@@ -370,7 +370,7 @@ async function main() {
   applyGeneratedPdfFallback(paths, order, generationStartedAt);
   if (!fs.existsSync(paths.pdfPath)) throw new Error('Expected PDF was not generated: ' + paths.pdfPath);
 
-  runNodeScript(path.join(ROOT, 'scripts', 'pdf_qa.js'), []);
+  runNodeScript(path.join(ROOT, 'scripts', 'pdf_qa.js'), [`--file=${paths.pdfPath}`]);
 
   const metadata = {
     order_id: order.order_id,

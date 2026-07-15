@@ -6,6 +6,17 @@ const OUTPUT_DIR = path.join(ROOT, 'output');
 const QA_DIR = path.join(OUTPUT_DIR, 'qa');
 const MIN_REASONABLE_BYTES = 50 * 1024;
 
+function parseArgs() {
+  const args = {};
+  for (const arg of process.argv.slice(2)) {
+    if (!arg.startsWith('--')) continue;
+    const idx = arg.indexOf('=');
+    if (idx === -1) args[arg.slice(2)] = true;
+    else args[arg.slice(2, idx)] = arg.slice(idx + 1);
+  }
+  return args;
+}
+
 function countPdfPages(buffer) {
   const text = buffer.toString('latin1');
   const matches = text.match(/\/Type\s*\/Page\b/g);
@@ -26,16 +37,28 @@ function hasUnresolvedPlaceholder(buffer) {
   return /{{[A-Z0-9_]+}}/.test(text);
 }
 
-if (!fs.existsSync(OUTPUT_DIR)) {
-  console.error('Missing output directory. Generate at least one PDF first.');
-  process.exit(1);
+const args = parseArgs();
+const requestedFile = args.file ? path.resolve(args.file) : null;
+let pdfPaths;
+
+if (requestedFile) {
+  if (!fs.existsSync(requestedFile) || path.extname(requestedFile).toLowerCase() !== '.pdf') {
+    console.error(`PDF file not found: ${requestedFile}`);
+    process.exit(1);
+  }
+  pdfPaths = [requestedFile];
+} else {
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    console.error('Missing output directory. Generate at least one PDF first.');
+    process.exit(1);
+  }
+  pdfPaths = fs.readdirSync(OUTPUT_DIR)
+    .filter(fileName => fileName.toLowerCase().endsWith('.pdf'))
+    .sort()
+    .map(fileName => path.join(OUTPUT_DIR, fileName));
 }
 
-const pdfFiles = fs.readdirSync(OUTPUT_DIR)
-  .filter(fileName => fileName.toLowerCase().endsWith('.pdf'))
-  .sort();
-
-if (pdfFiles.length === 0) {
+if (pdfPaths.length === 0) {
   console.error('No PDF files found in output/.');
   process.exit(1);
 }
@@ -45,14 +68,14 @@ fs.mkdirSync(QA_DIR, { recursive: true });
 const report = {
   generated_at: new Date().toISOString(),
   output_dir: OUTPUT_DIR,
-  pdf_count: pdfFiles.length,
+  pdf_count: pdfPaths.length,
   files: []
 };
 
 let failureCount = 0;
 
-for (const fileName of pdfFiles) {
-  const filePath = path.join(OUTPUT_DIR, fileName);
+for (const filePath of pdfPaths) {
+  const fileName = path.basename(filePath);
   const buffer = fs.readFileSync(filePath);
   const sizeBytes = buffer.length;
   const { count: pageCount, viaFallback: pageCountViaFallback } = countPdfPages(buffer);
@@ -92,7 +115,7 @@ for (const fileName of pdfFiles) {
 const reportPath = path.join(QA_DIR, 'pdf_qa_report.json');
 fs.writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
 
-console.log(`Checked ${pdfFiles.length} PDF file(s).`);
+console.log(`Checked ${pdfPaths.length} PDF file(s).`);
 console.log(`QA report: ${path.relative(ROOT, reportPath)}`);
 
 if (failureCount > 0) {
