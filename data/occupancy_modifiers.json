@@ -1,0 +1,98 @@
+{
+  "just_me": {
+    "label": "Solo",
+    "storage_modifier": 0,
+    "circulation_modifier": 0,
+    "durability_modifier": 0,
+    "description": "Optimized for single-user transit lanes and light, delicate textures.",
+    "storage_override": "Solo-load storage adjustment applied (+0): Compact single-user storage footprint. Focuses on immediate convenience and visual lightness.",
+    "geometry_override": "Solo-load circulation adjustment applied (+0): Single-user movement flow. Standard 90cm corridors optimized for direct transit.",
+    "durability_override": "Solo-load durability adjustment applied (+0): Premium delicate natural materials (raw linen, travertine, low-traffic porous wood grain) prioritizing direct sensory touch.",
+    "persona_notes": {
+      "sovereign": "Solo living is your ideal baseline — no compromise negotiation needed. Push the command-sightline and surface-hierarchy protocols to their strictest form since there's no second user to accommodate.",
+      "sage": "Solo occupancy is what your isolation protocols were designed for. Use the freed-up square footage to deepen the monastic-isolation zone rather than filling it with more furniture.",
+      "alchemist": "With no one else's schedule to coordinate around, your modular zones can shift daily without negotiation — lean into faster, more frequent reconfiguration.",
+      "weaver": "Solo living is the one context where your social-gravity instinct has no one to gravitate toward — consider scaling the conversational circle down to a single warm anchor chair rather than an empty circle."
+    }
+  },
+  "me_plus_someone": {
+    "label": "Couple",
+    "storage_modifier": 1,
+    "circulation_modifier": 1,
+    "durability_modifier": 0,
+    "description": "Optimized for dual-use divided storage and secondary companion clearance.",
+    "storage_override": "Couple-load storage adjustment applied (+1): Divided wardrobe layout. Requires separate, designated zones to prevent item mixing and spatial tension.",
+    "geometry_override": "Companion-load circulation adjustment applied (+1): Dual movement lanes. Clearance zones scaled to 95cm to support secondary companion clearance.",
+    "durability_override": "Solo-load durability adjustment applied (+0): Premium delicate natural materials (raw linen, travertine, low-traffic porous wood grain) prioritizing direct sensory touch.",
+    "persona_notes": {
+      "sovereign": "A second person is the first real negotiation your control instinct faces — designate one zone as fully yours (command chair, desk) to protect it from drift.",
+      "sage": "Couple life is compatible with your isolation needs only if your partner's routine is explicitly zoned out — a shared room without a defined solo corner will erode your recovery capacity.",
+      "alchemist": "Two people reconfiguring the same modular space multiplies your mode-switching value — this is where your flexibility protocols earn their keep the most.",
+      "weaver": "This is close to your natural habitat — the conversational circle now has its first real second node. Prioritize face-to-face seating angle over anything else."
+    }
+  },
+  "different_rhythms": {
+    "label": "Family",
+    "storage_modifier": 2,
+    "circulation_modifier": 3,
+    "durability_modifier": 2,
+    "description": "Optimized for high-capacity closed cabinetry, multi-user Neufert clearance, and high-rub durability finishes.",
+    "storage_override": "Family-load storage adjustment applied (+2): Wardrobe capacity doubled. Requires 80%+ fully closed doors with anti-clutter flush-mount profiles and child safety latches.",
+    "geometry_override": "Family-load circulation adjustment applied (+3): Multi-user transit flow. Corridors widened to 110cm+ (Neufert standard) to prevent pathway collision during overlapping schedules.",
+    "durability_override": "Family-load durability adjustment applied (+2): Scratch-resistant protective coatings, stain-resistant fabric treatments, and rounded solid timber edge profiles.",
+    "persona_notes": {
+      "sovereign": "Family life is the hardest context for your control instinct — you cannot enforce the same order across multiple schedules. Concede the shared zones fully, then over-protect one small command corner as non-negotiable.",
+      "sage": "Multiple overlapping rhythms are close to a worst-case scenario for isolation needs — invest disproportionately in physical acoustic separation (a door, not just a curtain) rather than trying to out-schedule the noise.",
+      "alchemist": "Family rhythms are naturally multi-mode already — your modular instinct is an asset here, not a compromise. Let different family members claim different configurations of the same flexible zone.",
+      "weaver": "This is your highest-reward context — a full household to gather. Push the social-gravity protocol to its maximum: the biggest conversational circle your square footage allows."
+    }
+  },
+  "me_plus_pet": {
+    "label": "Pet-Owner",
+    "storage_modifier": 1,
+    "circulation_modifier": 1,
+    "durability_modifier": 2,
+    "description": "Optimized for elevated safety latches, floor plane clearance, and anti-scratch/bite resistant materials.",
+    "storage_override": "Pet-Owner storage adjustment applied (+1): Open shelves below 90cm height deactivated to prevent pet contact. Lower cabinets equipped with spring-loaded latches. Cable routing fully enclosed in protective conduits.",
+    "geometry_override": "Pet-Owner layout adjustment applied (+1): Low coffee tables floated with a minimum 50cm clearance to prevent pet tail-sweep damage. Floor-level paths kept clear of delicate ornaments.",
+    "durability_override": "Pet-Owner materiality adjustment applied (+2): Claw-proof, tight-weave fabrics (minimum 50,000 double rubs, scratch-resistant microfiber or treated canvas) required. Porous base timbers replaced with poly-sealed, scratch-resistant finishes. Zero toxic pigments.",
+    "persona_notes": {
+      "sovereign": "A pet is the one variable your control protocols can't fully govern — accept a supervised zone of controlled disorder rather than fighting it room-wide, or the friction never resolves.",
+      "sage": "Pets can actually support isolation needs (a calm animal presence rarely breaks focus the way a person does) — but pet gear itself must stay fully enclosed or it becomes new visual clutter.",
+      "alchemist": "Pet gear is inherently mobile-friendly — fold it into your existing rolling-cart and modular-storage system rather than giving it a fixed dedicated zone.",
+      "weaver": "A pet fits naturally into your social-gravity layout — treat the pet bed as another node in the conversational circle rather than an afterthought against a wall."
+    }
+  },
+  "social_hosting": {
+    "label": "Social Hosting",
+    "storage_modifier": 1,
+    "circulation_modifier": 2,
+    "durability_modifier": 1,
+    "description": "Optimized for perimeter flow clearing, wide conversational clearances, and stain-resistant finishes.",
+    "storage_override": "Social-load storage adjustment applied (+1): Concealed cabinet zones located away from active hosting centers. Double trash bins integrated into pull-out drawers.",
+    "geometry_override": "Social-load circulation adjustment applied (+2): Active group flow. Clearance zones set to 105cm to support concurrent path transit around seating groups.",
+    "durability_override": "High-traffic durability adjustment applied (+1): Hardwood finishes, reinforced joints, and easy-clean woven textiles.",
+    "persona_notes": {
+      "sovereign": "Hosting is a temporary breach of your control system, not a redesign of it — plan a fast 10-minute reset sequence to restore the room to baseline order the moment guests leave.",
+      "sage": "Frequent hosting is the highest-tension context for your isolation needs — draw a hard line on which zone stays closed to guests entirely, and defend it explicitly rather than assuming people will respect it unspoken.",
+      "alchemist": "This is a natural fit for your modular instinct — pre-stage a 'hosting configuration' as one of your standard modes so switching doesn't require improvising each time.",
+      "weaver": "This is your core competency — optimize relentlessly for it. Every other occupancy mode is a variation on how to protect space from this one."
+    }
+  },
+  "everything_happens_here": {
+    "label": "Multi-Routine",
+    "storage_modifier": 2,
+    "circulation_modifier": 2,
+    "durability_modifier": 1,
+    "description": "Optimized for zone-separating modular storage, high-density flow, and durable composite materials.",
+    "storage_override": "Multi-routine storage adjustment applied (+2): Modular cabinet dividers. Custom drawer grids designed to isolate different hobby and work gear.",
+    "geometry_override": "Multi-routine circulation adjustment applied (+2): Flow layout. Main walking axis kept clear of secondary furniture with a minimum 100cm transit tolerance.",
+    "durability_override": "High-traffic durability adjustment applied (+1): Hardwood finishes, reinforced joints, and easy-clean woven textiles.",
+    "persona_notes": {
+      "sovereign": "Multi-routine use is the most direct threat to your surface-hierarchy protocol — enforce strict zone dividers (a rug, a shelf, a level change) so overlapping functions don't visually collapse into one.",
+      "sage": "Multiple routines sharing one room is difficult for focus, but not impossible — sequence activities by time-of-day rather than by space, since you don't have the square footage to separate them physically.",
+      "alchemist": "This occupancy type is essentially your natural state — you were already designing for constant mode-switching. Make sure storage keeps pace with however many active projects are running at once.",
+      "weaver": "Multi-routine days can fragment your social rhythm — anchor at least one recurring shared moment (a meal, an evening sit) so the room doesn't become purely transactional."
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "sovereign": {
+    "display_name": "The Sovereign",
+    "core_need": "Control, clarity, visual authority",
+    "theme_colors": {
+      "accent": "#1c3a5c",
+      "accent_soft": "#4a7aaa",
+      "paper_a": "#080d14",
+      "paper_b": "#0e1520",
+      "paper_c": "#141c2a"
+    },
+    "active_protocols": [
+      "command_sightline",
+      "surface_hierarchy",
+      "invisible_threshold",
+      "ortho_axial"
+    ],
+    "behavioral_instructions": [
+      "Maintain a strict 80cm circulation lane clear of all ancillary objects.",
+      "Align all horizontal surfaces to the primary room axis with a maximum 2-degree deviation.",
+      "Keep the central coffee table visually clean and clear of all objects after 8PM to lower cognitive fatigue."
+    ]
+  },
+  "weaver": {
+    "display_name": "The Weaver",
+    "core_need": "Social gravity, warm connection, shared comfort",
+    "theme_colors": {
+      "accent": "#9c4f2b",
+      "accent_soft": "#a56a43",
+      "paper_a": "#0f0e0c",
+      "paper_b": "#161512",
+      "paper_c": "#1b1a17"
+    },
+    "active_protocols": [
+      "social_gravity",
+      "soft_threshold",
+      "shared_radius",
+      "acoustic_softening"
+    ],
+    "behavioral_instructions": [
+      "Arrange the seating area in a soft circular shape to foster intimate face-to-face eye contact.",
+      "Introduce textured wool or linen throws over secondary chairs to soften boundary reflections.",
+      "Position all low lighting at eye-level when seated to create a warm, inviting glowing envelope."
+    ]
+  },
+  "sage": {
+    "display_name": "The Sage",
+    "core_need": "Intellectual focus, distraction-free isolation, deep comfort",
+    "theme_colors": {
+      "accent": "#4a6f52",
+      "accent_soft": "#8fa89b",
+      "paper_a": "#0a0c0b",
+      "paper_b": "#101412",
+      "paper_c": "#161c19"
+    },
+    "active_protocols": [
+      "monastic_isolation",
+      "focused_sightline",
+      "luminous_envelope",
+      "minimal_clutter"
+    ],
+    "behavioral_instructions": [
+      "Float a single dedicated reading armchair directly facing away from primary entry sightlines.",
+      "Restrict light pools strictly to active working or reading surfaces, keeping background corners soft.",
+      "Keep all bookshelf displays organized by content, avoiding dense, chaotic stack alignments."
+    ]
+  },
+  "alchemist": {
+    "display_name": "The Alchemist",
+    "core_need": "Dynamic flexibility, multi-mode adaptation, creative energy",
+    "theme_colors": {
+      "accent": "#5c3d75",
+      "accent_soft": "#9d81b5",
+      "paper_a": "#0d0912",
+      "paper_b": "#15101c",
+      "paper_c": "#1a1424"
+    },
+    "active_protocols": [
+      "modular_delineation",
+      "multi_axial",
+      "adaptable_height",
+      "kinetic_flow"
+    ],
+    "behavioral_instructions": [
+      "Ensure all key furniture items are modular or fitted with easy-glide casters for quick mode changes.",
+      "Leave a central 1.5m x 1.5m floor zone completely unanchored to allow instant transition to activity.",
+      "Use warm dimmable smart bulbs that switch color temperatures based on focus vs relaxation hours."
+    ]
+  }
+}

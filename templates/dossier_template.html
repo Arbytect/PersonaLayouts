@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PersonaLayouts Spatial Dossier</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
+
+:root {
+  /* Core dynamic theme variables - to be overridden by generator */
+  --accent: #9c4f2b;      /* Primary Accent */
+  --accent-soft: #a56a43; /* Soft Accent */
+  --accent-rgb: 156, 79, 67;
+  --ink: #faf8f4;         /* Rich off-white paper text */
+  --mid: #8e897e;         /* Muted secondary gray */
+  --faint: #b4ae9f;       /* Faint rules and markings */
+  --rule: #2a2824;        /* Soft divider lines */
+
+  /* Dark hierarchy backgrounds */
+  --paper-a: #0f0e0c;     /* Full Dark (Pages 1, 4, 10) */
+  --paper-b: #161512;     /* Soft Dark (Pages 2, 3, 6, 7, 8) */
+  --paper-c: #1b1a17;     /* Technical Charcoal (Pages 5, 9) */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9pt;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper-a);
+}
+
+/* ── PAGE CONTAINERS ── */
+.page {
+  width: 210mm;
+  height: 297mm;
+  padding: 0;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.page:last-child { page-break-after: avoid; }
+
+/* Left accent bar - every page */
+.page::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+}
+
+/* Page dark hierarchy mapping */
+.page.type-a { background: var(--paper-a); }
+.page.type-b { background: var(--paper-b); }
+.page.type-c { background: var(--paper-c); }
+
+/* ── PAGE HEADER ── */
+.pg-hdr {
+  padding: 24px 36px 12px 40px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pg-hdr-brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 8pt; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink); font-weight: 500;
+}
+.pg-hdr-right {
+  font-family: 'DM Mono', monospace;
+  font-size: 7pt; letter-spacing: .1em; color: var(--faint);
+}
+
+/* ── PAGE FOOTER ── */
+.pg-ftr {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 18px 40px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  z-index: 20;
+}
+.pg-ftr-l {
+  font-family: 'DM Mono', monospace;
+  font-size: 6.5pt; letter-spacing: .1em; color: var(--faint);
+}
+.pg-ftr-r {
+  font-family: 'DM Mono', monospace;
+  font-size: 6.5pt; color: var(--accent-soft); letter-spacing: .08em;
+}
+
+/* ── CONTENT ── */
+.body { padding: 30px 36px 52px 40px; flex: 1; display: flex; flex-direction: column; }
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 7pt; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--accent-soft); margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22pt; font-weight: 400; line-height: 1.1;
+  letter-spacing: -.01em; margin-bottom: 14px;
+}
+.section-title em { font-style: italic; }
+
+/* Personalized prescription page */
+.prescription-grid {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 12px;
+  margin-top: 2px;
+}
+.prescription-card {
+  border: 1px solid var(--rule);
+  background: rgba(255,255,255,0.018);
+  padding: 14px;
+  min-height: 92px;
+}
+.prescription-card.accent { border-color: rgba(var(--accent-rgb), .42); background: rgba(var(--accent-rgb), .07); }
+.rx-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 6.7pt;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent-soft);
+  margin-bottom: 6px;
+}
+.rx-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17pt;
+  line-height: 1.08;
+  color: #fff;
+  margin-bottom: 7px;
+}
+.rx-text { font-size: 8.2pt; line-height: 1.48; color: var(--mid); }
+.rx-text strong { color: var(--ink); font-weight: 500; }
+.seven-day-plan {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.day-card {
+  border: 1px solid var(--rule);
+  background: var(--paper-a);
+  padding: 10px;
+  min-height: 94px;
+}
+.day-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 6.5pt;
+  color: var(--accent-soft);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  margin-bottom: 5px;
+}
+.day-task { font-size: 7.8pt; line-height: 1.42; color: var(--ink); }
+.visual-brief {
+  margin-top: 12px;
+  border-top: 1px solid var(--rule);
+  padding-top: 11px;
+  display: grid;
+  grid-template-columns: .72fr 1.28fr;
+  gap: 10px;
+  align-items: stretch;
+}
+.vb-chip {
+  border: 1px solid rgba(var(--accent-rgb), .38);
+  color: var(--accent-soft);
+  font-family: 'DM Mono', monospace;
+  font-size: 6.5pt;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  padding: 8px;
+}
+.vb-copy {
+  font-size: 7.7pt;
+  color: var(--mid);
+  line-height: 1.45;
+}
+
+/* ── COVER PAGE (Type A) ── */
+.cover { display: flex; flex-direction: column; justify-content: space-between; height: 297mm; }
+
+.cover-hero {
+  background: linear-gradient(160deg, #050505 0%, var(--paper-a) 100%);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 40px 48px 44px;
+  position: relative;
+}
+.cover-hero::after {
+  content: '#MNFST';
+  position: absolute;
+  right: 40px; top: 40px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80pt; font-weight: 300; font-style: italic;
+  color: rgba(255,255,255,.015);
+  letter-spacing: -.03em;
+  line-height: 1;
+}
+.prep-tag {
+  display: inline-block;
+  width: max-content;
+  border: 1px solid var(--rule);
+  padding: 8px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 6.8pt;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 18px;
+  background: rgba(255,255,255,.018);
+}
+.prep-tag strong { color: var(--accent-soft); font-weight: 700; }
+
+.cover-brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 9pt; letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(255,255,255,.9); font-weight: 500;
+  margin-bottom: 60px;
+}
+.cover-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 7pt; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--accent-soft);
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.cover-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+.cover-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42pt; font-weight: 300;
+  color: white; line-height: .95;
+  letter-spacing: -.02em;
+  margin-bottom: 8px;
+}
+.cover-variant {
+  font-family: 'DM Mono', monospace;
+  font-size: 7.5pt; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 32px;
+}
+.cover-desc {
+  font-size: 9.5pt; line-height: 1.65; font-weight: 300;
+  color: rgba(255,255,255,.6);
+  max-width: 380px;
+  border-left: 2px solid var(--accent);
+  padding-left: 14px;
+}
+
+.cover-passport {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--rule);
+  background: var(--paper-b);
+}
+.cp-item {
+  padding: 16px 0 16px 18px;
+  border-right: 1px solid var(--rule);
+}
+.cp-item:last-child { border-right: none; }
+.cp-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 6pt; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 3px;
+}
+.cp-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 8pt; font-weight: 500; color: var(--ink);
+  letter-spacing: .02em;
+}
+
+.cover-ftr {
+  padding: 14px 40px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--paper-b);
+}
+.cover-ftr-l {
+  font-family: 'DM Mono', monospace;
+  font-size: 6.5pt; letter-spacing: .1em; color: var(--faint);
+}
+.cover-ftr-r {
+  font-family: 'DM Mono', monospace;
+  font-size: 6.5pt; color: var(--faint);
+}
+
+/* ── PHILOSOPHY (Type B) ── */
+.philo-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px;
+}
+.philo-card {
+  background: rgba(255,255,255,0.01); border: 1px solid var(--rule); padding: 18px; border-radius: 4px;
+}
+.philo-card.accent {
+  background: rgba(156, 79, 43, 0.03); border-color: rgba(156, 79, 43, 0.15);
+}
+.philo-label {
+  font-family: 'DM Mono', monospace; font-size: 7pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-bottom: 6px;
+}
+.philo-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 14pt; font-weight: 500; margin-bottom: 10px; color: #fff;
+}
+.philo-text {
+  font-size: 8.5pt; line-height: 1.55; color: var(--mid);
+}
+
+/* ── HIERARCHY RULES (Type B) ── */
+.rule-list {
+  display: flex; flex-direction: column; gap: 12px; margin-top: 12px;
+}
+.rule-item {
+  display: flex; gap: 14px; align-items: flex-start; padding-bottom: 12px; border-bottom: 1px solid var(--rule);
+}
+.rule-item:last-child { border-bottom: none; }
+.rule-num {
+  font-family: 'DM Mono', monospace; font-size: 8pt; font-weight: 700; color: var(--accent);
+}
+.rule-title {
+  font-size: 9.5pt; font-weight: 600; color: #fff; margin-bottom: 2px;
+}
+.rule-text {
+  font-size: 8.5pt; line-height: 1.5; color: var(--mid);
+}
+
+/* ── STRESS MAP LAYOUT (Type A / B) ── */
+.diag-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  margin-bottom: 14px;
+}
+.diag-card {
+  background: rgba(255,255,255,0.01); border: 1px solid var(--rule);
+  padding: 10px 12px;
+}
+.diag-card.accent { background: rgba(239, 83, 80, 0.02); border-color: rgba(239, 83, 80, 0.2); }
+.dc-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 6pt; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 2px;
+}
+.dc-val { font-size: 9pt; font-weight: 500; color: var(--ink); }
+
+.brutal-box {
+  border-left: 3px solid #ef5350; padding: 12px 14px;
+  margin: 14px 0;
+  background: rgba(239, 83, 80, 0.02);
+}
+.brutal-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 6pt; letter-spacing: .14em; text-transform: uppercase;
+  color: #ef5350; margin-bottom: 4px;
+}
+.brutal-text {
+  font-size: 9pt; line-height: 1.55; color: var(--ink);
+  font-style: italic;
+}
+
+.stress-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+}
+.sr-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 6.5pt; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--mid); width: 130px; flex-shrink: 0;
+}
+.sr-track {
+  flex: 1; height: 3px; background: var(--rule); border-radius: 2px;
+}
+.sr-fill {
+  height: 100%; background: #ef5350; border-radius: 2px;
+}
+.sr-fill.warn { background: #d69a38; }
+.sr-val.warn { color: #d69a38; }
+.scale-note { font-size: 7.2pt; color: var(--mid); margin: 4px 0 10px; line-height: 1.45; }
+.scale-note strong { color: var(--ink); font-weight: 500; }
+.sr-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 6.5pt; color: #ef5350; width: 28px; text-align: right;
+  font-weight: 700;
+}
+
+/* ── BLUEPRINT TECHNICAL DRAWING (Type C) ── */
+.plan-wrap {
+  position: relative;
+  border: 1px solid var(--rule);
+  background: #000;
+  width: 100%;
+  height: 330px;
+  margin: 12px 0;
+  overflow: hidden;
+}
+.plan-hdr-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0; z-index: 10;
+  padding: 6px 12px; border-bottom: 1px solid var(--rule);
+  background: var(--paper-c);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.plan-hdr-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 6.5pt; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mid);
+}
+.plan-hdr-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 6pt; color: var(--faint); letter-spacing: .06em;
+}
+
+.blueprint-base {
+  position: absolute;
+  top: 28px; left: 0; right: 0; bottom: 0;
+  z-index: 1;
+}
+.blueprint-base img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: invert(0.92) hue-rotate(180deg) contrast(1.15) brightness(0.9);
+}
+
+.overlay-vectors {
+  position: absolute;
+  top: 28px; left: 0; right: 0; bottom: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+.overlay-vectors svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── NEUFERT SPECIFICATIONS TABLE ── */
+.standards-table {
+  width: 100%; border-collapse: collapse; margin-top: 8px;
+}
+.standards-table th {
+  font-family: 'DM Mono', monospace; font-size: 6pt;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 6px 8px; background: rgba(255,255,255,0.02);
+  color: var(--accent-soft); text-align: left;
+  border-bottom: 1px solid var(--rule);
+}
+.standards-table td {
+  padding: 8px; border-bottom: 1px solid var(--rule);
+  font-size: 8pt; line-height: 1.4; color: var(--mid);
+  vertical-align: middle;
+}
+.standards-table tr:last-child td { border-bottom: none; }
+
+/* ── FUNCTIONAL ZONING (Type B) ── */
+.zoning-list {
+  display: flex; flex-direction: column; gap: 10px; margin-top: 12px;
+}
+.zoning-card {
+  background: rgba(255,255,255,0.01); border: 1px solid var(--rule); padding: 14px 16px; border-radius: 4px;
+}
+.zc-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;
+}
+.zc-title {
+  font-family: 'DM Mono', monospace; font-size: 7.5pt; font-weight: 700; text-transform: uppercase; color: #fff;
+}
+.zc-area {
+  font-family: 'DM Mono', monospace; font-size: 7.5pt; color: var(--accent-soft); font-weight: 700;
+}
+.zc-personas {
+  font-family: 'DM Mono', monospace; font-size: 6.5pt; color: var(--mid); margin-bottom: 6px;
+}
+.zc-rationale {
+  font-size: 8.5pt; line-height: 1.45; color: var(--mid);
+}
+
+/* ── PROCUREMENT LIST (Type B) ── */
+.product-list {
+  display: flex; flex-direction: column; gap: 8px; margin-top: 12px;
+}
+.dont-buy-box { border: 1px solid rgba(239,83,80,.55); background: rgba(239,83,80,.045); padding: 10px 12px; margin-top: 12px; }
+.dont-buy-box .db-title { font-family: 'DM Mono', monospace; font-size: 6.8pt; letter-spacing: .14em; text-transform: uppercase; color: #ef5350; margin-bottom: 6px; }
+.dont-buy-box li { list-style: none; position: relative; padding-left: 14px; margin-bottom: 5px; color: var(--mid); font-size: 7.6pt; line-height: 1.45; }
+.dont-buy-box li::before { content: 'x'; position: absolute; left: 0; color: #ef5350; font-family: 'DM Mono', monospace; }
+.dont-buy-box strong { color: var(--ink); font-weight: 500; }
+.product-item {
+  background: rgba(255,255,255,0.01); border: 1px solid var(--rule);
+  padding: 14px 16px; display: grid; grid-template-columns: 24px 1.5fr 70px 1.5fr; gap: 14px;
+  align-items: center;
+}
+.pi-num {
+  font-family: 'DM Mono', monospace; font-size: 8pt; color: var(--accent); font-weight: 700;
+}
+.pi-name {
+  font-weight: 600; color: #fff; font-size: 9pt;
+}
+.pi-name a { color: #fff; text-decoration: none; border-bottom: 1px dotted var(--mid); }
+.pi-reason {
+  font-size: 7.5pt; color: var(--mid); margin-top: 2px;
+}
+.pi-cost {
+  font-family: 'DM Mono', monospace; font-size: 9pt; font-weight: bold; color: var(--accent-soft);
+}
+.pi-benefit {
+  font-size: 8pt; color: var(--mid); line-height: 1.4;
+}
+
+/* ── FURNITURE RECOMMENDATION (Type B) ── */
+.furniture-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 15pt; font-weight: 500; color: #fff;
+  margin-top: 14px; margin-bottom: 2px;
+}
+.furniture-tagline {
+  font-size: 7.5pt; color: var(--accent-soft); font-family: 'DM Mono', monospace;
+  letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px;
+}
+
+/* ── MATERIALITY & SPECIFICATION (Type B) ── */
+.specs-table {
+  width: 100%; border-collapse: collapse; margin-top: 14px;
+}
+.specs-table th {
+  font-family: 'DM Mono', monospace; font-size: 6pt;
+  letter-spacing: .15em; text-transform: uppercase;
+  padding: 10px 14px; background: rgba(255,255,255,0.02);
+  color: var(--accent-soft); text-align: left;
+  border-bottom: 1px solid var(--rule);
+}
+.specs-table td {
+  padding: 14px; border-bottom: 1px solid var(--rule);
+  font-size: 8.5pt; line-height: 1.6; color: var(--ink);
+  vertical-align: top;
+}
+.specs-table tr:last-child td { border-bottom: none; }
+.specs-label { font-family: 'DM Mono', monospace; font-size: 7.5pt; color: var(--mid); font-weight: bold; }
+.specs-val { font-weight: 400; color: var(--mid); }
+
+/* ── BOTANICAL SANCTUARY (Type C) ── */
+.plant-grid {
+  display: flex; flex-direction: column; gap: 12px;
+  margin-top: 14px;
+}
+.plant-card {
+  background: rgba(255,255,255,0.01); border: 1px solid var(--rule);
+  padding: 16px 18px; display: grid; grid-template-columns: 1.6fr 1fr; gap: 18px;
+}
+.plant-meta { display: flex; flex-direction: column; justify-content: center; }
+.plant-name-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 6px;
+}
+.plant-common { font-family: 'Cormorant Garamond', serif; font-size: 13pt; font-weight: 500; color: #fff; }
+.plant-sci { font-size: 7.5pt; color: var(--mid); font-style: italic; margin-left: 8px; }
+.plant-safety-safe {
+  font-family: 'DM Mono', monospace; font-size: 5.5pt;
+  padding: 2px 7px; background: rgba(85, 175, 85, 0.08); color: #85df85;
+  letter-spacing: .08em; align-self: start;
+}
+.plant-safety-risk {
+  font-family: 'DM Mono', monospace; font-size: 5.5pt;
+  padding: 2px 7px; background: rgba(175, 85, 85, 0.08); color: #df8585;
+  letter-spacing: .08em; align-self: start;
+}
+.plant-desc { font-size: 8.5pt; color: var(--mid); line-height: 1.5; margin-bottom: 8px; }
+.plant-specs-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  border-top: 1px solid var(--rule); padding-top: 8px;
+}
+.ps-col { font-size: 7.5pt; line-height: 1.4; color: var(--mid); }
+.ps-lbl { font-family: 'DM Mono', monospace; font-size: 5.5pt; text-transform: uppercase; color: var(--faint); }
+
+/* ── RENOVATION PATHWAYS (Type A / B) ── */
+.pathway-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; flex: 1;
+}
+.pathway-card {
+  background: rgba(255,255,255,0.01); border: 1px solid var(--rule); padding: 20px; border-radius: 4px; display: flex; flex-direction: column; justify-content: space-between;
+}
+.pathway-card.accent {
+  background: rgba(156, 79, 43, 0.03); border-color: rgba(156, 79, 43, 0.25);
+}
+.pw-label {
+  font-family: 'DM Mono', monospace; font-size: 7.5pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-soft); font-weight: 700; margin-bottom: 6px;
+}
+.pw-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 15pt; font-weight: 500; margin-bottom: 12px; color: #fff;
+}
+.pw-scope {
+  font-size: 8.5pt; line-height: 1.6; color: var(--mid); margin-bottom: 18px; flex-grow: 1;
+}
+.pw-scope ul { padding-left: 14px; margin-top: 6px; }
+.pw-scope li { margin-bottom: 4px; }
+.pw-metrics {
+  border-top: 1px solid var(--rule); padding-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.pwm-val {
+  font-family: 'DM Mono', monospace; font-size: 11pt; font-weight: bold; color: #fff;
+}
+.pwm-lbl {
+  font-family: 'DM Mono', monospace; font-size: 6pt; text-transform: uppercase; color: var(--mid); margin-top: 2px;
+}
+
+/* Visual evidence modules */
+.visual-module { margin-top: 18px; border: 1px solid var(--rule); background: var(--paper-b); padding: 14px; overflow: hidden; }
+.visual-module-head { display:flex; justify-content:space-between; align-items:end; margin-bottom:12px; }
+.visual-module-kicker { font-family:'DM Mono',monospace; font-size:6.5pt; color:var(--accent); text-transform:uppercase; }
+.visual-module-note { font-size:7pt; color:var(--mid); }
+.hierarchy-bars { display:grid; gap:7px; }
+.hierarchy-bar-row { display:grid; grid-template-columns:22px 125px 1fr 34px; align-items:center; gap:8px; font-size:7.5pt; }
+.hierarchy-track { height:16px; border:1px solid var(--rule); background:#0d0d0c; }
+.hierarchy-fill { height:100%; background:var(--accent); opacity:.82; }
+.zone-map { height:220px; display:grid; grid-template-columns:1.55fr .95fr; gap:8px; }
+.zone-primary,.zone-secondary,.zone-tertiary { border:1px solid var(--rule); position:relative; padding:12px; display:flex; flex-direction:column; justify-content:space-between; }
+.zone-primary { grid-row:1 / span 2; background:rgba(var(--accent-rgb),.18); border-color:var(--accent); }
+.zone-secondary { background:rgba(98,126,111,.16); }
+.zone-tertiary { background:rgba(185,145,79,.10); }
+.zone-map-name { font-family:'Cormorant Garamond',serif; font-size:14pt; color:var(--ink); }
+.zone-map-pct { font-family:'DM Mono',monospace; font-size:19pt; color:var(--accent); }
+.material-board { display:grid; grid-template-columns:1.05fr 1fr; gap:12px; min-height:230px; }
+.palette-stack { display:grid; grid-template-columns:repeat(3,1fr); min-height:230px; }
+.palette-chip { padding:12px 8px; display:flex; flex-direction:column; justify-content:end; border-right:1px solid rgba(255,255,255,.12); }
+.palette-chip-name { font-family:'DM Mono',monospace; font-size:6.5pt; text-transform:uppercase; color:#fff; text-shadow:0 1px 3px #000; }
+.material-ledger { display:grid; grid-template-rows:repeat(3,1fr); gap:7px; }
+.material-sample { border:1px solid var(--rule); padding:11px; display:flex; flex-direction:column; justify-content:center; }
+.material-sample strong { display:block; color:var(--ink); font-size:8pt; margin-bottom:4px; }
+.material-sample span { color:var(--mid); font-size:7pt; line-height:1.45; }
+.plant-plan { height:300px; display:grid; grid-template-columns:1.15fr .85fr; gap:12px; }
+.plant-plan-drawing { position:relative; border:1px solid var(--rule); background:#0b0b0a; overflow:hidden; }
+.plant-plan-drawing img { width:100%; height:100%; object-fit:contain; filter:invert(1) grayscale(1); opacity:.38; }
+.plant-marker { position:absolute; width:32px; height:32px; border:1px solid #7fa381; border-radius:50%; background:rgba(75,112,80,.72); color:#fff; display:flex; align-items:center; justify-content:center; font:700 7pt 'DM Mono',monospace; }
+.plant-guidance { display:grid; gap:8px; }
+.plant-guidance-item { border:1px solid var(--rule); padding:10px; }
+.plant-guidance-item strong { display:block; color:var(--ink); font-size:8pt; margin-bottom:4px; }
+.plant-guidance-item span { color:var(--mid); font-size:7pt; line-height:1.4; }
+.concept-context { height:290px; display:grid; grid-template-columns:1.55fr .75fr; border:1px solid var(--rule); margin-top:14px; overflow:hidden; }
+.concept-context-media { background:#090909; overflow:hidden; }
+.concept-context-media img { width:100%; height:100%; object-fit:cover; display:block; }
+.concept-context-copy { padding:14px; background:var(--paper-b); display:flex; flex-direction:column; justify-content:space-between; }
+.concept-context-title { font-family:'Cormorant Garamond',serif; color:var(--ink); font-size:16pt; line-height:1.05; }
+.concept-context-meta { font:6.5pt 'DM Mono',monospace; color:var(--accent); text-transform:uppercase; line-height:1.7; }
+.before-after-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:18px; }
+.photo-frame { height:545px; border:1px solid var(--rule); background:#080808; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.photo-frame.before { border-color:rgba(239,83,80,.35); }
+.photo-frame.after { border-color:rgba(var(--accent-rgb),.7); }
+.photo-frame img { width:100%; height:100%; object-fit:contain; display:block; }
+.photo-frame-label { position:absolute; z-index:2; top:0; left:0; right:0; padding:9px 11px; background:rgba(5,5,5,.88); font:6.5pt 'DM Mono',monospace; color:var(--ink); text-transform:uppercase; }
+.transform-evidence-note { margin-top:12px; border-left:2px solid var(--accent); background:var(--paper-b); padding:11px 13px; color:var(--mid); font-size:8pt; line-height:1.5; }
+.transform-evidence-note strong { color:var(--ink); }
+.transform-proof-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:10px; }
+.transform-proof-grid div { border:1px solid var(--rule); padding:9px; color:var(--mid); font-size:7pt; line-height:1.4; }
+.transform-proof-grid span { display:block; color:var(--accent); font:6pt 'DM Mono',monospace; text-transform:uppercase; margin-bottom:4px; }
+.photo-observation-list { display:grid; gap:8px; margin-top:16px; }
+.photo-observation { display:grid; grid-template-columns:42px 1fr; gap:11px; border:1px solid var(--rule); background:var(--paper-b); padding:11px 12px; min-height:112px; }
+.photo-observation-num { font:15pt 'DM Mono',monospace; color:var(--accent); border-right:1px solid var(--rule); }
+.photo-observation-title { font:13pt 'Cormorant Garamond',serif; color:var(--ink); margin-bottom:7px; }
+.photo-observation-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; color:var(--mid); font-size:7.2pt; line-height:1.42; }
+.photo-observation-grid span { display:block; color:var(--accent-soft); font:5.8pt 'DM Mono',monospace; text-transform:uppercase; margin-bottom:3px; }
+.photo-audit-limit { margin-top:10px; border-top:1px solid var(--rule); padding-top:8px; color:var(--mid); font-size:6.8pt; line-height:1.45; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     PAGE 1 - COVER (Type A)
+══════════════════════════════════ -->
+<div class="page type-a cover">
+  <div class="cover-hero">
+    <div class="cover-image-container" style="position: absolute; right: 34px; top: 92px; width: 430px; height: 322px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--rule); background: rgba(255,255,255,0.01); border-radius: 4px; padding: 10px; overflow: hidden;">
+        {{COVER_VISUAL_HTML}}
+    </div>
+    <div class="prep-tag">Prepared for <strong>{{CUSTOMER_NAME}}</strong> | {{DELIVERY_DATE}} | {{DOSSIER_ID}}</div>
+    <div class="cover-brand">PersonaLayouts</div>
+    <div class="cover-eyebrow">{{PRODUCT_TIER}}</div>
+    <div class="cover-name">{{COVER_PRODUCT_NAME}}</div>
+    <div class="cover-variant">{{VARIANT_NAME}}</div>
+    <div class="cover-desc">{{COVER_DESCRIPTION}}</div>
+  </div>
+
+  <div class="cover-passport">
+    <div class="cp-item">
+      <div class="cp-label">Space</div>
+      <div class="cp-val">{{SPACE_TYPE}}</div>
+    </div>
+    <div class="cp-item">
+      <div class="cp-label">Total Area</div>
+      <div class="cp-val">{{SPACE_AREA}}</div>
+    </div>
+    <div class="cp-item">
+      <div class="cp-label">Lifestyle</div>
+      <div class="cp-val">{{LIFESTYLE_LABEL}}</div>
+    </div>
+    <div class="cp-item">
+      <div class="cp-label">Persona Split</div>
+      <div class="cp-val">{{RATIOS_LABEL}}</div>
+    </div>
+  </div>
+
+  <div class="cover-ftr">
+    <div class="cover-ftr-l">PersonaLayouts | personalayouts.com</div>
+    <div class="cover-ftr-r">Yorukoglu Architecture</div>
+  </div>
+</div>
+
+{{PHOTO_AUDIT_PAGES_HTML}}
+
+
+<!-- ══════════════════════════════════
+     PAGE 2 - DESIGN PHILOSOPHY (Type B)
+══════════════════════════════════ -->
+<div class="page type-b">
+  <div class="pg-hdr">
+    <div class="pg-hdr-brand">PersonaLayouts</div>
+    <div class="pg-hdr-right">{{VARIANT_NAME}} | Prescription | {{SPACE_TYPE}}</div>
+  </div>
+
+  <div class="body">
+    <div class="eyebrow">02 - Personal Spatial Prescription</div>
+    <div class="section-title">Your Room Diagnosis<br><em>{{PRESCRIPTION_HEADLINE}}</em></div>
+
+    <div class="prescription-grid">
+      {{PRESCRIPTION_CARDS_HTML}}
+    </div>
+
+    <div class="eyebrow" style="margin-top: 15px; margin-bottom: 8px;">First 7 Days</div>
+    <div class="seven-day-plan">
+      {{SEVEN_DAY_PLAN_HTML}}
+    </div>
+    <!-- API/render prompt intentionally kept in the pipeline, not printed in the customer PDF. -->
+  </div>
+
+  <div class="pg-ftr">
+    <div class="pg-ftr-l">Persona Layouts Spatial Dossier</div>
+    <div class="pg-ftr-r">02 - Personal Prescription</div>
+  </div>
+</div>
+
+
+<!-- PAGE 3 - DESIGN HIERARCHY (Type B)
+══════════════════════════════════ -->
+<div class="page type-b">
+  <div class="pg-hdr">
+    <div class="pg-hdr-brand">PersonaLayouts</div>
+    <div class="pg-hdr-right">{{VARIANT_NAME}} | Design Hierarchy</div>
+  </div>
+
+  <div class="body">
+    <div class="eyebrow">03 - Spatial Order</div>
+    <div class="section-title">Layout Rules<br><em>Six principles of design hierarchy</em></div>
+    
+    <div class="rule-list">
+      {{STYLE_HIERARCHY_HTML}}
+    </div>
+    {{HIERARCHY_VISUAL_HTML}}
+  </div>
+
+  <div class="pg-ftr">
+    <div class="pg-ftr-l">Persona Layouts Spatial Dossier</div>
+    <div class="pg-ftr-r">03 - Design Hierarchy</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE 4 - SPATIAL STRESS MAP (Type A)
+══════════════════════════════════ -->
+<div class="page type-a">
+  <div class="pg-hdr">
+    <div class="pg-hdr-brand">PersonaLayouts</div>
+    <div class="pg-hdr-right">{{VARIANT_NAME}} | Stress Coordinates</div>
+  </div>
+
+  <div class="body">
+    <div class="eyebrow">04 - Stress Map</div>
+    <div class="section-title">Before Restructuring<br><em>Spatial friction coordinates</em></div>
+
+    <div class="plan-wrap" style="height: 280px; border-color: rgba(239, 83, 80, 0.2);">
+      <div class="plan-hdr-bar" style="background: #140d0d; border-color: rgba(239, 83, 80, 0.2);">
+        <div class="plan-hdr-label" style="color: #ef5350;">Stress Mapping - {{SPACE_AREA}}</div>
+        <div class="plan-hdr-meta" style="color: rgba(239, 83, 80, 0.6);">Friction Coordinates Overlaid</div>
+      </div>
+      
+      <!-- Underneath: Inverted Revit Base Drawing -->
+      <div class="blueprint-base">
+        {{BASE_PLAN_IMAGE_HTML}}
+      </div>
+      
+      <!-- On Top: Sharp Red Vector Overlay -->
+      <div class="overlay-vectors">
+        {{BEFORE_SVG_OVERLAY}}
+      </div>
+    </div>
+
+    <div class="diag-grid">
+      <div class="diag-card accent">
+        <div class="dc-label">Spatial Tension</div>
+        <div class="dc-val">{{SPATIAL_TENSION}}</div>
+      </div>
+      <div class="diag-card accent">
+        <div class="dc-label">Lifestyle</div>
+        <div class="dc-val">{{LIFESTYLE_STRESS}}</div>
+      </div>
+    </div>
+
+    <div class="brutal-box">
+      <div class="brutal-label">Brutal Spatial Observation</div>
+      <div class="brutal-text">"{{BRUTAL_OBSERVATION}}"</div>
+    </div>
+
+    <div class="eyebrow" style="margin-bottom:8px; margin-top: 4px;">Friction Indicators</div>
+    {{STRESS_ROWS_HTML}}
+  </div>
+
+  <div class="pg-ftr">
+    <div class="pg-ftr-l">Persona Layouts Spatial Dossier</div>
+    <div class="pg-ftr-r" style="color: #ef5350;">04 - Spatial Stress Map</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE 5 - CLEARANCE BLUEPRINT (Type C)
+══════════════════════════════════ -->
+<div class="page type-c">
+  <div class="pg-hdr">
+    <div class="pg-hdr-brand">PersonaLayouts</div>
+    <div class="pg-hdr-right">{{VARIANT_NAME}} | Clearance Drawing</div>
+  </div>
+
+  <div class="body">
+    <div class="eyebrow">05 - Clearance Blueprint</div>
+    <div class="section-title">After Restructuring<br><em>Corrective blueprint & clearances</em></div>
+
+    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin: 12px 0;">
+      <!-- 2D Plan with vectors -->
+      <div class="plan-wrap" style="height: 200px; margin: 0; position: relative;">
+        <div class="plan-hdr-bar">
+          <div class="plan-hdr-label">Corrected Blueprint - {{SPACE_AREA}}</div>
+        </div>
+        <div class="blueprint-base" style="top: 24px;">
+          {{BLUEPRINT_IMAGE_HTML}}
+        </div>
+        <div class="overlay-vectors" style="top: 24px;">
+          {{AFTER_SVG_OVERLAY}}
+        </div>
+      </div>
+      
+      <!-- 3D Isometric View -->
+      <div class="plan-wrap" style="height: 200px; margin: 0; position: relative;">
+        <div class="plan-hdr-bar">
+          <div class="plan-hdr-label">Isometric Room Shell</div>
+        </div>
+        <div class="blueprint-base" style="top: 24px;">
+          {{ISOMETRIC_IMAGE_HTML}}
+        </div>
+      </div>
+    </div>
+
+    <div style="background: var(--paper-b); border: 1px solid var(--rule); padding: 12px; border-radius: 2px; margin-top: 6px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 7.5pt; color: var(--accent-soft); text-transform: uppercase; font-weight: bold; margin-bottom: 6px;">
+        {{CLEARANCES_TITLE}}
+      </div>
+      <table border="0" cellpadding="0" cellspacing="0" class="standards-table">
+        <thead>
+          <tr>
+            <th style="width: 35%;">Clearance Target</th>
+            <th style="width: 20%;">Neufert Min.</th>
+            <th style="width: 55%;">What it means in this room</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{CLEARANCES_TABLE_HTML}}
+        </tbody>
+      </table>
+    </div>
+
+    <div style="border: 1px dashed var(--accent-soft); padding: 10px 14px; border-radius: 2px; margin-top: 10px; background: rgba(165, 106, 67, 0.02);">
+      <div style="font-family: 'DM Mono', monospace; font-size: 7.5pt; color: var(--accent-soft); text-transform: uppercase; font-weight: bold; margin-bottom: 4px;">
+        First 3 Priority Actions
+      </div>
+      <ul style="font-size: 8pt; color: var(--mid); padding-left: 14px; line-height: 1.45; margin: 0;">
+        {{PRIORITY_ACTIONS_HTML}}
+      </ul>
+    </div>
+  </div>
+
+  <div class="pg-ftr">
+    <div class="pg-ftr-l">Persona Layouts Spatial Dossier</div>
+    <div class="pg-ftr-r">05 - Clearance Blueprint</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE 6 - FUNCTIONAL ZONING (Type B)
+══════════════════════════════════ -->
+<div class="page type-b">
+  <div class="pg-hdr">
+    <div class="pg-hdr-brand">PersonaLayouts</div>
+    <div class="pg-hdr-right">{{VARIANT_NAME}} | Functional Zoning</div>
+  </div>
+
+  <div class="body">
+    <div class="eyebrow">06 - Spatial Calibrations</div>
+    <div class="section-title">Functional Zoning<br><em>Three zones calibrated to the diagnosed room</em></div>
+    
+    <div class="zoning-list">
+      {{FUNCTIONAL_ZONING_HTML}}
+    </div>
+    {{ZONING_DIAGRAM_HTML}}
+  </div>
+
+  <div class="pg-ftr">
+    <div class="pg-ftr-l">Persona Layouts Spatial Dossier</div>
+    <div class="pg-ftr-r">06 - Functional Zoning</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE 7 - PROCUREMENT LIST (Type B)
+══════════════════════════════════ -->
+<div class="page type-b">
+  <div class="pg-hdr">
+    <div class="pg-hdr-brand">PersonaLayouts</div>
+    <div class="pg-hdr-right">{{VARIANT_NAME}} | Curation Ledger</div>
+  </div>
+
+  <div class="body">
+    <div class="eyebrow">07 - Equipment Checklist</div>
+    <div class="section-title">Procurement List<br><em>Layout correction tools & elements</em></div>
+
+    <p style="font-size: 8.5pt; color: var(--mid); line-height: 1.5; margin-bottom: 12px;">
+      Selected to resolve the diagnosed friction in the order the 7-day sequence needs them. Nothing here is decorative.
+    </p>
+
+    <div class="product-list">
+      {{PROCUREMENT_TABLE_HTML}}
+    </div>
+    
+    <div style="margin-top: 16px; font-size: 7.5pt; color: var(--mid); font-style: italic; text-align: center;">
+      * Tools contain affiliate tracking links. Purchasing directly supports Yorukoglu Architecture.
+    </div>
+  </div>
+
+  <div class="pg-ftr">
+    <div class="pg-ftr-l">Persona Layouts Spatial Dossier</div>
+    <div class="pg-ftr-r">07 - Procurement List</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE 8 - SPECIFICATIONS (Type B)
+══════════════════════════════════ -->
+<div class="page type-b">
+  <div class="pg-hdr">
+    <div class="pg-hdr-brand">PersonaLayouts</div>
+    <div class="pg-hdr-right">{{VARIANT_NAME}} | Technical Specs</div>
+  </div>
+
+  <div class="body">
+    <div class="eyebrow">08 - Material Specs</div>
+    <div class="section-title">Materiality & Lighting<br><em>Technical surface & illumination standards</em></div>
+
+    <table class="specs-table">
+      <thead>
+        <tr>
+          <th style="width: 25%;">Category</th>
+          <th style="width: 75%;">Specification Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="specs-label">Lighting Strategy</td>
+          <td class="specs-val">{{DETAIL_LIGHTING}}</td>
+        </tr>
+        <tr>
+          <td class="specs-label">Spatial Geometry</td>
+          <td class="specs-val">{{DETAIL_GEOMETRY}}</td>
+        </tr>
+        <tr>
+          <td class="specs-label">Zonal Integration</td>
+          <td class="specs-val">{{DETAIL_DINING}}</td>
+        </tr>
+        <tr>
+          <td class="specs-label">Concealment & Storage</td>
+          <td class="specs-val">{{DETAIL_STORAGE}}</td>
+        </tr>
+        <tr>
+          <td class="specs-label">Materiality & Durability</td>
+          <td class="specs-val">{{DETAIL_DURABILITY}}</td>
+        </tr>
+      </tbody>
+    </table>
+    {{MATERIAL_PALETTE_HTML}}
+  </div>
+
+  <div class="pg-ftr">
+    <div class="pg-ftr-l">Persona Layouts Spatial Dossier</div>
+    <div class="pg-ftr-r">08 - Technical Specifications</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE 9 - BOTANICAL SANCTUARY (Type C)
+══════════════════════════════════ -->
+<div class="page type-c">
+  <div class="pg-hdr">
+    <div class="pg-hdr-brand">PersonaLayouts</div>
+    <div class="pg-hdr-right">{{VARIANT_NAME}} | Botanical Sanctuary</div>
+  </div>
+
+  <div class="body">
+    <div class="eyebrow">09 - Botanical Sanctuary</div>
+    <div class="section-title">Natural Softening<br><em>Acoustic and volumetric plant balancing</em></div>
+
+    <div class="plant-grid">
+      {{PLANTS_LIST_HTML}}
+    </div>
+    {{PLANT_PLACEMENT_HTML}}
+  </div>
+
+  <div class="pg-ftr">
+    <div class="pg-ftr-l">Persona Layouts Spatial Dossier</div>
+    <div class="pg-ftr-r">09 - Botanical Sanctuary</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE 10 - RENOVATION PATHWAYS (Type A)
+══════════════════════════════════ -->
+<div class="page type-a">
+  <div class="pg-hdr">
+    <div class="pg-hdr-brand">PersonaLayouts</div>
+    <div class="pg-hdr-right">{{VARIANT_NAME}} | Renovation Pathways</div>
+  </div>
+
+  <div class="body" style="padding-bottom: 60px;">
+    <div class="eyebrow">10 - Renovation Pathways</div>
+    <div class="section-title">Execution Strategy<br><em>Cosmetic vs. Structural room restructuring</em></div>
+
+    <div class="pathway-grid">
+      {{RENOVATION_PATHWAYS_HTML}}
+    </div>
+
+    <div style="border-top: 1px solid var(--rule); padding-top: 14px; margin-top: 16px; font-size: 8pt; line-height: 1.55; color: var(--mid);">
+      {{BESPOKE_UPGRADE_HTML}}
+    </div>
+  </div>
+
+  <div class="pg-ftr">
+    <div class="pg-ftr-l">Persona Layouts Spatial Dossier</div>
+    <div class="pg-ftr-r">10 - Renovation Strategy</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE 11 - FURNITURE RECOMMENDATION (Type B)
+══════════════════════════════════ -->
+<div class="page type-b">
+  <div class="pg-hdr">
+    <div class="pg-hdr-brand">PersonaLayouts</div>
+    <div class="pg-hdr-right">{{VARIANT_NAME}} | Furniture Recommendation</div>
+  </div>
+
+  <div class="body">
+    <div class="eyebrow">11 - Anchor Piece</div>
+    <div class="section-title">Furniture Recommendation<br><em>The one piece that carries the whole layout</em></div>
+
+    <p style="font-size: 8.5pt; color: var(--mid); line-height: 1.5; margin-bottom: 4px;">
+      Every layout in this dossier is organized around a single anchor piece. Buy this correctly and the rest of the room follows; buy it wrong and no amount of styling will fix the layout.
+    </p>
+
+    {{FURNITURE_RECOMMENDATION_HTML}}
+    {{FURNITURE_CONTEXT_HTML}}
+  </div>
+
+  <div class="pg-ftr">
+    <div class="pg-ftr-l">Persona Layouts Spatial Dossier</div>
+    <div class="pg-ftr-r">11 - Furniture Recommendation</div>
+  </div>
+</div>
+
+</body>
+</html>

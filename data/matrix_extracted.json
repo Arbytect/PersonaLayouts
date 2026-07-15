@@ -1,0 +1,1492 @@
+{
+  "sovereign": {
+    "bedroom": {
+      "challenge": "Uyku sinyali kirlenmiş: çalışma masası, ekranlar, açık raflar görsel gürültü yaratıyor. Sovereign için yatak odası nihayet 'off' noktası olmalı.",
+      "variants": {
+        "clinical": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Low-profile platform yatak çerçevesi (meşe / siyah)",
+              "why": "Oda tavanını yüksek gösterir, görsel kütleyi azaltır — Sovereign'in 'boş alan = otorite' mantığıyla örtüşür",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Push-to-open kapalı komodin (2 adet, simetrik)",
+              "why": "Kol aksesuarı, şarj kablosu, kitap — hiçbiri görünmez. Her yüzey tek işlevli.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Blackout-linen karanlıklatma perdesi",
+              "why": "Işık kontrolü = bilişsel egemenlik. Sabah baskısı yok.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P4",
+              "name": "Tek duvar apliki (2200K, dimmer)",
+              "why": "Tavan aydınlatması elimine edilir. Komodin yüzeyi temiz kalır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Açık raf / dekoratif obje",
+              "why": "Her görünen nesne bir mikro-karar. Kaldır.",
+              "tag": "REMOVE"
+            },
+            {
+              "num": "X2",
+              "name": "TV / ekran",
+              "why": "Görsel odak noktası yatak ile rakip olmamalı.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Görünür nesne azaltma: min %60",
+              "why": "Tüm açık yüzeyler boşaltılır. Yalnızca 1–2 nesne kalır.",
+              "tag": "P02"
+            },
+            {
+              "num": "02",
+              "name": "Simetrik yerleşim zorunluluğu",
+              "why": "İki komodin, iki apliki — asimetri görsel egemenliği bozar.",
+              "tag": "P01"
+            },
+            {
+              "num": "03",
+              "name": "Çalışma alanı sıfır tolerans",
+              "why": "Yatak odasında masa varsa kapalı dolap yüzeyine dönüştürülmeli.",
+              "tag": "move"
+            }
+          ]
+        },
+        "precision": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Entegre başlıklı döşemeli yatak (ölçüye göre)",
+              "why": "Başlık = duvar yüzeyi olarak okur. Ayrı başucu rafına gerek kalmaz.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Duvar gömme gardırop (zemin-tavan, kapaksız görünüm)",
+              "why": "Precision: her milimetre hesaplı. Sürgülü kapak oda genişliğini artırır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Keten nevresim (nötr, düz renk)",
+              "why": "Desen = görsel gürültü. Tek renk yüzey hiyerarşisi sağlar.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Çok renkli dekoratif yastık seti",
+              "why": "Precision varyantı için renk kaosuna sıfır tolerans.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Ölçü-temelli yerleşim (cm hassasiyeti)",
+              "why": "Komodin-duvar: maks 5cm. Yatak-geçiş: min 80cm her iki yanda.",
+              "tag": "P02"
+            },
+            {
+              "num": "02",
+              "name": "Malzeme paleti maks 3 ton",
+              "why": "Ahşap + linen + mat siyah. Dördüncü malzeme girilmez.",
+              "tag": "P03"
+            }
+          ]
+        }
+      }
+    },
+    "living_room": {
+      "challenge": "Salon çok fazla rol üstleniyor: dinlenme, çalışma, sosyal, eğlence. Sovereign için görsel alan üzerindeki kontrol kaybolmamalı.",
+      "variants": {
+        "clinical": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Tek dominant kanepe (L-form değil, komuta pozisyonu)",
+              "why": "Kapıya bakan yerleşim — P01 Command Sightline zorunluluğu.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Kapalı medya ünitesi / TV konsolü",
+              "why": "Kablolar, kutular, depolama — hiçbiri görünmez.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Tek büyük halı (mobilyayı birleştiren)",
+              "why": "Zonlama net. Halı olmadan alan parçalanır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P4",
+              "name": "Gömme / duvar lambası (tavan spot değil)",
+              "why": "Tavan spot ışığı yüzleri flatten eder, kontrol hissi azalır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Açık raflardaki küçük dekoratif objeler",
+              "why": "%20 üstü görünür yüzey = bilişsel yük.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Kapıya bakan birincil oturma noktası",
+              "why": "180° görsel alan — komuta hissi sağlanır.",
+              "tag": "P01"
+            },
+            {
+              "num": "02",
+              "name": "Tek odak noktası kuralı",
+              "why": "Ya TV ya tablo ya bitki. Birden fazla rekabet edemez.",
+              "tag": "P02"
+            }
+          ]
+        },
+        "precision": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Modüler, keskin hatlı kanepe",
+              "why": "Ölçülebilir geometri, düz çizgiler.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Gizli kablo kanallı çalışma nişi",
+              "why": "Teknoloji var ama görünmez.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Dağınık yastıklar ve örtüler",
+              "why": "Düzen bir karardır, alışkanlık değil.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Milimetrik Hizalama",
+              "why": "Tüm mobilyalar duvarlarla ve birbirleriyle paralel.",
+              "tag": "P03"
+            }
+          ]
+        }
+      }
+    },
+    "studio": {
+      "challenge": "Tek odada her şey: çalışma, uyku, yaşam. Sovereign için en kritik senaryo — zon ayrışması mimari olmadan sağlanmalı.",
+      "variants": {
+        "clinical": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Raf bölücü / açık panel room divider",
+              "why": "Mimari duvar olmadan zon yaratır. Sovereign 'görünür kontrol' ister.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Murphy yatak (duvar entegre)",
+              "why": "Gündüz uyku zonu yok. Net çalışma alanı kalır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Ayarlanabilir masa-raf kombinasyonu",
+              "why": "P02 Surface Hierarchy: birincil masa tek işlevli.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Çok amaçlı 'her şey bir arada' mobilya",
+              "why": "Sovereign için belirsizlik = kontrol kaybı. Her mobilyanın tek rolü olmalı.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Zon Ayrışması",
+              "why": "Uyku ve Yaşam alanları kesin çizgilerle ayrılır.",
+              "tag": "P02"
+            }
+          ]
+        },
+        "precision": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Özel üretim gömme dolap sistemleri",
+              "why": "Tüm stüdyo duvarları işlevsel depolamaya dönüşür.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Katlanır çalışma masası (duvara sıfır)",
+              "why": "Kullanılmadığında tamamen yok olur.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Görsel Kesintisizlik",
+              "why": "Açık renk tonları ve kulpsuz dolaplarla tek parça görünüm.",
+              "tag": "P03"
+            }
+          ]
+        }
+      }
+    },
+    "open_plan": {
+      "challenge": "Mutfak, yemek ve oturma alanları birbirine girer. Görsel sınırların olmaması Sovereign için düzensizlik hissi yaratır.",
+      "variants": {
+        "clinical": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Büyük ada tezgah (ayırıcı kütle)",
+              "why": "Mutfak ile yaşam alanını kesin bir çizgiyle böler.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Tavandan asılı davlumbaz (mimari sınır)",
+              "why": "Dikeyde bir sınır belirler.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Zemin Tanımlaması",
+              "why": "Farklı zemin kaplamaları veya büyük halılarla alanları belirginleştirme.",
+              "tag": "P02"
+            }
+          ]
+        },
+        "precision": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Mat siyah veya beyaz tek parça mutfak dolapları",
+              "why": "Görsel gürültüyü engeller, mimari bir kutu gibi durur.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Gizli aydınlatma hatları",
+              "why": "Alanları ışıkla zonlama.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Kesin Geometrik Hizalama",
+              "why": "Mutfak adası, yemek masası ve kanepe aynı aks üzerinde hizalanır.",
+              "tag": "P03"
+            }
+          ]
+        }
+      }
+    },
+    "kitchen": {
+      "challenge": "Tezgah üstü kalabalığı ve açık depolama Sovereign'in kontrol hissini yok eder.",
+      "variants": {
+        "clinical": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Tüm cihazların ankastre olması",
+              "why": "Buzdolabı, bulaşık makinesi görünmez.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Tezgah üstü 'Appliance Garage' (cihaz garajı)",
+              "why": "Kahve makinesi, tost makinesi kapalı kapılar ardında.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Açık baharatlıklar ve askılı kepçeler",
+              "why": "Kesinlikle yasak.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Boş Tezgah Kuralı",
+              "why": "Kullanım anı dışında tezgah üzerinde hiçbir şey kalamaz.",
+              "tag": "P02"
+            }
+          ]
+        },
+        "precision": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Çekmece içi özel organizatörler (lazer kesim)",
+              "why": "Her eşyanın milimetrik bir yeri vardır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "İnce profil (12mm) tezgah",
+              "why": "Keskinlik ve hassasiyet hissi.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Kusursuz Entegrasyon",
+              "why": "Evye ve ocak tezgaha sıfır olmalı.",
+              "tag": "P03"
+            }
+          ]
+        }
+      }
+    },
+    "balcony": {
+      "challenge": "Balkon genellikle depolama alanı olarak kullanılır. Sovereign için burası bir kontrol gözlem noktasıdır.",
+      "variants": {
+        "clinical": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Minimal şezlong veya tekli tasarım koltuk",
+              "why": "Sadece 1 adet, net bir odak noktası.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Cam korkuluk (kesintisiz manzara)",
+              "why": "Dış dünyaya hakimiyet.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Kuruyan çamaşırlar, süpürgeler",
+              "why": "Balkonda depolama yasaktır.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Sightline Command",
+              "why": "Oturma pozisyonu manzaraya ve balkon girişine hakim olmalı.",
+              "tag": "P01"
+            }
+          ]
+        },
+        "precision": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Geometrik saksılar içinde tek tip bitki (ör: bonsai veya bambu)",
+              "why": "Doğa bile kontrol altında ve ölçülü.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Zeminde ahşap deck karolar (kusursuz dizilim)",
+              "why": "Çizgisel düzen.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Renk Disiplini",
+              "why": "Dış mekanda da içerideki 3 renk kuralı geçerli.",
+              "tag": "P03"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "sage": {
+    "bedroom": {
+      "challenge": "Sage için yatak odası tam anlamıyla duyusal tanklama bölgesi. Işık, ses, koku — hepsinin sıfır toleransla kontrol edildiği alan.",
+      "variants": {
+        "hermit": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Tam karanlıklatma perde (blackout + sheer katmanlı)",
+              "why": "Sage gündüz uyuyor olabilir. Tam karanlık şart.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Organik keten/yün nevresim (hiposensitif)",
+              "why": "Sentetik materyal duyusal aktivasyona yol açar.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Kapı altı yalıtım bandı",
+              "why": "Dışarıdan ses sızıntısı sıfır tolerans.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Ekran / telefon şarj noktası yatak yanında",
+              "why": "Mavi ışık ve bildirim sesi — duyusal kirlilik.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Duyusal İzolasyon",
+              "why": "Tüm dış uyaranların kesilmesi.",
+              "tag": "P07"
+            }
+          ]
+        },
+        "scholar": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Yatak ucu okuma pufu/bench'i",
+              "why": "Yatmadan önce odaklanarak okuma yapmak için.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Yönlendirilmiş okuma lambası (Dar açılı spot)",
+              "why": "Sadece kitabı aydınlatır, odayı değil.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Uyku ve Odak Ayrımı",
+              "why": "Yatak sadece uyku içindir, okuma yatak dışında yapılır.",
+              "tag": "P09"
+            }
+          ]
+        }
+      }
+    },
+    "living_room": {
+      "challenge": "Salon Sage için 'büyük sessiz stüdyo' işlevi görür. Misafir beklentisi yok — derin çalışma ve izolasyon öncelikli.",
+      "variants": {
+        "hermit": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Ağır dokuma halı (3×4 m minimum, yün)",
+              "why": "Akustik sönümleme birincil yüzeyden başlar.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Döşemeli kanepe (kadife / yüksek sırt)",
+              "why": "Yüksek sırt = fiziksel çekilme. 'Dünya dışarıda' hissi.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Linen panel perdeler",
+              "why": "Sensory sovereignty: ne zaman ışık gireceğini Sage belirler.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P4",
+              "name": "Akustik panel",
+              "why": "Birincil ses yansıma duvarına uygulanır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Açık plan sosyal düzenleme",
+              "why": "Hermit misafir için salon optimize etmez.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Akustik tabaka haritası",
+              "why": "Zemin → halı. Duvar → panel. Tavan → tekstil.",
+              "tag": "P06"
+            }
+          ]
+        },
+        "scholar": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "L-şekli köşe çalışma istasyonu",
+              "why": "Scholar salonunu çalışma odası olarak kullanır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Kapasiteli kitaplık sistemi (duvar boyu)",
+              "why": "Referans koleksiyonu erişilebilir olmalı.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Mimari masa lambası (ayarlanabilir kol)",
+              "why": "Görev aydınlatması sadece çalışma yüzeyini kapsar.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Çalışma zonunu salondan soyutla",
+              "why": "Raf bölücü veya halı ile çalışma adası oluştur.",
+              "tag": "P09"
+            }
+          ]
+        }
+      }
+    },
+    "studio": {
+      "challenge": "Tek odada derin odaklanma sağlamak. Çevresel uyaranlar (mutfak, yatak) konsantrasyonu bozar.",
+      "variants": {
+        "hermit": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Yatağı tamamen çevreleyen kalın perdeler",
+              "why": "Uyku alanını bir kozaya çevirir.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Ağır ses yutucu separatörler",
+              "why": "Fiziksel ve akustik bariyer.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Görsel Küçültme",
+              "why": "Alanı olduğundan daha küçük ve sarıp sarmalayan bir hale getirmek.",
+              "tag": "P07"
+            }
+          ]
+        },
+        "scholar": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Büyük bir kütüphane masası (Odanın merkezinde)",
+              "why": "Tüm hayat çalışma masası etrafında döner.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Yatağı gizleyen kütüphane modülü",
+              "why": "Kitaplar duvar oluşturur.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Odak Merkezi",
+              "why": "Çalışma masası dışındaki her şey ikincildir.",
+              "tag": "P09"
+            }
+          ]
+        }
+      }
+    },
+    "open_plan": {
+      "challenge": "Açık plan Sage için kabustur. Akustik kontrol zordur ve dış etkenler her yerdedir.",
+      "variants": {
+        "hermit": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Odayı bölen devasa ahşap / akustik paneller",
+              "why": "Planı açık olmaktan çıkarır, odalara böler.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Zemin katmanları",
+              "why": "Üst üste serilmiş kalın halılar.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Anti-Open Plan",
+              "why": "Fiziksel sınırları yeniden inşa etmek.",
+              "tag": "P06"
+            }
+          ]
+        },
+        "scholar": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Kitaplıklardan oluşan labirent benzeri yerleşim",
+              "why": "Açık alanı bilgi depolama alanına dönüştürür.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Her bölüm için ayrı lokal aydınlatma",
+              "why": "Genel aydınlatma kullanılmaz, sadece bulunulan zon aydınlatılır.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Işıkla Zonlama",
+              "why": "Işık ve karanlık kullanılarak alanlar psikolojik olarak ayrılır.",
+              "tag": "P08"
+            }
+          ]
+        }
+      }
+    },
+    "kitchen": {
+      "challenge": "Kokular ve sesler (buzdolabı uğultusu) duyusal rahatsızlık verir.",
+      "variants": {
+        "hermit": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Ultra sessiz beyaz eşyalar (A+++ akustik)",
+              "why": "Motor sesi sıfıra indirgenmeli.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Güçlü ama sessiz havalandırma",
+              "why": "Yemek kokularının yaşam alanına sızmasını engeller.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Duyusal Nötralizasyon",
+              "why": "Mutfak kokusuz ve sessiz olmalıdır.",
+              "tag": "P07"
+            }
+          ]
+        },
+        "scholar": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Çay/Kahve ritüel istasyonu",
+              "why": "Zihni tazelemek için özel, odaklanmış bir alan.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Koyu renk, mat dolaplar (ormen yeşili/ceviz)",
+              "why": "Gözü yormayan renk paleti.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Ritüel Alanı",
+              "why": "Mutfak, zihinsel molalar için bir kaçış noktasıdır.",
+              "tag": "P09"
+            }
+          ]
+        }
+      }
+    },
+    "balcony": {
+      "challenge": "Dışarıdaki kaos, gürültü ve komşuların bakışları balkonu kullanılamaz hale getirir.",
+      "variants": {
+        "hermit": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Sarmaşıklar veya bambu çitlerle tamamen kapalı sınırlar",
+              "why": "Dışarıdan görünümü tamamen engeller.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Küçük, yere yakın bir meditasyon minderi",
+              "why": "Dünyadan kopuş noktası.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Görsel Kalkan",
+              "why": "Gökyüzü hariç dış dünyayla görsel temas kesilir.",
+              "tag": "P07"
+            }
+          ]
+        },
+        "scholar": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Rahat bir okuma koltuğu ve küçük yan sehpa",
+              "why": "Sadece bir kitap ve kahve için.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Rüzgar çanı veya su sesi yapan ufak bir çeşme",
+              "why": "Dış gürültüyü maskeleyen 'white noise'.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Akustik Maskeleme",
+              "why": "Dışarıdaki kaosu, kontrollü bir sesle örtmek.",
+              "tag": "P06"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "alchemist": {
+    "bedroom": {
+      "challenge": "Uyku alanı sabit kalmak zorunda olduğu için Alchemist'in değişim ihtiyacı burada tıkanır.",
+      "variants": {
+        "fluid": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Gündüz kanepesi / Daybed",
+              "why": "Gündüz oturma alanı, gece yatak.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Modüler tekerlekli komodinler",
+              "why": "İhtiyaca göre yatağın farklı köşelerine taşınabilir.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Çoklu Durum",
+              "why": "Yatak odası gün içinde şekil değiştirebilmelidir.",
+              "tag": "P18"
+            }
+          ]
+        },
+        "chaotic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Yatak altı devasa depolama sepetleri",
+              "why": "Kaotik eşyaların hızla saklanması için.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Başucunda 'Fikir Tahtası' (Mantar pano)",
+              "why": "Gece gelen fikirleri not almak için.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Üretken Dağınıklık",
+              "why": "Yatak odasında bile fikirlerin taşmasına izin ver.",
+              "tag": "P19"
+            }
+          ]
+        }
+      }
+    },
+    "living_room": {
+      "challenge": "Alchemist salonu saatlik dönüştürür: sabah çalışma, öğlen stüdyo, akşam sosyal hub.",
+      "variants": {
+        "fluid": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Ottoman / puf (oturma + depolama + yüzey)",
+              "why": "Tek mobilya, üç işlev.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Katlanabilir yemek masası (uzatılabilir)",
+              "why": "2→4→6 kişilik değişim.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Tekerlekli bar arabası",
+              "why": "Sosyal moda geçiş hızı.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Sıvı Akış",
+              "why": "Mobilyalar dakikalar içinde yeniden yapılandırılabilmelidir.",
+              "tag": "P12"
+            }
+          ]
+        },
+        "chaotic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Salonun ortasında devasa bir çalışma masası/atölye tezgahı",
+              "why": "Yaşam ve üretimin içiçe geçmesi.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Endüstriyel açık raflar (Sanat malzemeleri ve kitaplar karışık)",
+              "why": "Malzemeler dekorasyonun bir parçasıdır.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Kontrollü Taşma",
+              "why": "Projelerin salona yayılmasına izin verilir ama sınırlar konur.",
+              "tag": "P22"
+            }
+          ]
+        }
+      }
+    },
+    "studio": {
+      "challenge": "Sabit düzen Alchemist'in doğal ritmine karşı savaşır.",
+      "variants": {
+        "fluid": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Tekerlekli / katlanabilir çalışma masası",
+              "why": "Masa hareket eder, zonlar değişir.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Modüler kanepe (ayrılabilir parçalar)",
+              "why": "Sosyal mod veya dinlenme moduna uyum.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Sabit, duvara monte ağır mobilya",
+              "why": "Dönüşümü engelleyen her şey engel.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Dönüşüm Platformu",
+              "why": "Mekan günde 3 kez değişebilir.",
+              "tag": "P12"
+            }
+          ]
+        },
+        "chaotic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Büyük pegboard / duvar ızgarası",
+              "why": "Kaos organize edilir: araçlar görünür ama sınırlı.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Overflow kutusu / kapaklı sepet (etiketli)",
+              "why": "Projeler taşar, konteyner olmadan alan çöker.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Zemin örtüsü / paspas",
+              "why": "Malzeme çalışması zemini kirletmemeli.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Kaos Konteyneri",
+              "why": "Yaratıcı yoğunluk, fiziksel çöküşe neden olmadan kapsanır.",
+              "tag": "P14"
+            }
+          ]
+        }
+      }
+    },
+    "open_plan": {
+      "challenge": "Alchemist için büyük boşluklar bir oyun alanıdır, ancak yanlış kurgu sürekli dağınıklık yaratır.",
+      "variants": {
+        "fluid": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Hareketli perdeler / paravanlar (Raylı sistem)",
+              "why": "Büyük mekanı istendiğinde böler, istendiğinde birleştirir.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Çok amaçlı mobil mutfak adası",
+              "why": "Yemek yapmak, çalışmak veya sosyalleşmek için tekerlekli modül.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Esnek Sınırlar",
+              "why": "Zonlar geçicidir ve duruma göre esner.",
+              "tag": "P13"
+            }
+          ]
+        },
+        "chaotic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Açık planın farklı köşelerinde 'proje istasyonları'",
+              "why": "Bir köşede resim, bir köşede müzik aletleri.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Tavandan sarkan askı sistemleri (Bisiklet, projeler için)",
+              "why": "Dikey boşluğu kaotik şekilde kullanmak.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Eşzamanlı Üretim",
+              "why": "Aynı anda birden fazla projenin açık planda yaşamasına izin ver.",
+              "tag": "P22"
+            }
+          ]
+        }
+      }
+    },
+    "kitchen": {
+      "challenge": "Mutfak yaratıcı bir laboratuvardır, standart dolaplar Alchemist'i kısıtlar.",
+      "variants": {
+        "fluid": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Paslanmaz çelik modüler tezgahlar (Restoran tarzı)",
+              "why": "Kolay temizlenir, yeri değiştirilebilir.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Açık askı sistemleri (Tava ve tencereler için)",
+              "why": "Araçlara hızlı erişim.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Ergonomik Akış",
+              "why": "Mutfak bir şefin istasyonu gibi hızlı uyum sağlamalıdır.",
+              "tag": "P12"
+            }
+          ]
+        },
+        "chaotic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Açık kavanoz rafları, baharat duvarı",
+              "why": "Malzemeler görsel bir ilham kaynağıdır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Farklı sandalyelerin kombinasyonundan oluşan yemek köşesi",
+              "why": "Uyumsuzluk içindeki uyum.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Görsel Stimülasyon",
+              "why": "Mutfak araçları yaratıcılığı tetikler.",
+              "tag": "P19"
+            }
+          ]
+        }
+      }
+    },
+    "balcony": {
+      "challenge": "Alchemist için balkon üçüncü mod alanıdır. Sabah meditasyon, dış çalışma, akşam sosyal.",
+      "variants": {
+        "fluid": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Katlanabilir bistro set (2 sandalye + masa)",
+              "why": "2 dakikada kurulur, 2 dakikada katlanır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Outdoor halı",
+              "why": "İç-dış geçişini netleştirir.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Üçüncü Mekan Dönüşümü",
+              "why": "Balkon ev içindeki tüm fonksiyonların alternatifi olabilir.",
+              "tag": "P18"
+            }
+          ]
+        },
+        "chaotic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Balkon bahçeciliği / dikey bostan",
+              "why": "Bitki, toprak, saksı karmaşası (kontrollü doğa).",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Hamak veya asma koltuk",
+              "why": "Standart dışı dinlenme pozisyonları.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Doğal Kaos",
+              "why": "Balkon doğanın eve taştığı, kontrolün gevşediği yerdir.",
+              "tag": "P14"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "weaver": {
+    "bedroom": {
+      "challenge": "İki kişi sıkış tıkış değil, kasıtlı yakınlık. Mekansal sıkışma Weaver için tasarım aracı.",
+      "variants": {
+        "intimate": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Queen yatak duvar köşesine tam dayalı",
+              "why": "3 taraf serbest, köşe sarıp sarmalar.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Katmanlı yumuşak tekstil",
+              "why": "Dokusal katman = yakınlık sinyali.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Duvara monte yüzen komodinler",
+              "why": "Zemin alanı korunur.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Büyük dekoratif ayna",
+              "why": "Alan yansıması konforu bozar.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Yatak köşe yerleşimi (L-duvar)",
+              "why": "İki duvar sırtı destekler.",
+              "tag": "P20"
+            },
+            {
+              "num": "02",
+              "name": "Sıcak ışık tonu zorunluluğu (maks 2700K)",
+              "why": "Amber ton şart.",
+              "tag": "P24"
+            }
+          ]
+        },
+        "dynamic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "King yatak (180×200)",
+              "why": "Büyük yatak konfor sinyali.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Oturma köşesi / butik koltuk (pencere kenarı)",
+              "why": "Sosyal temas kurar, odayı yaşanılır kılar.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Genişleme Alanı",
+              "why": "Oda sadece uyku için değil, iki kişinin zaman geçirmesi içindir.",
+              "tag": "P25"
+            }
+          ]
+        }
+      }
+    },
+    "living_room": {
+      "challenge": "Weaver salonunda sosyal modu aktive eder. İnsanlar birbirine dönük olmalıdır.",
+      "variants": {
+        "intimate": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Köşe kanepe (L-form, centripetal yerleşim)",
+              "why": "İki kişi birbirine dönerek oturur.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Büyük yuvarlak sehpa",
+              "why": "Keskin köşe yok, yakınlık geometrisi.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Büyük yumuşak halı",
+              "why": "Oturma alanını tek zonda toplar.",
+              "tag": "ADD"
+            },
+            {
+              "num": "X1",
+              "name": "Duvara dayalı kanepe düzeni",
+              "why": "Kimsenin sırtı kapıya dönük olmamalı.",
+              "tag": "REMOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Centripetal Yerleşim",
+              "why": "Merkeze çeken, içe dönük mobilya düzeni.",
+              "tag": "P20"
+            }
+          ]
+        },
+        "dynamic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Tekerlekli ek koltuk / puf (2 adet)",
+              "why": "Misafir gelince çıkar.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Bar arabası / drinks trolley",
+              "why": "Weaver ev sahibi olarak servis sunar.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Ses sistemi / hoparlör",
+              "why": "Müzik bağlantı aracıdır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "M1",
+              "name": "Sosyal mod → kanepe yeniden konumlandırma",
+              "why": "Misafirler çember oluşturur.",
+              "tag": "MOVE"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Orbital akış",
+              "why": "Kanepe yerleşimi 360° hareket sağlar. Kimse köşeye sıkışmaz.",
+              "tag": "P25"
+            }
+          ]
+        }
+      }
+    },
+    "studio": {
+      "challenge": "Tek odada hem mahremiyet (Intimate) hem de misafir ağırlama (Dynamic) yeteneği.",
+      "variants": {
+        "intimate": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Yarı geçirgen linen perdelerle ayrılmış yatak zonu",
+              "why": "Tam duvar değil, yumuşak bir sınır.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Derin ve geniş loveseat (ikili kanepe)",
+              "why": "İki kişinin yakın oturması için.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Yumuşak Sınırlar",
+              "why": "Zonlar arası geçişler keskin duvarlarla değil, kumaş ve ışıkla yapılır.",
+              "tag": "P24"
+            }
+          ]
+        },
+        "dynamic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Modüler köşe kanepe (Yatak fonksiyonlu)",
+              "why": "Misafir yatırmak veya çok kişiyi oturtmak için.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "İç içe geçen zigon sehpalar",
+              "why": "Gerektiğinde odaya dağıtılan yüzeyler.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Misafir Kapasitesi Artırımı",
+              "why": "Mevcut alan, mobilyaların açılmasıyla daha çok kişiyi ağırlar.",
+              "tag": "P25"
+            }
+          ]
+        }
+      }
+    },
+    "open_plan": {
+      "challenge": "Akış ve geçirgenlik sosyal bağlantıyı kolaylaştırır. Ama zonlama olmadan kaos çıkar.",
+      "variants": {
+        "intimate": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Yuvarlak yemek masası",
+              "why": "Herkes birbirini görür, sohbet eşittir.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Kanepe arkasına yerleştirilmiş konsol",
+              "why": "Alçak bir sınır, alanı daraltmadan böler.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Sohbet Geometrisi",
+              "why": "Yuvarlak veya kare masa, L kanepe: Amaç göz teması.",
+              "tag": "P20"
+            }
+          ]
+        },
+        "dynamic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Mutfak adası / bar tezgahı",
+              "why": "Pişirirken sohbeti kesmez.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Farklı halılar ile zon ayrışması",
+              "why": "Duvar yok, halı sınır koyar.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P3",
+              "name": "Bar yüksekliği sehpa",
+              "why": "4 kişi rahat oturur, iletişim kesilmez.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Mutfak-salon görsel bağlantısı",
+              "why": "Sırt mutfağa dönmez, iletişim sürekli akar.",
+              "tag": "P28"
+            }
+          ]
+        }
+      }
+    },
+    "kitchen": {
+      "challenge": "Weaver için mutfak bir çalışma alanı değil, sosyalleşmenin kalbidir.",
+      "variants": {
+        "intimate": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Mutfak içinde küçük bir kahvaltı köşesi (nook)",
+              "why": "İki kişinin baş başa kahve içmesi için sarıp sarmalayan alan.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Ahşap tezgahlar",
+              "why": "Soğuk mermer yerine sıcak, dokunsal malzeme.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Sıcaklık Hissi",
+              "why": "Mutfak steril bir laboratuvar gibi değil, bir yuva gibi hissettirmeli.",
+              "tag": "P24"
+            }
+          ]
+        },
+        "dynamic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Geniş mutfak adası ve etrafında konforlu bar tabureleri",
+              "why": "Yemek yapılırken misafirlerin mutfakta toplanması için.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Açık şaraplık / içecek istasyonu",
+              "why": "Misafirlerin kendi içeceklerini alabilmesi için erişilebilir alan.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Sosyal Pişirme",
+              "why": "Aşçı ve misafirler aynı hizada, aynı alandadır.",
+              "tag": "P25"
+            }
+          ]
+        }
+      }
+    },
+    "balcony": {
+      "challenge": "Balkon iki kişi için romantik bir kaçamak veya dostlar için küçük bir toplanma noktası olmalıdır.",
+      "variants": {
+        "intimate": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "Büyük, rahat bir daybed veya ikili dış mekan kanepesi",
+              "why": "Beraber uzanmak/oturmak için tek parça.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Fenerler, mumlar ve dize ışıklar (Fairy lights)",
+              "why": "Son derece loş ve romantik atmosfer.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Gece Atmosferi",
+              "why": "Işıklar çok kısık, mekan birbirine dönük kurgulanır.",
+              "tag": "P24"
+            }
+          ]
+        },
+        "dynamic": {
+          "products": [
+            {
+              "num": "P1",
+              "name": "U-şeklinde modüler sedir oturma grubu",
+              "why": "Balkonun etrafını sararak maksimum kişi kapasitesi.",
+              "tag": "ADD"
+            },
+            {
+              "num": "P2",
+              "name": "Ortada büyük bir ateş çukuru veya fener (Fire pit masası)",
+              "why": "İnsanları etrafında toplayacak bir merkez.",
+              "tag": "ADD"
+            }
+          ],
+          "protocols": [
+            {
+              "num": "01",
+              "name": "Ateş Etrafında Toplanma",
+              "why": "İnsanları bir çember şeklinde dışarıda bir araya getirmek.",
+              "tag": "P28"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

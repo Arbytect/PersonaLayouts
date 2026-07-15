@@ -1,0 +1,98 @@
+{
+  "sovereign_clinical": {
+    "palette": [
+      {"name": "Antrasit", "hex": "#1c2128"},
+      {"name": "Flat White", "hex": "#e8e6e0"},
+      {"name": "Deep Navy Accent", "hex": "#1c3a5c"}
+    ],
+    "primary_material": "Matte lacquer flat-front panels, zero visible hardware",
+    "secondary_material": "Honed travertine or polished concrete flooring",
+    "textile": "Tight-weave wool or bouclé in single solid tones, no pattern",
+    "metal_hardware": "Push-to-open mechanisms only — no visible pulls or knobs",
+    "avoid": ["Patterned textiles", "Open grain wood", "Warm brass accents", "Mixed metal finishes"]
+  },
+  "sovereign_precision": {
+    "palette": [
+      {"name": "Walnut (Ceviz)", "hex": "#3b2a20"},
+      {"name": "Graphite", "hex": "#2b2f36"},
+      {"name": "Steel Blue Accent", "hex": "#4a7aaa"}
+    ],
+    "primary_material": "Book-matched walnut veneer with visible grain symmetry",
+    "secondary_material": "Brushed stainless or matte black steel structural legs",
+    "textile": "Structured wool flannel, precise piping seams",
+    "metal_hardware": "Fine linear brushed-steel pulls, symmetrical placement only",
+    "avoid": ["Distressed finishes", "Rounded organic silhouettes", "Loose textile drape"]
+  },
+  "sage_hermit": {
+    "palette": [
+      {"name": "Moss Green", "hex": "#4a6f52"},
+      {"name": "Charcoal Umber", "hex": "#22201c"},
+      {"name": "Raw Linen", "hex": "#cfc6b8"}
+    ],
+    "primary_material": "Raw, low-sheen oiled oak — matte, tactile, non-reflective",
+    "secondary_material": "Natural wool felt panels for acoustic dampening",
+    "textile": "Heavy raw linen, undyed wool, nothing glossy or reflective",
+    "metal_hardware": "Blackened iron or none — hardware should disappear visually",
+    "avoid": ["Glossy lacquer", "Mirrors", "Bright overhead-reflective surfaces", "Cold white palettes"]
+  },
+  "sage_scholar": {
+    "palette": [
+      {"name": "Forest Green", "hex": "#3f5b46"},
+      {"name": "Aged Brass", "hex": "#8a6a3a"},
+      {"name": "Warm Cream", "hex": "#e4ddc9"}
+    ],
+    "primary_material": "Solid wood shelving (oak or ash), open grain, library character",
+    "secondary_material": "Leather desk surfaces, aged patina welcome",
+    "textile": "Wool tweed, corduroy — textured but calm, muted tones only",
+    "metal_hardware": "Aged brass reading-lamp fittings, warm tone",
+    "avoid": ["High-gloss surfaces", "Cold chrome", "Saturated primary colors"]
+  },
+  "alchemist_fluid": {
+    "palette": [
+      {"name": "Violet Smoke", "hex": "#5c3d75"},
+      {"name": "Soft Lilac", "hex": "#9d81b5"},
+      {"name": "Warm Grey", "hex": "#8a8680"}
+    ],
+    "primary_material": "Lightweight engineered composites — easy to move, low mass",
+    "secondary_material": "Soft-rubber caster wheels on every mobile piece",
+    "textile": "Performance-weave fabric, stain-resistant, adaptable to reconfiguration",
+    "metal_hardware": "Locking casters and quick-release brackets, brushed nickel",
+    "avoid": ["Heavy solid-wood fixed pieces", "Anything requiring two people to move", "Fragile natural stone"]
+  },
+  "alchemist_chaotic": {
+    "palette": [
+      {"name": "Deep Plum", "hex": "#4a2f5c"},
+      {"name": "Electric Amber Accent", "hex": "#c98a3a"},
+      {"name": "Raw Concrete", "hex": "#8f8b85"}
+    ],
+    "primary_material": "Exposed plywood or OSB edge-banded panels — workshop honesty",
+    "secondary_material": "Pegboard (painted MDF or metal) as a structural wall material",
+    "textile": "Canvas, denim-weight cotton — durable, visibly functional",
+    "metal_hardware": "Exposed bolts, visible brackets, industrial hooks",
+    "avoid": ["Delicate upholstery", "Anything that can't be wiped down", "Precious/fragile finishes"]
+  },
+  "weaver_intimate": {
+    "palette": [
+      {"name": "Terracotta", "hex": "#9c4f2b"},
+      {"name": "Warm Sand", "hex": "#d8c3a5"},
+      {"name": "Deep Umber", "hex": "#3a2a1e"}
+    ],
+    "primary_material": "Warm oak or cane (hazeran) panel doors, natural texture visible",
+    "secondary_material": "High-pile wool or jute rugs as the room's acoustic anchor",
+    "textile": "Bouclé, heavy linen, wool throws — layered and touchable",
+    "metal_hardware": "Warm brass or bronze, softly aged, never cold chrome",
+    "avoid": ["Cold metals", "Glass-heavy surfaces", "Sparse minimal styling"]
+  },
+  "weaver_dynamic": {
+    "palette": [
+      {"name": "Rust Orange", "hex": "#a56a43"},
+      {"name": "Warm Charcoal", "hex": "#332a22"},
+      {"name": "Honey Oak", "hex": "#b98a52"}
+    ],
+    "primary_material": "Durable honey-toned oak, high-traffic sealed finish",
+    "secondary_material": "Stain-resistant woven upholstery for high-guest-volume seating",
+    "textile": "Tight-weave washable fabrics, warm tones, easy-clean priority",
+    "metal_hardware": "Brushed brass, durable and warm, resistant to fingerprints",
+    "avoid": ["Delicate silk or velvet in high-traffic zones", "Pale colors prone to staining", "Fragile glass surfaces near circulation paths"]
+  }
+}

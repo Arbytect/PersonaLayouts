@@ -1,0 +1,632 @@
+{
+  "living_room": {
+    "sovereign_clinical": {
+      "lighting": "3000K diffused wall-washing, ceiling overhead washing deactivated. Structured perimeter shadows.",
+      "geometry": "Symmetrical seating layout, TV concealed behind flush panel or omitted. Main sofa floated exactly 60cm off rear wall.",
+      "dining": "Separate dining zone defined by rug boundary, 2700K low-hung dining pendant (65cm height above surface).",
+      "storage": "Everything concealed behind push-to-open hemzemin (flush-mount) wardrobes. Zero open shelving allowed.",
+      "first_3_steps": [
+        "Conceal the TV screen behind a flush wall panel or omit it from the main visual axis.",
+        "Float the primary sofa exactly 60cm off all boundary walls to establish a command position.",
+        "Hang a 2700K warm pendant light exactly 65cm above the dining surface to anchor the eating zone."
+      ]
+    },
+    "sovereign_precision": {
+      "lighting": "3000K spot illumination + low cabinet strip. Precision perimeter alignment, glare-free task spots.",
+      "geometry": "L-shaped seating floated off walls with single focal axis. 100cm standard seating clearance.",
+      "dining": "Geometrik dining area, 3000K CCT dining pendant. Symmetrical chair pull-backs.",
+      "storage": "Millimetric curated open shelf display. Books/objects aligned with exact equal spacing.",
+      "first_3_steps": [
+        "Align all major seating elements along the primary room axis with a maximum 2-degree deviation.",
+        "Configure a custom grid shelving unit to display curated reference items with millimetric spacing.",
+        "Install double-circuit CCT spots to allow quick adjustments between work daylight and focus warm amber."
+      ]
+    },
+    "sage_hermit": {
+      "lighting": "2200-2700K localized low-level task lamps. Room corners and perimeters left in deep shadow.",
+      "geometry": "Cozy U-shaped layout or conversation pit. Deep armchairs turned away from entry sightlines.",
+      "dining": "Compact 2-person dining corner near wall, lo-fi 2200K lighting. Quiet restoration alcove.",
+      "storage": "Fully enclosed wood cabinetry. Visual clutter completely hidden to minimize cognitive load.",
+      "first_3_steps": [
+        "Remove any overhead ceiling lighting and rely strictly on localized low-level task lamps.",
+        "Position your reading chair in a low-traffic corner facing away from the main entrance pathway.",
+        "Enclose all reference books and tools in opaque wardrobes to protect your brain from scanning clutter."
+      ]
+    },
+    "sage_scholar": {
+      "lighting": "4000K workspace task lamps + 2700K ambient. Dual circuits for day/night mode transitions.",
+      "geometry": "Seating clustered near reference bookcases, maintaining a central focus lane.",
+      "dining": "Dining table rotated to face natural window light, serving as a dual reading table.",
+      "storage": "Açık ama düzenli books shelving. Organized by category and size for easy retrieval.",
+      "first_3_steps": [
+        "Establish a dual-circuit lighting grid with 4000K focus work light and 2700K ambient relaxation loops.",
+        "Position your main study desk perpendicular to the window to block daylight glare while maintaining views.",
+        "Sort all library books by category and size on sturdy floor-to-ceiling wooden shelves."
+      ]
+    },
+    "alchemist_fluid": {
+      "lighting": "Dimmable smart lighting tracks, CCT range 2700K-4000K. Single circuit for easy mod shifts.",
+      "geometry": "Modular, tekerlekli (caster-mounted) light sectionals. 1.5m center grid left completely free.",
+      "dining": "Katlanır masa (drop-leaf table) or movable island on glides. Adapts instantly based on use.",
+      "storage": "Minimal, portable cabinets and rolling utility carts. Wall pegboards keep floor space clear.",
+      "first_3_steps": [
+        "Mount lockable soft-rubber industrial casters to all secondary tables and storage credenzas.",
+        "Replace heavy stationary coffee tables with nesting tables that can store flat against the wall.",
+        "Keep a highly protected 2m x 2m central floor area completely free of permanent furniture."
+      ]
+    },
+    "alchemist_chaotic": {
+      "lighting": "Zone-based separate circuits, colorful accent lights, flexible tracks.",
+      "geometry": "Overlapping activity zones defined by rugs. Modular sofa segments scattered around.",
+      "dining": "Movable kitchen island acting as active workspace and dining counter.",
+      "storage": "Açık pegboard storage. Wires and technical tools visible and easily reachable on wall rails.",
+      "first_3_steps": [
+        "Install wall-mounted pegboards with flexible hooks to store cables, headphones, and tools off the floor.",
+        "Use multiple independent rugs to partition your studio into distinct, overlapping activity zones.",
+        "Deploy multi-tier rolling utility carts to transport active project gear between work and lounge stations."
+      ]
+    },
+    "weaver_intimate": {
+      "lighting": "2200K localized face-level lighting. Mum/candle accents, warm table lamps, no harsh spots.",
+      "geometry": "U-shaped conversation circle, armchairs spaced at 80-100cm for voice intimacy.",
+      "dining": "Sarkıt lamba at 2700K, hung low at 65cm over wood table. Warm textured linen runner.",
+      "storage": "Natural textured wood cabinets with hazeran (cane) panels. Soft woven baskets for textiles.",
+      "first_3_steps": [
+        "Arrange all primary living room seats in a tight 120-degree concave circle facing each other.",
+        "Hang a soft dome pendant light low over the coffee table to create a warm communal illumination circle.",
+        "Introduce heavy boucle, textured linen, and jute rugs to soften the room's acoustic reflections."
+      ]
+    },
+    "weaver_dynamic": {
+      "lighting": "2700K zemin (uplights) + 3000K island spots. Ambient background warmth, high visibility.",
+      "geometry": "Seating pushed to boundaries to clear a central circulation lane for gathering traffic.",
+      "dining": "Extended dining/bar island with stools. Layout accommodates group meals and socializing.",
+      "storage": "Concealed perimeter cabinets. Keeps main circulation lanes wide and safe for guests.",
+      "first_3_steps": [
+        "Ensure a wide 90cm sirkülasyon corridor behind and around all major social seating areas.",
+        "Integrate a central kitchen/bar counter island with backless bar stools to support group socializing.",
+        "Install low-level floor uplights in the corners to create an inviting, ambient perimeter glow at night."
+      ]
+    }
+  },
+  "kitchen": {
+    "sovereign_clinical": {
+      "lighting": "3000K linear under-cabinet LED strips, concealed sources. No ceiling glare.",
+      "geometry": "Clean, linear workspaces. Prep, cook, and wash stations mapped sequentially to prevent path overlap.",
+      "dining": "Concealed slide-out breakfast counter drawer, flush-mount when not in use.",
+      "storage": "Everything concealed behind push-to-open matte flat doors. Ceiling-height top cabinets.",
+      "first_3_steps": [
+        "Conceal all minor appliances (kettle, toaster) inside an appliance garage cabinet with slide-away doors.",
+        "Install push-to-open flush-mount cabinet fronts with zero visible handles to maintain linear order.",
+        "Establish a strict work sequence: prep (left), sink (center), cook (right) with a minimum 40cm buffer."
+      ]
+    },
+    "sovereign_precision": {
+      "lighting": "3000K spot illumination + low shelf LED strip. Highly structured directional work lights.",
+      "geometry": "Orthogonal layout, task zones clearly marked. Clear sightlines of prep surfaces.",
+      "dining": "Integrated bar counter with aligned geometric bar stools (without backs).",
+      "storage": "Curated shelf grid for reference tools, perfectly aligned. Trash bin pulled back in cabinet drawer.",
+      "first_3_steps": [
+        "Organize spice jars and utensils in matching geometric containers on an open, low-profile wall rail.",
+        "Establish a clear 90cm circulation corridor around the kitchen island to support movement paths.",
+        "Use under-cabinet 3000K spot lighting to illuminate prep zones without casting shadows."
+      ]
+    },
+    "sage_hermit": {
+      "lighting": "2700K local lighting pools. Under-cabinet task strips, no bright overhead ceiling lights.",
+      "geometry": "Low-noise preparation zone, sound-dampened drawer slides and soft-close hinges.",
+      "dining": "Small cozy 2-person corner nook for solitary morning rituals.",
+      "storage": "Enclosed, out-of-sight pantries and closed cabinets. Low-stimulation natural finishes.",
+      "first_3_steps": [
+        "Replace all noisy metal cabinet handles with leather pulls or integrated finger-grooves.",
+        "Set up a small 2-person dining table in a quiet corner of the kitchen facing a window view.",
+        "Store all pots, pans, and tools inside deep, soft-closing drawer units to eliminate visual scanning."
+      ]
+    },
+    "sage_scholar": {
+      "lighting": "4000K work plane illumination + 2700K dining. Dual circuit for recipe reading and dining.",
+      "geometry": "Prep zone near natural light source. Integrated recipe stand or tablet mount.",
+      "dining": "Small desktop-style eating surface or high-comfort bar zone.",
+      "storage": "Enclosed storage, but dry ingredients and spices stored in clear, labeled mason jars.",
+      "first_3_steps": [
+        "Install a dedicated wall-mounted document shelf or tablet arm to hold recipes at eye level during prep.",
+        "Use 4000K neutral light strips directly above the cooktop and sink to ensure high visual clarity.",
+        "Group dry ingredients in uniform glass mason jars inside a designated, pull-out pantry cabinet."
+      ]
+    },
+    "alchemist_fluid": {
+      "lighting": "Dimmable smart track lighting, switching between task daylight (4000K) and dining (2700K).",
+      "geometry": "Movable kitchen island on glides with lockable casters. Adaptable counter height.",
+      "dining": "Folding leaf dining table that drops flat against the wall when additional floor space is needed.",
+      "storage": "Modular rolling carts and wall-mounted pegboard rails for pots and pans.",
+      "first_3_steps": [
+        "Install a wall pegboard system to hang pots, pans, and larger utensils, freeing up drawer space.",
+        "Mount locking industrial casters to your kitchen prep cart so it can be moved out of the way instantly.",
+        "Deploy a drop-leaf dining table that can be folded down flat when cooking projects require floor space."
+      ]
+    },
+    "alchemist_chaotic": {
+      "lighting": "Flexible multi-directional track spots, separately switched zones.",
+      "geometry": "Overlapping culinary stations, active preparation zone spread across multiple mobile carts.",
+      "dining": "Island counter serving as double-sided active work hub and dining zone.",
+      "storage": "Open shelving and magnetic knife strips. Kitchen tools and ingredients visible and reachable.",
+      "first_3_steps": [
+        "Install high-strength magnetic wall rails to hold chef knives and metallic prep tools in plain view.",
+        "Use open wire baskets below the island counter to keep organic vegetables and active pans accessible.",
+        "Utilize rolling multi-tier kitchen trays to quickly transition baking or chopping ingredients."
+      ]
+    },
+    "weaver_intimate": {
+      "lighting": "2700K warm pendant lights hung low (65cm) over island, face-level illumination. Candle stands.",
+      "geometry": "Centripetal prep layout. Cooktop rotated so cook faces the room, supporting conversation.",
+      "dining": "Warm oak breakfast bar/island where guests can sit and socialize during food prep.",
+      "storage": "Woven cane panels on pantry doors, natural cedar shelving, ceramic containers.",
+      "first_3_steps": [
+        "Position your kitchen bar stools facing the primary prep zone so guests can sit and converse.",
+        "Hang a pair of warm-toned 2700K pendant lamps over the island counter to invite gathering.",
+        "Use soft ceramic jars and cedar shelves to add tactile warmth and natural scent to open surfaces."
+      ]
+    },
+    "weaver_dynamic": {
+      "lighting": "2700K ambient uplights + 3000K island task lights. Welcoming and highly visible.",
+      "geometry": "Open-plan kitchen integrated with social zone, wide sirkülasyon clearances (min 90cm).",
+      "dining": "Spacious central island with integrated bar tabureleri (backless) to support high gathering volume.",
+      "storage": "Pantry columns and perimeter cupboards to keep transit paths clear and unobstructed.",
+      "first_3_steps": [
+        "Maintain a minimum 90cm clear pathway around the central kitchen island to prevent bottlenecks.",
+        "Choose backless bar stools that can tuck fully underneath the island counter to keep flow lines clear.",
+        "Install a pass-through opening or partition-free layout to connect kitchen prep to the social zone."
+      ]
+    }
+  },
+  "bedroom": {
+    "sovereign_clinical": {
+      "lighting": "3000K diffused lighting, wall-washing. No ceiling tavan lighting, CCT dimmers.",
+      "geometry": "Bed strictly centered against headboard wall, facing the entry path (Command Sightline).",
+      "nightstand": "Symmetrical komodinler, flush-mount drawers, minimal visible items.",
+      "storage": "Tavan-hizası (ceiling-height) built-in sliding wardrobes, flat white or antrasit, no mirrors.",
+      "first_3_steps": [
+        "Align the bed centrally against the solid headboard wall, ensuring a clear view of the door axis.",
+        "Install ceiling-height wardrobes with push-to-open sliding doors to eliminate visual joints.",
+        "Set up symmetrical bedside tables containing integrated chargers to hide loose cables."
+      ]
+    },
+    "sovereign_precision": {
+      "lighting": "3000K spots + 2700K nightstand lamp. Precision directional illumination.",
+      "geometry": "Symmetrical bed alignment. Flat headboard panel with integrated linear profile lighting.",
+      "nightstand": "Symmetrical wood bedside tables, drawers, millimetric placement of light and book.",
+      "storage": "L-shaped built-in wardrobe, ceviz finish. Structured interior layout with visible hanger bars.",
+      "first_3_steps": [
+        "Mount linear LED profile channels behind the headboard to project a clean halo light axis.",
+        "Utilize an L-shaped wardrobe configuration to frame a clean dressing corner out of traffic zones.",
+        "Position yatak etrafında a minimum 90cm sirkülasyon gap to ensure unhindered transit paths."
+      ]
+    },
+    "sage_hermit": {
+      "lighting": "2200K localized reading lamps, perimeter in deep shadow. Double-layer blackout drapery.",
+      "geometry": "Low-slung platform bed, tucked into a 3-sided wall alcove (koza) out of door sightline.",
+      "nightstand": "Single small wood block holding only one book slot and a lo-fi 2200K task lamp.",
+      "storage": "Built-in wardrobes with solid dark wood doors. Ayna (mirror) completely omitted to avoid glare.",
+      "first_3_steps": [
+        "Shift the bed into a cozy corner alcove, completely shielding the head axis from door drafts.",
+        "Replace tavan lamps with double-layered blackout blinds to ensure total sensory darkness.",
+        "Omit bedroom mirrors or conceal them inside wardrobe doors to prevent visual distractions."
+      ]
+    },
+    "sage_scholar": {
+      "lighting": "4000K workspace task lamp + 2700K nightstand. Separated study CCT circuits.",
+      "geometry": "Bed rotated perpendicular to natural light window. Dedicated reading desk in corner.",
+      "nightstand": "Wide komodin surface serving as a study reference zone. Aplik task lights.",
+      "storage": "Built-in wardrobe with open bookshelf sections. Structured book categorization.",
+      "first_3_steps": [
+        "Set up an ergonomic reading desk in a quiet alcove perpendicular to the window light axis.",
+        "Configure your bedside table with a wide surface to hold active books and a clamp-on task lamp.",
+        "Install sensörlü LED strips inside wardrobe doors to illuminate reference shelves quietly."
+      ]
+    },
+    "alchemist_fluid": {
+      "lighting": "Dimmable CCT track lighting, switching between morning daylight and evening warm amber.",
+      "geometry": "Low platform yatak on casters or modular frame. Center of the room easily cleared.",
+      "nightstand": "Asymmetric bedside table on lockable rollers, easily moved to side walls.",
+      "storage": "Shallow built-in wardrobe (50cm depth) focused on folded clothes, space-saving sliding doors.",
+      "first_3_steps": [
+        "Mount locking casters to your bedside tables so they can be repositioned during mode changes.",
+        "Use a low-slung modular bed frame that can be shifted easily if you need open floor space.",
+        "Choose shallow wardrobes with sliding doors to preserve clearance paths in tight room bounds."
+      ]
+    },
+    "alchemist_chaotic": {
+      "lighting": "Multi-directional track spots, flexible bedside task lights.",
+      "geometry": "Bed floated in center or pushed to side corner, surrounded by active storage carts.",
+      "nightstand": "Asymmetrical bedside setup utilizing rolling multi-tier project trays.",
+      "storage": "Open wardrobe system with rolling screen partitions, mixed hangers and wire bins.",
+      "first_3_steps": [
+        "Replace standard wardrobes with an open-rail clothes rack shielded by a lightweight rolling screen.",
+        "Position active project storage carts on either side of the bed for fluid tool access.",
+        "Use modular wall pegboards near the closet axis to keep accessories and keys organized."
+      ]
+    },
+    "weaver_intimate": {
+      "lighting": "2200K face-level warm lights. Candle fixtures, low-hung bedside pendants, no ceiling washing.",
+      "geometry": "Soft yatak layout with large headboard cushion. Large high-pile wool rug underneath bed.",
+      "nightstand": "Warm timber nightstands, simetrik, soft ambient warm lamps.",
+      "storage": "L-shaped built-in wardrobe with hazeran/cane panel doors to introduce soft textures.",
+      "first_3_steps": [
+        "Anchor the sleeping zone by placing a thick, soft high-pile wool rug underneath the bed frame.",
+        "Install low-hanging pendant lamps directly beside the bed to create cozy, eye-level glow pools.",
+        "Choose L-shaped wardrobes with woven cane panels to soften the room's hard geometric surfaces."
+      ]
+    },
+    "weaver_dynamic": {
+      "lighting": "2700K floor uplights + 3000K wardrobe spots. Wide welcoming illumination.",
+      "geometry": "Bed positioned to protect transit clearance, keeping entry vectors open.",
+      "nightstand": "Minimal bedside shelving, wall-mounted to save floor space.",
+      "storage": "Concealed built-in wardrobes, flush-mount. Keeping paths clear for movement.",
+      "first_3_steps": [
+        "Mount floating bedside shelves on the wall to keep the floor plane completely open.",
+        "Position the bed to preserve a generous 90cm clearance pathway on both sides of the mattress.",
+        "Install sensor-activated indirect LED strips along the bed base to act as a warm night-time guide."
+      ]
+    }
+  },
+  "balcony": {
+    "sovereign_clinical": {
+      "lighting": "Hidden warm CCT LED strip under rail or deck borders. No direct bulbs.",
+      "geometry": "Single minimal chair + stone-top side table. Strict horizontal lines, zero clutter.",
+      "dining": "No dining table. Pure seating void.",
+      "storage": "Minimal hidden outdoor cabinet flush with wall boundary.",
+      "first_3_steps": [
+        "Omit dining tables from micro balconies; focus on a single, high-design lounge seat instead.",
+        "Install a hidden warm LED strip beneath the outer railing to project indirect boundary light.",
+        "Use a single, monolithic concrete or stone pot for a solitary structural plant (like Cast Iron)."
+      ]
+    },
+    "sovereign_precision": {
+      "lighting": "Directional spot + linear strip lighting. Geometrik aligned shadows.",
+      "geometry": "Two chairs in perfect axial alignment facing Green view. Symmetrical side tables.",
+      "dining": "Symmetrical 2-seat layout, small steel dining table. Zero clutter.",
+      "storage": "Enclosed wood cabinet matching deck color, storing tools.",
+      "first_3_steps": [
+        "Align two minimalist outdoor chairs side-by-side with exact geometric symmetry.",
+        "Lay parallel timber deck tiling to reinforce the balcony's primary visual direction.",
+        "Set up an enclosed storage cabinet flush with the side wall to hold cushions out of sight."
+      ]
+    },
+    "sage_hermit": {
+      "lighting": "Low-level portable outdoor lamp. Dim ambient glow, corners lo-fi.",
+      "geometry": "Single deep lounge chair or puf tucked behind botanical privacy buffer.",
+      "dining": "No dining table. Single cozy seat.",
+      "storage": "No visible storage. Zero clutter.",
+      "first_3_steps": [
+        "Install a high botanical planter screen along the railing to block street views and noise.",
+        "Replace hard wall sconces with a portable, dimmable outdoor lantern at seat level.",
+        "Place a single deep, weather-proof floor cushion or tub chair in the most shielded corner."
+      ]
+    },
+    "sage_scholar": {
+      "lighting": "Focused reading task spot CCT 2700K + ambient dim.",
+      "geometry": "Seating oriented facing calm daylight views. Integrated reading stand.",
+      "dining": "Small wood writing desk or balcony rail hanging table.",
+      "storage": "Closed cabinet for books and reference files.",
+      "first_3_steps": [
+        "Install a folding desk surface directly onto the balcony rail to create a quiet study nook.",
+        "Set up a warm, directional outdoor clamp-on reading light over your primary seat.",
+        "Protect your balcony study axis from wind and glare using a roll-down canvas shade."
+      ]
+    },
+    "alchemist_fluid": {
+      "lighting": "Dimmable smart strip lights. Switch from active day mode to cozy night.",
+      "geometry": "Katlanır (folding) chairs and table, easily cleared for yoga practice.",
+      "dining": "Katlanabilir outdoor table, drops flat against railing when mat is rolled out.",
+      "storage": "Wall-mounted pegboards for folding chair brackets.",
+      "first_3_steps": [
+        "Deploy a wall-mounted hook system to hang folding chairs flat against the side wall.",
+        "Install a click-together wooden deck tile system that runs flush with your room's floor level.",
+        "Select lightweight, weather-proof aluminum chairs that can be stacked and shifted instantly."
+      ]
+    },
+    "alchemist_chaotic": {
+      "lighting": "Flexible string lights running along wall or rail.",
+      "geometry": "Active multi-use stations. Planters and tools sharing same boundaries.",
+      "dining": "Small folding bar table, movable stool.",
+      "storage": "Open shelves for gardening tools and plant pots.",
+      "first_3_steps": [
+        "String warm-toned LED fairy lights along the perimeter railing to create dynamic evening lighting.",
+        "Set up a vertical plant rack to grow herbs and botanical elements within easy reach.",
+        "Use a mobile rolling tray to transport coffee or gardening gear from the kitchen to the deck."
+      ]
+    },
+    "weaver_intimate": {
+      "lighting": "2200K face-level warm lights. Candle lanterns, string lights glowing soft amber.",
+      "geometry": "Two cozy wicker chairs arranged in a 90-degree curve facing a central coffee crate.",
+      "dining": "Small wood dining crate serving as coffee table. Textured linen cushions.",
+      "storage": "Woven cedar storage box for blankets.",
+      "first_3_steps": [
+        "Arrange two wicker or rattan chairs facing each other at a close angle to anchor conversation.",
+        "Drape warm wool blankets over the seats and use a woven cedar chest to store cushions.",
+        "Install candle lanterns and low CCT string lights to create an intimate, face-level glow."
+      ]
+    },
+    "weaver_dynamic": {
+      "lighting": "2700K uplights + 3000K warm hanging light. High social visibility.",
+      "geometry": "Seating pushed to balcony edges to maximize center standing room for guests.",
+      "dining": "Bar-height rail table with bar stools, supporting group hosting.",
+      "storage": "Concealed bench storage under seating.",
+      "first_3_steps": [
+        "Install a bar-height counter along the main balcony rail accompanied by high stools.",
+        "Build a built-in corner bench with hidden storage underneath to maximize social seating.",
+        "Keep the central walking lane clear of coffee tables to allow guests to transit comfortably."
+      ]
+    }
+  },
+  "studio": {
+    "sovereign_clinical": {
+      "lighting": "3000K diffused lighting, independent zone CCT dimmers. Tavan light off.",
+      "geometry": "Murphy Bed (vertical mechanism) that folds flat to reset sleeping zone during day.",
+      "work": "Wall-mounted cantilever desk, fold-down mechanism, zero leg clutter.",
+      "storage": "Tavan-hizası (ceiling-height) built-in sliding wardrobes, flat white or antrasit, no mirrors.",
+      "first_3_steps": [
+        "Install a piston-operated Murphy Bed that folds fully flush into a wardrobe frame.",
+        "Deploy a wall-mounted fold-down desk to keep the floor plane completely free of leg structures.",
+        "Construct floor-to-ceiling wardrobes to enclose all daily tools, clothes, and appliances out of sight."
+      ]
+    },
+    "sovereign_precision": {
+      "lighting": "3000K spot + 2700K nightstand. Precision directional zones.",
+      "geometry": "Bed aligned to primary axis. Flat headboard panel with integrated profile light.",
+      "work": "Fixed desk with L-shaped layout. Kablo channels integrated.",
+      "storage": "L-shaped built-in wardrobe, ceviz finish. Structured interior layout.",
+      "first_3_steps": [
+        "Map your studio's functional zones using clean rug boundaries aligned to the room's main axis.",
+        "Install a fixed L-shaped desk in the corner to create a structured work zone.",
+        "Use a ceiling-height partition panel to separate the sleep zone from the entryway flow."
+      ]
+    },
+    "sage_hermit": {
+      "lighting": "2200K localized reading lights. Rest of the space in deep atmospheric shadow.",
+      "geometry": "Low-slung Murphy bed behind a heavy velvet drape partition (acoustic buffer).",
+      "work": "Minimalist desk rotated away from traffic paths, facing a calm wall or window.",
+      "storage": "Enclosed, out-of-sight pantries and closed cabinets. Low-stimulation natural finishes.",
+      "first_3_steps": [
+        "Hang a thick, double-pleated acoustic curtain to partition the sleeping bed from the living zone.",
+        "Position your writing desk facing a quiet corner wall to eliminate background visual noise.",
+        "Rely on low-level task lamps and table lights, leaving the room corners in dim, relaxing shadow."
+      ]
+    },
+    "sage_scholar": {
+      "lighting": "4000K work spot + 2700K ambient. Dual CCT circuits.",
+      "geometry": "Platform yatak near window, study desk aligned perpendicular to window daylight.",
+      "work": "Spacious desk, L-shaped layout to hold active reference books. Aplik lights.",
+      "storage": "Built-in wardrobe with open library shelves. Structured book categorization.",
+      "first_3_steps": [
+        "Orient your study desk perpendicular to the window to ensure glare-free daylight focus.",
+        "Set up a dedicated shelving unit for reference files directly adjacent to your work surface.",
+        "Use double-circuit smart lights to separate your work hour CCT from your evening resting CCT."
+      ]
+    },
+    "alchemist_fluid": {
+      "lighting": "Dimmable CCT track lighting. Switch from active day mode to cozy night.",
+      "geometry": "Murphy Bed or loft bed.Tek tekerlekli (caster-mounted) modular sofa sectionals.",
+      "work": "Katlanır (folding) desk and folding chair that store flat against the wall.",
+      "storage": "Minimal, portable cabinets and rolling utility carts. Wall pegboards.",
+      "first_3_steps": [
+        "Mount locking rubber casters on all secondary chairs, desks, and storage units.",
+        "Use a Murphy bed or loft bed frame to ensure the central floor plane can be cleared in 60 seconds.",
+        "Install a folding wall desk that drops flat when you transition the studio to active movement mode."
+      ]
+    },
+    "alchemist_chaotic": {
+      "lighting": "Flexible track spots, colorful accent lights, flexible tracks.",
+      "geometry": "Overlapping zones defined by rugs. Movable sofa segments scattered around.",
+      "work": "Fixed active workspace table, tools visible and easily reachable on wall rails.",
+      "storage": "Open shelving and magnetic knife strips, pegboards.",
+      "first_3_steps": [
+        "Deploy rolling multi-tier utility carts to transport gear between work and dining zones.",
+        "Use open modular wire baskets on wheels to store bedding and active clothing packages.",
+        "Install wall-mounted pegboard tracks to keep all electronics, cables, and tools off the floor."
+      ]
+    },
+    "weaver_intimate": {
+      "lighting": "2200K face-level warm lights. Candle lanterns, low-hung bedside pendants.",
+      "geometry": "Soft yatak layout. Large high-pile wool rug underneath bed.",
+      "work": "Cozy wood desk, simetrik, soft ambient warm lamps.",
+      "storage": "L-shaped built-in wardrobe with hazeran/cane panel doors to introduce soft textures.",
+      "first_3_steps": [
+        "Place a large, thick wool rug in the center of the lounge area to create a warm social boundary.",
+        "Choose wardrobes with woven cane panels to add natural textures and acoustic softening.",
+        "Arrange a small circular dining table with two comfortable wooden chairs to invite sharing."
+      ]
+    },
+    "weaver_dynamic": {
+      "lighting": "2700K uplights + 3000K wardrobe spots. Wide welcoming illumination.",
+      "geometry": "Bed positioned to protect transit clearance, keeping entry vectors open.",
+      "work": "Minimal workspace desk, wall-mounted to save floor space.",
+      "storage": "Concealed built-in wardrobes, flush-mount. Keeping paths clear for movement.",
+      "first_3_steps": [
+        "Ensure a clear 90cm pathway connects the entrance, kitchen, and bathroom zones.",
+        "Select a compact kitchen counter island that serves as a boundary between the kitchen and sleeping zones.",
+        "Install sensor-activated indirect floor LEDs to guide movement quietly without bright ceiling glare."
+      ]
+    }
+  },
+  "open_plan": {
+    "sovereign_clinical": {
+      "lighting": "3000K diffused wall-washing, ceiling overhead washing deactivated. Structured perimeter shadows.",
+      "geometry": "Symmetrical seating layout, TV concealed behind flush panel or omitted. Main sofa floated exactly 60cm off rear wall.",
+      "dining": "Separate dining zone defined by rug boundary, 2700K low-hung dining pendant (65cm height above surface).",
+      "storage": "Everything concealed behind push-to-open hemzemin (flush-mount) wardrobes. Zero open shelving allowed.",
+      "first_3_steps": [
+        "Conceal the TV screen behind a flush wall panel or omit it from the main visual axis.",
+        "Float the primary sofa exactly 60cm off all boundary walls to establish a command position.",
+        "Hang a 2700K warm pendant light exactly 65cm above the dining surface to anchor the eating zone."
+      ]
+    },
+    "sovereign_precision": {
+      "lighting": "3000K spot illumination + low cabinet strip. Precision perimeter alignment, glare-free task spots.",
+      "geometry": "L-shaped seating floated off walls with single focal axis. 100cm standard seating clearance.",
+      "dining": "Geometrik dining area, 3000K CCT dining pendant. Symmetrical chair pull-backs.",
+      "storage": "Millimetric curated open shelf display. Books/objects aligned with exact equal spacing.",
+      "first_3_steps": [
+        "Align all major seating elements along the primary room axis with a maximum 2-degree deviation.",
+        "Configure a custom grid shelving unit to display curated reference items with millimetric spacing.",
+        "Install double-circuit CCT spots to allow quick adjustments between work daylight and focus warm amber."
+      ]
+    },
+    "sage_hermit": {
+      "lighting": "2200-2700K localized low-level task lamps. Room corners and perimeters left in deep shadow.",
+      "geometry": "Cozy U-shaped layout or conversation pit. Deep armchairs turned away from entry sightlines.",
+      "dining": "Compact 2-person dining corner near wall, lo-fi 2200K lighting. Quiet restoration alcove.",
+      "storage": "Fully enclosed wood cabinetry. Visual clutter completely hidden to minimize cognitive load.",
+      "first_3_steps": [
+        "Remove any overhead ceiling lighting and rely strictly on localized low-level task lamps.",
+        "Position your reading chair in a low-traffic corner facing away from the main entrance pathway.",
+        "Enclose all reference books and tools in opaque wardrobes to protect your brain from scanning clutter."
+      ]
+    },
+    "sage_scholar": {
+      "lighting": "4000K workspace task lamps + 2700K ambient. Dual circuits for day/night mode transitions.",
+      "geometry": "Seating clustered near reference bookcases, maintaining a central focus lane.",
+      "dining": "Dining table rotated to face natural window light, serving as a dual reading table.",
+      "storage": "Açık ama düzenli books shelving. Organized by category and size for easy retrieval.",
+      "first_3_steps": [
+        "Establish a dual-circuit lighting grid with 4000K focus work light and 2700K ambient relaxation loops.",
+        "Position your main study desk perpendicular to the window to block daylight glare while maintaining views.",
+        "Sort all library books by category and size on sturdy floor-to-ceiling wooden shelves."
+      ]
+    },
+    "alchemist_fluid": {
+      "lighting": "Dimmable smart lighting tracks, CCT range 2700K-4000K. Single circuit for easy mod shifts.",
+      "geometry": "Modular, tekerlekli (caster-mounted) light sectionals. 1.5m center grid left completely free.",
+      "dining": "Katlanır masa (drop-leaf table) or movable island on glides. Adapts instantly based on use.",
+      "storage": "Minimal, portable cabinets and rolling utility carts. Wall pegboards keep floor space clear.",
+      "first_3_steps": [
+        "Mount lockable soft-rubber industrial casters to all secondary tables and storage credenzas.",
+        "Replace heavy stationary coffee tables with nesting tables that can store flat against the wall.",
+        "Keep a highly protected 2m x 2m central floor area completely free of permanent furniture."
+      ]
+    },
+    "alchemist_chaotic": {
+      "lighting": "Zone-based separate circuits, colorful accent lights, flexible tracks.",
+      "geometry": "Overlapping activity zones defined by rugs. Modular sofa segments scattered around.",
+      "dining": "Movable kitchen island acting as active workspace and dining counter.",
+      "storage": "Açık pegboard storage. Wires and technical tools visible and easily reachable on wall rails.",
+      "first_3_steps": [
+        "Install wall-mounted pegboards with flexible hooks to store cables, headphones, and tools off the floor.",
+        "Use multiple independent rugs to partition your studio into distinct, overlapping activity zones.",
+        "Deploy multi-tier rolling utility carts to transport active project gear between work and lounge stations."
+      ]
+    },
+    "weaver_intimate": {
+      "lighting": "2200K localized face-level lighting. Mum/candle accents, warm table lamps, no harsh spots.",
+      "geometry": "U-shaped conversation circle, armchairs spaced at 80-100cm for voice intimacy.",
+      "dining": "Sarkıt lamba at 2700K, hung low at 65cm over wood table. Warm textured linen runner.",
+      "storage": "Natural textured wood cabinets with hazeran (cane) panels. Soft woven baskets for textiles.",
+      "first_3_steps": [
+        "Arrange all primary living room seats in a tight 120-degree concave circle facing each other.",
+        "Hang a soft dome pendant light low over the coffee table to create a warm communal illumination circle.",
+        "Introduce heavy boucle, textured linen, and jute rugs to soften the room's acoustic reflections."
+      ]
+    },
+    "weaver_dynamic": {
+      "lighting": "2700K zemin (uplights) + 3000K island spots. Ambient background warmth, high visibility.",
+      "geometry": "Seating pushed to boundaries to clear a central circulation lane for gathering traffic.",
+      "dining": "Extended dining/bar island with stools. Layout accommodates group meals and socializing.",
+      "storage": "Concealed perimeter cabinets. Keeps main circulation lanes wide and safe for guests.",
+      "first_3_steps": [
+        "Ensure a wide 90cm sirkülasyon corridor behind and around all major social seating areas.",
+        "Integrate a central kitchen/bar counter island with backless bar stools to support group socializing.",
+        "Install low-level floor uplights in the corners to create an inviting, ambient perimeter glow at night."
+      ]
+    }
+  },
+  "home_office": {
+    "sovereign_clinical": {
+      "lighting": "3000K diffused ceiling spots + directional task lamp. Linear cable channels.",
+      "geometry": "Symmetrical desk orientation facing the room entrance (Command Sightline).",
+      "chair": "Ergonomic leather chair with high back, no rollers (fixed feet). Symmetrical alignment.",
+      "storage": "Concealed wall cabinets, flush-mount. Printer hidden inside drawers. Blank desktop.",
+      "first_3_steps": [
+        "Position the main desk facing the entrance door to command the room's access vector.",
+        "Conceal all monitor and desk power wiring inside integrated under-desk metal channels.",
+        "Keep the desk surface completely clear of secondary items except the monitor and keyboard."
+      ]
+    },
+    "sovereign_precision": {
+      "lighting": "3000K spot illumination + low shelf LED strip. Highly structured directional work lights.",
+      "geometry": "L-shaped desk corner configuration. Precision layout, technical desk accessories.",
+      "chair": "Ergonomic chair, geometric design, strict lumbar support settings.",
+      "storage": "Closed catalog filing systems, books aligned on open shelving with exact spacing.",
+      "first_3_steps": [
+        "Utilize an L-shaped desk configuration to separate active typing from drawing/writing surfaces.",
+        "Install a multi-joint monitor arm to align the screen's top edge exactly with your eye level.",
+        "Mount a linear task bar light on top of the monitor to project glare-free light on the key axis."
+      ]
+    },
+    "sage_hermit": {
+      "lighting": "2700K localized desk lamp. Rest of the space in deep shadow. Acoustic keçe panels.",
+      "geometry": "Desk placed in a cozy, 3-sided wall alcove (niş) facing away from high-traffic paths.",
+      "chair": "Plush, ergonomic textile chair with high comfort padding. Soft support.",
+      "storage": "Fully enclosed teak cabinets. No visible open folders or reference documents.",
+      "first_3_steps": [
+        "Position the work desk facing away from the entrance door to prevent peripheral visual distractions.",
+        "Mount acoustic felt panels on the desk's rear wall to absorb keyboard clicking echoes.",
+        "Lay a thick wool carpet beneath the work chair to dampen footfall vibration and soften acoustics."
+      ]
+    },
+    "sage_scholar": {
+      "lighting": "4000K neutral daylight task lamp + 2700K ambient. Dual circuit.",
+      "geometry": "Desk placed perpendicular to the window. Sturdy reference bookcases directly adjacent.",
+      "chair": "High-back mesh ergonomic chair on rollers, adjustable armrests.",
+      "storage": "Open bookshelf wall system. Reference books categorized by field and size.",
+      "first_3_steps": [
+        "Place reference bookcases within arm's reach of your desk seating axis to keep manuals accessible.",
+        "Position the desk perpendicular to the window to benefit from natural daylight without screen glare.",
+        "Set up a dual-circuit lighting grid with 4000K CCT daylight work spots and 2700K warm background lamps."
+      ]
+    },
+    "alchemist_fluid": {
+      "lighting": "Dimmable smart track lighting, switching between daylight CCT and warm ambient.",
+      "geometry": "Katlanır (folding) desk or height-adjustable sit-stand desk on lockable rollers.",
+      "chair": "Lightweight ergonomic chair, easily stored flat against wall.",
+      "storage": "Movable cart on wheels, wall pegboards for keeping tech equipment mobile.",
+      "first_3_steps": [
+        "Deploy an adjustable height sit-stand desk to easily transition between sitting and active standing work.",
+        "Mount lockable rubber casters to all mobile units to allow rapid room rearrangements.",
+        "Use wall pegboards to keep tech gear, chargers, and wires elevated and mobile."
+      ]
+    },
+    "alchemist_chaotic": {
+      "lighting": "Flexible multi-directional spots, colorful accent lights, flexible tracks.",
+      "geometry": "Multiple active work stations (laptop zone, drawing zone, manufacturing/tool zone).",
+      "chair": "Active ergonomic balancing stool or task chair, tekerlekli (rollers).",
+      "storage": "Open shelves, visible parts bins, hanging wall grid storage.",
+      "first_3_steps": [
+        "Organize different project streams at distinct desk stations or mobile tray tables.",
+        "Use open wall-mounted grids to display active concept drawings and wires within arm's reach.",
+        "Deploy a tekerlekli active stool to support frequent movement and posture changes during work."
+      ]
+    },
+    "weaver_intimate": {
+      "lighting": "2700K warm desk lamp + ambient uplight. Diffused glowing pools, no ceiling wash.",
+      "geometry": "Double desk setup or curved wood desk, encouraging close collaboration.",
+      "chair": "Soft linen upholstered ergonomic chair. Cozy fabric textures.",
+      "storage": "Natural cedar shelves, closed drawers with brass handles.",
+      "first_3_steps": [
+        "Configure a double-sided desk setup to support side-by-side or facing collaborative work.",
+        "Choose an ergonomic task chair upholstered in soft linen to introduce tactile warmth.",
+        "Decorate open shelves with natural cedar boards and plants to create a welcoming, shared environment."
+      ]
+    },
+    "weaver_dynamic": {
+      "lighting": "2700K floor lamps + 3000K desk spots. Social and highly visible.",
+      "geometry": "Desk pushed to periphery, center of the room left open for guest seating.",
+      "chair": "Minimalist mesh task chair. Light and unobtrusive.",
+      "storage": "Concealed cupboards, keeping transit paths clear for visitors.",
+      "first_3_steps": [
+        "Arrange secondary comfortable armchairs in a circle opposite your desk to accommodate visiting guests.",
+        "Keep the center floor plane clear of storage units to allow comfortable sirkülasyon space.",
+        "Install a dimmable floor lamp in the corner to provide inviting, warm ambient lighting."
+      ]
+    }
+  }
+}

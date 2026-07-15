@@ -1,0 +1,30 @@
+{
+  "living_room": {
+    "priority_stress": "zone_ambiguity",
+    "context": "As the room every household member and every guest passes through, unresolved layout issues here compound daily — this is the highest-traffic diagnostic zone."
+  },
+  "kitchen": {
+    "priority_stress": "workflow_friction",
+    "context": "Kitchen stress is uniquely physical: friction here shows up as repeated small collisions and wasted steps during the exact hours you're already most depleted."
+  },
+  "bedroom": {
+    "priority_stress": "sleep_quality",
+    "context": "This is the one room where unresolved spatial stress directly degrades sleep — the cost of getting it wrong compounds nightly rather than showing up as a one-off irritation."
+  },
+  "balcony": {
+    "priority_stress": "privacy_exposure",
+    "context": "As the only fully outdoor-facing zone, exposure and weather constraints dominate here more than in any interior room — privacy and threshold friction matter disproportionately."
+  },
+  "studio": {
+    "priority_stress": "behavioral_separation",
+    "context": "With every function sharing one footprint, studio stress is almost always about boundary collapse between sleep, work, and rest rather than any single function failing on its own."
+  },
+  "open_plan": {
+    "priority_stress": "hierarchy_deficit",
+    "context": "Without walls to define zones, this room lives or dies on visual hierarchy — the eye needs an anchor point or the entire space reads as unresolved."
+  },
+  "home_office": {
+    "priority_stress": "focus_exposure",
+    "context": "Productivity here is directly gated by sightline control — every unshielded sightline to a door or high-traffic path measurably taxes sustained focus."
+  }
+}

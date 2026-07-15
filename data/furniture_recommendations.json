@@ -1,0 +1,336 @@
+{
+  "living_room": {
+    "sovereign_clinical": [
+      { "role": "Sofa (Anchor)", "type": "Low-Slung Modular Sofa", "shape": "Rectilinear, deep seat, no exposed legs — appears to float via a recessed plinth", "dimensions": "240cm W x 95cm D x 68cm H" },
+      { "role": "Coffee Table", "type": "Monolithic Concrete-Top Table", "shape": "Single rectangular slab, sharp 90° edges, zero ornamentation", "dimensions": "120cm x 60cm x 32cm H" },
+      { "role": "Media Console / Storage", "type": "Flush Push-to-Open Console", "shape": "Continuous horizontal volume, no visible pulls, wall-mounted floating", "dimensions": "200cm W x 40cm D x 45cm H" },
+      { "role": "Accent Chair", "type": "Structural Steel-Frame Lounge Chair", "shape": "Angular frame, single flat cushion, no armrests", "dimensions": "70cm W x 75cm D x 80cm H" }
+    ],
+    "sovereign_precision": [
+      { "role": "Sofa (Anchor)", "type": "Book-Matched Walnut-Frame Sofa", "shape": "Symmetrical tailored silhouette, piped seams, exposed walnut base rail", "dimensions": "230cm W x 92cm D x 72cm H" },
+      { "role": "Coffee Table", "type": "Brushed Steel-Leg Walnut Table", "shape": "Perfect rectangle, mitred walnut top, fine steel box-frame legs", "dimensions": "110cm x 55cm x 34cm H" },
+      { "role": "Media Console / Storage", "type": "Linear Walnut Credenza", "shape": "Symmetrical door/drawer grid, fine brushed-steel pulls", "dimensions": "210cm W x 42cm D x 48cm H" },
+      { "role": "Accent Chair", "type": "Tailored Wingback Precision Chair", "shape": "Structured flannel upholstery, exact piping, walnut tapered legs", "dimensions": "72cm W x 78cm D x 95cm H" }
+    ],
+    "sage_hermit": [
+      { "role": "Sofa (Anchor)", "type": "Oiled-Oak Frame Cocoon Sofa", "shape": "Low, deep-seat, high sides for enclosure, matte raw wood base", "dimensions": "220cm W x 100cm D x 70cm H" },
+      { "role": "Coffee Table", "type": "Raw Oak Low Table", "shape": "Soft-edged rectangle, low profile, non-reflective oiled finish", "dimensions": "100cm x 55cm x 30cm H" },
+      { "role": "Media Console / Storage", "type": "Felt-Fronted Storage Bench", "shape": "Fully enclosed, acoustic wool-felt panel doors, no visible hardware", "dimensions": "180cm W x 40cm D x 42cm H" },
+      { "role": "Accent Chair", "type": "Wingback Isolation Armchair", "shape": "High-sided, deep recessed seat, blackout-linen upholstery", "dimensions": "78cm W x 85cm D x 105cm H" }
+    ],
+    "sage_scholar": [
+      { "role": "Sofa (Anchor)", "type": "Library Chesterfield-Style Sofa", "shape": "Rolled arms, tufted back, aged leather or wool tweed", "dimensions": "215cm W x 95cm D x 78cm H" },
+      { "role": "Coffee Table", "type": "Solid Ash Book Table", "shape": "Open-grain rectangular top with lower shelf for volumes", "dimensions": "115cm x 60cm x 33cm H" },
+      { "role": "Media Console / Storage", "type": "Open Oak Shelving Ladder", "shape": "Vertical open-grain shelving, aged brass book-light fitting", "dimensions": "90cm W x 30cm D x 190cm H" },
+      { "role": "Accent Chair", "type": "Aged-Leather Reading Wingback", "shape": "Deep recline, high back, brass-tack trim", "dimensions": "75cm W x 82cm D x 108cm H" }
+    ],
+    "alchemist_fluid": [
+      { "role": "Sofa (Anchor)", "type": "Modular Caster Sofa (3-Piece)", "shape": "Splits into 3 independent modules, soft-rubber locking casters", "dimensions": "each module 80cm W x 90cm D x 70cm H" },
+      { "role": "Coffee Table", "type": "Height-Adjustable Glide Table", "shape": "Circular top, gas-lift column, locking caster base", "dimensions": "70cm dia x 40-60cm H (adjustable)" },
+      { "role": "Media Console / Storage", "type": "Rolling Modular Storage Cart", "shape": "3-tier open cart, quick-release side panels", "dimensions": "70cm W x 45cm D x 80cm H" },
+      { "role": "Accent Chair", "type": "Folding Caster Lounge Chair", "shape": "Collapsible frame, performance-weave sling seat, locking wheels", "dimensions": "65cm W x 70cm D x 78cm H" }
+    ],
+    "alchemist_chaotic": [
+      { "role": "Sofa (Anchor)", "type": "Exposed-Bolt Plywood Sofa", "shape": "Visible structural joinery, canvas cushions, industrial hook side-arms", "dimensions": "225cm W x 90cm D x 72cm H" },
+      { "role": "Coffee Table", "type": "OSB Panel Utility Table", "shape": "Edge-banded rectangular top on exposed steel A-frame", "dimensions": "110cm x 60cm x 35cm H" },
+      { "role": "Media Console / Storage", "type": "Pegboard Wall Storage Unit", "shape": "Painted MDF pegboard face, exposed bracket shelving", "dimensions": "180cm W x 35cm D x 200cm H" },
+      { "role": "Accent Chair", "type": "Industrial Bolt-Frame Stool-Chair", "shape": "Exposed bolted joints, denim-weight cotton seat pad", "dimensions": "60cm W x 65cm D x 82cm H" }
+    ],
+    "weaver_intimate": [
+      { "role": "Sofa (Anchor)", "type": "Curved Bouclé Nest Sofa", "shape": "Organic L-curve, deep cushions, wraps into a conversational nook", "dimensions": "260cm W x 100cm D x 75cm H" },
+      { "role": "Coffee Table", "type": "Cane-Front Terracotta Table", "shape": "Rounded oval top, warm cane detailing on the base", "dimensions": "110cm x 65cm x 36cm H" },
+      { "role": "Media Console / Storage", "type": "Warm Oak Cane-Door Console", "shape": "Woven cane door panels over solid oak carcass", "dimensions": "195cm W x 42cm D x 48cm H" },
+      { "role": "Accent Chair", "type": "Textured Cozy Tub Chair", "shape": "Soft rounded tub shape, low center of gravity, bouclé upholstery", "dimensions": "75cm W x 78cm D x 78cm H" }
+    ],
+    "weaver_dynamic": [
+      { "role": "Sofa (Anchor)", "type": "High-Traffic Sectional Sofa", "shape": "Wide L-sectional, stain-resistant weave, rounded bolster arms", "dimensions": "280cm W x 160cm D x 78cm H" },
+      { "role": "Coffee Table", "type": "Honey Oak Rounded Table", "shape": "Soft-cornered rectangle, sealed high-traffic oak top", "dimensions": "125cm x 65cm x 35cm H" },
+      { "role": "Media Console / Storage", "type": "Honey Oak Media Credenza", "shape": "Wide sliding-door console, brushed-brass pulls", "dimensions": "220cm W x 45cm D x 50cm H" },
+      { "role": "Accent Chair", "type": "Washable-Weave Swivel Chair", "shape": "360° swivel base, tight-weave washable upholstery", "dimensions": "78cm W x 80cm D x 82cm H" }
+    ]
+  },
+  "kitchen": {
+    "sovereign_clinical": [
+      { "role": "Dining Table", "type": "Flat-Edge Concrete Dining Table", "shape": "Rectangular, zero-overhang edge, matte finish", "dimensions": "180cm x 90cm x 75cm H" },
+      { "role": "Dining Seating", "type": "Cantilevered Steel-Frame Chairs (x4)", "shape": "Single-curve steel frame, no visible joints", "dimensions": "45cm W x 50cm D x 82cm H each" },
+      { "role": "Storage / Pantry Unit", "type": "Flush Matte Pantry Wall", "shape": "Full-height push-to-open cabinetry, integrated appliance bay", "dimensions": "240cm W x 60cm D x 220cm H" }
+    ],
+    "sovereign_precision": [
+      { "role": "Dining Table", "type": "Book-Matched Walnut Dining Table", "shape": "Symmetrical grain bookmatch, fine steel trestle base", "dimensions": "190cm x 95cm x 75cm H" },
+      { "role": "Dining Seating", "type": "Brushed-Steel Dining Chairs (x4)", "shape": "Slim tapered steel legs, structured wool seat pad", "dimensions": "46cm W x 52cm D x 84cm H each" },
+      { "role": "Storage / Pantry Unit", "type": "Walnut Grid Pantry Cabinetry", "shape": "Symmetrical door grid, fine linear brushed-steel pulls", "dimensions": "230cm W x 58cm D x 215cm H" }
+    ],
+    "sage_hermit": [
+      { "role": "Dining Table", "type": "Raw Oak Refectory Table", "shape": "Long single-slab silhouette, matte oiled finish", "dimensions": "170cm x 85cm x 74cm H" },
+      { "role": "Dining Seating", "type": "Felt-Padded Oak Benches (x2)", "shape": "Backless bench seating, wool-felt cushion strip", "dimensions": "150cm W x 35cm D x 45cm H each" },
+      { "role": "Storage / Pantry Unit", "type": "Acoustic Felt-Front Pantry", "shape": "Fully enclosed, felt-clad door faces, blackened iron pulls", "dimensions": "220cm W x 55cm D x 210cm H" }
+    ],
+    "sage_scholar": [
+      { "role": "Dining Table", "type": "Solid Ash Farmhouse Table", "shape": "Open-grain rectangular top, turned legs", "dimensions": "175cm x 88cm x 75cm H" },
+      { "role": "Dining Seating", "type": "Aged-Leather Dining Chairs (x4)", "shape": "Ladder-back oak frame, aged leather seat pad", "dimensions": "45cm W x 50cm D x 88cm H each" },
+      { "role": "Storage / Pantry Unit", "type": "Open Oak Larder Shelving", "shape": "Exposed shelving with woven basket inserts, brass fittings", "dimensions": "200cm W x 50cm D x 200cm H" }
+    ],
+    "alchemist_fluid": [
+      { "role": "Dining Table", "type": "Glide Height-Adjustable Dining Table", "shape": "Gas-lift rectangular top on soft casters, converts to standing height", "dimensions": "160cm x 85cm x 40-95cm H" },
+      { "role": "Dining Seating", "type": "Stackable Caster Stools (x4)", "shape": "Lightweight composite shell, locking casters", "dimensions": "40cm W x 40cm D x 60cm H each" },
+      { "role": "Storage / Pantry Unit", "type": "Rolling Modular Pantry Cart", "shape": "Multi-tier cart, quick-release bins, mobile between zones", "dimensions": "80cm W x 50cm D x 150cm H" }
+    ],
+    "alchemist_chaotic": [
+      { "role": "Dining Table", "type": "OSB-Top Workshop Dining Table", "shape": "Edge-banded panel top, exposed steel A-frame legs", "dimensions": "175cm x 90cm x 75cm H" },
+      { "role": "Dining Seating", "type": "Industrial Bolt-Frame Stools (x4)", "shape": "Exposed bolted joints, canvas seat pads", "dimensions": "40cm W x 40cm D x 65cm H each" },
+      { "role": "Storage / Pantry Unit", "type": "Pegboard Pantry Wall", "shape": "Painted MDF pegboard with exposed hook/shelf system", "dimensions": "220cm W x 45cm D x 210cm H" }
+    ],
+    "weaver_intimate": [
+      { "role": "Dining Table", "type": "Warm Oak Gathering Table", "shape": "Rounded-corner rectangle, generous shared surface", "dimensions": "200cm x 100cm x 75cm H" },
+      { "role": "Dining Seating", "type": "Cane-Back Dining Chairs (x6)", "shape": "Woven cane backrest, oak frame, linen seat pad", "dimensions": "46cm W x 52cm D x 86cm H each" },
+      { "role": "Storage / Pantry Unit", "type": "Cane-Door Pantry Console", "shape": "Woven cane door panels over oak carcass, warm brass pulls", "dimensions": "210cm W x 55cm D x 200cm H" }
+    ],
+    "weaver_dynamic": [
+      { "role": "Dining Table", "type": "Honey Oak Extendable Table", "shape": "Rounded-corner rectangle with expandable leaf for guests", "dimensions": "180-230cm x 95cm x 75cm H" },
+      { "role": "Dining Seating", "type": "Washable-Weave Dining Chairs (x6)", "shape": "Tight-weave washable upholstery, sealed oak frame", "dimensions": "46cm W x 52cm D x 85cm H each" },
+      { "role": "Storage / Pantry Unit", "type": "Honey Oak Sliding-Door Pantry", "shape": "Wide sliding-door cabinetry, brushed-brass hardware", "dimensions": "230cm W x 55cm D x 210cm H" }
+    ]
+  },
+  "bedroom": {
+    "sovereign_clinical": [
+      { "role": "Bed (Anchor)", "type": "Floating Platform Bed", "shape": "Low, cantilevered base with no visible legs, upholstered headboard panel", "dimensions": "Queen 160cm x 200cm, 35cm platform H" },
+      { "role": "Nightstand(s)", "type": "Wall-Mounted Cantilever Nightstands (x2)", "shape": "Floating rectangular volume, push-to-open drawer", "dimensions": "45cm W x 35cm D x 20cm H each" },
+      { "role": "Wardrobe / Dresser", "type": "Flush Matte Wardrobe Wall", "shape": "Full-height sliding door system, zero visible hardware", "dimensions": "240cm W x 60cm D x 240cm H" },
+      { "role": "Reading Chair", "type": "Structural Steel-Frame Chair", "shape": "Angular frame, single flat cushion", "dimensions": "70cm W x 75cm D x 80cm H" }
+    ],
+    "sovereign_precision": [
+      { "role": "Bed (Anchor)", "type": "Book-Matched Walnut Bed Frame", "shape": "Symmetrical grain headboard, tailored upholstered panel insert", "dimensions": "Queen 160cm x 200cm, 40cm frame H" },
+      { "role": "Nightstand(s)", "type": "Walnut Precision Nightstands (x2)", "shape": "Single drawer, fine brushed-steel pull", "dimensions": "48cm W x 38cm D x 55cm H each" },
+      { "role": "Wardrobe / Dresser", "type": "Walnut Grid Wardrobe", "shape": "Symmetrical door/drawer grid, fine linear pulls", "dimensions": "220cm W x 62cm D x 230cm H" },
+      { "role": "Reading Chair", "type": "Tailored Wingback Precision Chair", "shape": "Structured flannel upholstery, walnut tapered legs", "dimensions": "72cm W x 78cm D x 95cm H" }
+    ],
+    "sage_hermit": [
+      { "role": "Bed (Anchor)", "type": "Oiled-Oak Cocoon Bed", "shape": "Low platform, high wraparound headboard for acoustic enclosure", "dimensions": "Queen 160cm x 200cm, 30cm platform H" },
+      { "role": "Nightstand(s)", "type": "Felt-Fronted Nightstands (x2)", "shape": "Fully enclosed drawer face, blackened iron pull", "dimensions": "42cm W x 36cm D x 50cm H each" },
+      { "role": "Wardrobe / Dresser", "type": "Felt-Panel Wardrobe", "shape": "Acoustic wool-felt door faces, no visible hardware", "dimensions": "220cm W x 60cm D x 230cm H" },
+      { "role": "Reading Chair", "type": "Wingback Isolation Armchair", "shape": "High-sided, deep recessed seat, blackout-linen upholstery", "dimensions": "78cm W x 85cm D x 105cm H" }
+    ],
+    "sage_scholar": [
+      { "role": "Bed (Anchor)", "type": "Library Sleigh Bed", "shape": "Curved solid-ash headboard and footboard, aged patina", "dimensions": "Queen 160cm x 200cm, 45cm frame H" },
+      { "role": "Nightstand(s)", "type": "Ash Ladder-Shelf Nightstands (x2)", "shape": "Open shelving for books, aged brass reading-lamp fitting", "dimensions": "45cm W x 38cm D x 60cm H each" },
+      { "role": "Wardrobe / Dresser", "type": "Open Oak Library Wardrobe", "shape": "Partial open shelving combined with closed drawer base", "dimensions": "230cm W x 60cm D x 220cm H" },
+      { "role": "Reading Chair", "type": "Aged-Leather Reading Wingback", "shape": "Deep recline, high back, brass-tack trim", "dimensions": "75cm W x 82cm D x 108cm H" }
+    ],
+    "alchemist_fluid": [
+      { "role": "Bed (Anchor)", "type": "Modular Fold-Flat Bed", "shape": "Frame folds for daytime reconfiguration, lightweight composite base", "dimensions": "Queen 160cm x 200cm, 30cm platform H" },
+      { "role": "Nightstand(s)", "type": "Rolling Caster Nightstands (x2)", "shape": "Locking-caster mobile base, quick-release drawer", "dimensions": "40cm W x 35cm D x 55cm H each" },
+      { "role": "Wardrobe / Dresser", "type": "Modular Rolling Wardrobe Units (x2)", "shape": "Split into mobile modules, quick-release panels", "dimensions": "each 60cm W x 55cm D x 180cm H" },
+      { "role": "Reading Chair", "type": "Folding Caster Lounge Chair", "shape": "Collapsible frame, performance-weave sling seat", "dimensions": "65cm W x 70cm D x 78cm H" }
+    ],
+    "alchemist_chaotic": [
+      { "role": "Bed (Anchor)", "type": "Exposed-Bolt Platform Bed", "shape": "Visible structural joinery, plywood headboard panel", "dimensions": "Queen 160cm x 200cm, 35cm platform H" },
+      { "role": "Nightstand(s)", "type": "Pegboard-Side Nightstands (x2)", "shape": "Painted MDF pegboard side panel, exposed bracket shelf", "dimensions": "40cm W x 35cm D x 55cm H each" },
+      { "role": "Wardrobe / Dresser", "type": "OSB Panel Wardrobe", "shape": "Edge-banded panel doors, exposed industrial hardware", "dimensions": "210cm W x 60cm D x 220cm H" },
+      { "role": "Reading Chair", "type": "Industrial Bolt-Frame Stool-Chair", "shape": "Exposed bolted joints, denim-weight cotton seat pad", "dimensions": "60cm W x 65cm D x 82cm H" }
+    ],
+    "weaver_intimate": [
+      { "role": "Bed (Anchor)", "type": "Warm Cane-Panel Bed", "shape": "Woven cane headboard insert, oak frame", "dimensions": "Queen 160cm x 200cm, 40cm frame H" },
+      { "role": "Nightstand(s)", "type": "Cane-Front Nightstands (x2)", "shape": "Woven cane drawer face, warm brass pull", "dimensions": "45cm W x 38cm D x 55cm H each" },
+      { "role": "Wardrobe / Dresser", "type": "Warm Oak Cane-Door Wardrobe", "shape": "Woven cane door panels over solid oak carcass", "dimensions": "225cm W x 62cm D x 230cm H" },
+      { "role": "Reading Chair", "type": "Textured Cozy Tub Chair", "shape": "Soft rounded tub shape, bouclé upholstery", "dimensions": "75cm W x 78cm D x 78cm H" }
+    ],
+    "weaver_dynamic": [
+      { "role": "Bed (Anchor)", "type": "Honey Oak Upholstered Bed", "shape": "Sealed oak frame, tight-weave washable headboard panel", "dimensions": "Queen 160cm x 200cm, 42cm frame H" },
+      { "role": "Nightstand(s)", "type": "Honey Oak Nightstands (x2)", "shape": "Sealed high-traffic finish, brushed-brass pull", "dimensions": "46cm W x 38cm D x 55cm H each" },
+      { "role": "Wardrobe / Dresser", "type": "Honey Oak Sliding-Door Wardrobe", "shape": "Wide sliding-door cabinetry, brushed-brass hardware", "dimensions": "230cm W x 62cm D x 230cm H" },
+      { "role": "Reading Chair", "type": "Washable-Weave Swivel Chair", "shape": "360° swivel base, tight-weave washable upholstery", "dimensions": "78cm W x 80cm D x 82cm H" }
+    ]
+  },
+  "balcony": {
+    "sovereign_clinical": [
+      { "role": "Lounge Seating", "type": "Cantilevered Steel Lounge Chairs (x2)", "shape": "Single-curve steel frame, weatherproof charcoal cushion", "dimensions": "65cm W x 75cm D x 78cm H each" },
+      { "role": "Side Table", "type": "Concrete Disc Side Table", "shape": "Circular slab top, slim steel pedestal", "dimensions": "45cm dia x 45cm H" },
+      { "role": "Planter / Storage Bench", "type": "Flush Concrete Planter Trough", "shape": "Linear trough, zero-ornament matte finish", "dimensions": "150cm W x 35cm D x 40cm H" }
+    ],
+    "sovereign_precision": [
+      { "role": "Lounge Seating", "type": "Walnut-Frame Lounge Chairs (x2)", "shape": "Slim tapered legs, structured weatherproof cushion", "dimensions": "66cm W x 76cm D x 80cm H each" },
+      { "role": "Side Table", "type": "Steel-Leg Walnut Side Table", "shape": "Small rectangular top, fine steel box-frame legs", "dimensions": "40cm x 40cm x 45cm H" },
+      { "role": "Planter / Storage Bench", "type": "Walnut-Edge Planter Bench", "shape": "Linear bench with integrated planter trough, brushed-steel trim", "dimensions": "160cm W x 40cm D x 42cm H" }
+    ],
+    "sage_hermit": [
+      { "role": "Lounge Seating", "type": "Oiled-Oak Cocoon Lounger", "shape": "Low, deep-seat single lounger, wraparound sides", "dimensions": "75cm W x 100cm D x 70cm H" },
+      { "role": "Side Table", "type": "Raw Oak Low Table", "shape": "Soft-edged, low profile, non-reflective finish", "dimensions": "40cm x 40cm x 35cm H" },
+      { "role": "Planter / Storage Bench", "type": "Felt-Fronted Storage Bench", "shape": "Enclosed bench with planter niche, blackened iron trim", "dimensions": "140cm W x 38cm D x 42cm H" }
+    ],
+    "sage_scholar": [
+      { "role": "Lounge Seating", "type": "Aged-Leather Lounge Chair", "shape": "Deep recline, high back, brass-tack trim", "dimensions": "72cm W x 80cm D x 100cm H" },
+      { "role": "Side Table", "type": "Solid Ash Book Table", "shape": "Small rectangular top with lower shelf", "dimensions": "42cm x 42cm x 40cm H" },
+      { "role": "Planter / Storage Bench", "type": "Open Oak Planter Shelf", "shape": "Exposed shelving with terracotta planter inserts", "dimensions": "150cm W x 35cm D x 45cm H" }
+    ],
+    "alchemist_fluid": [
+      { "role": "Lounge Seating", "type": "Folding Caster Lounge Chairs (x2)", "shape": "Collapsible frame, performance-weave sling seat, locking wheels", "dimensions": "65cm W x 70cm D x 78cm H each" },
+      { "role": "Side Table", "type": "Glide Height-Adjustable Table", "shape": "Circular top, gas-lift column", "dimensions": "40cm dia x 35-55cm H" },
+      { "role": "Planter / Storage Bench", "type": "Rolling Modular Planter Cart", "shape": "Mobile cart with quick-release planter bins", "dimensions": "70cm W x 40cm D x 60cm H" }
+    ],
+    "alchemist_chaotic": [
+      { "role": "Lounge Seating", "type": "Industrial Bolt-Frame Lounge Chairs (x2)", "shape": "Exposed bolted joints, canvas seat pads", "dimensions": "62cm W x 68cm D x 80cm H each" },
+      { "role": "Side Table", "type": "OSB Panel Side Table", "shape": "Edge-banded top on exposed steel A-frame", "dimensions": "40cm x 40cm x 42cm H" },
+      { "role": "Planter / Storage Bench", "type": "Pegboard Planter Bench", "shape": "Painted MDF pegboard back, exposed bracket planter shelf", "dimensions": "150cm W x 38cm D x 45cm H" }
+    ],
+    "weaver_intimate": [
+      { "role": "Lounge Seating", "type": "Cane-Frame Lounge Chairs (x2)", "shape": "Woven cane back, bouclé cushion", "dimensions": "68cm W x 78cm D x 80cm H each" },
+      { "role": "Side Table", "type": "Cane-Front Terracotta Table", "shape": "Rounded top, warm cane detailing", "dimensions": "42cm dia x 42cm H" },
+      { "role": "Planter / Storage Bench", "type": "Warm Oak Planter Bench", "shape": "Linear bench with integrated terracotta planter trough", "dimensions": "155cm W x 40cm D x 42cm H" }
+    ],
+    "weaver_dynamic": [
+      { "role": "Lounge Seating", "type": "Washable-Weave Lounge Chairs (x2)", "shape": "Stain-resistant weave, rounded bolster arms", "dimensions": "70cm W x 80cm D x 80cm H each" },
+      { "role": "Side Table", "type": "Honey Oak Rounded Table", "shape": "Soft-cornered small table, sealed finish", "dimensions": "42cm x 42cm x 40cm H" },
+      { "role": "Planter / Storage Bench", "type": "Honey Oak Planter Bench", "shape": "Sealed high-traffic bench with planter trough", "dimensions": "160cm W x 40cm D x 42cm H" }
+    ]
+  },
+  "studio": {
+    "sovereign_clinical": [
+      { "role": "Sleep Piece (Bed/Sofa-bed)", "type": "Floating Platform Daybed", "shape": "Low cantilevered base, doubles as seating by day", "dimensions": "140cm x 200cm, 30cm platform H" },
+      { "role": "Desk", "type": "Wall-Mounted Cantilever Desk", "shape": "Zero-leg floating desk, zero visible hardware", "dimensions": "120cm W x 50cm D x 75cm H" },
+      { "role": "Storage Divider", "type": "Flush Matte Room-Divider Wall", "shape": "Full-height sliding storage partition, zero visible hardware", "dimensions": "200cm W x 40cm D x 230cm H" },
+      { "role": "Compact Multi-use Table", "type": "Concrete Disc Side/Dining Table", "shape": "Circular slab, slim steel pedestal", "dimensions": "70cm dia x 74cm H" }
+    ],
+    "sovereign_precision": [
+      { "role": "Sleep Piece (Bed/Sofa-bed)", "type": "Walnut-Frame Daybed", "shape": "Symmetrical grain frame, tailored upholstered cushion", "dimensions": "140cm x 200cm, 35cm frame H" },
+      { "role": "Desk", "type": "Book-Matched Walnut Floating Desk", "shape": "Symmetrical grain, fine steel bracket support", "dimensions": "125cm W x 52cm D x 75cm H" },
+      { "role": "Storage Divider", "type": "Walnut Grid Divider Cabinet", "shape": "Symmetrical door grid, fine linear pulls, double-sided", "dimensions": "190cm W x 42cm D x 220cm H" },
+      { "role": "Compact Multi-use Table", "type": "Steel-Leg Walnut Round Table", "shape": "Small round top, fine steel legs", "dimensions": "70cm dia x 74cm H" }
+    ],
+    "sage_hermit": [
+      { "role": "Sleep Piece (Bed/Sofa-bed)", "type": "Oiled-Oak Cocoon Daybed", "shape": "Low, deep, high-sided enclosure for isolation", "dimensions": "140cm x 200cm, 28cm platform H" },
+      { "role": "Desk", "type": "Raw Oak Floating Desk", "shape": "Cantilevered oak slab, zero leg clutter", "dimensions": "115cm W x 50cm D x 74cm H" },
+      { "role": "Storage Divider", "type": "Felt-Panel Acoustic Divider", "shape": "Wool-felt clad partition, sound-dampening", "dimensions": "180cm W x 38cm D x 210cm H" },
+      { "role": "Compact Multi-use Table", "type": "Raw Oak Low Table", "shape": "Soft-edged, low, non-reflective", "dimensions": "65cm dia x 40cm H" }
+    ],
+    "sage_scholar": [
+      { "role": "Sleep Piece (Bed/Sofa-bed)", "type": "Library Daybed", "shape": "Solid ash frame, aged leather bolster cushions", "dimensions": "140cm x 200cm, 40cm frame H" },
+      { "role": "Desk", "type": "Solid Ash Library Desk", "shape": "Open-grain writing surface with side shelving", "dimensions": "130cm W x 55cm D x 75cm H" },
+      { "role": "Storage Divider", "type": "Open Oak Shelving Divider", "shape": "Double-sided open shelving, book-storage focus", "dimensions": "190cm W x 35cm D x 200cm H" },
+      { "role": "Compact Multi-use Table", "type": "Ash Book Side Table", "shape": "Round top with lower shelf", "dimensions": "65cm dia x 42cm H" }
+    ],
+    "alchemist_fluid": [
+      { "role": "Sleep Piece (Bed/Sofa-bed)", "type": "Modular Fold-Flat Sofa-Bed", "shape": "Folds between sofa and bed modes, lightweight composite frame", "dimensions": "140cm x 195cm (bed), 30cm H" },
+      { "role": "Desk", "type": "Glide Height-Adjustable Desk", "shape": "Gas-lift top, sit-stand convertible, locking casters", "dimensions": "120cm W x 55cm D x 70-110cm H" },
+      { "role": "Storage Divider", "type": "Rolling Modular Divider Shelving", "shape": "Mobile shelving unit doubling as a room partition", "dimensions": "80cm W x 35cm D x 180cm H" },
+      { "role": "Compact Multi-use Table", "type": "Height-Adjustable Glide Table", "shape": "Circular top, gas-lift column, casters", "dimensions": "60cm dia x 40-60cm H" }
+    ],
+    "alchemist_chaotic": [
+      { "role": "Sleep Piece (Bed/Sofa-bed)", "type": "Exposed-Bolt Daybed", "shape": "Visible structural joinery, plywood platform", "dimensions": "140cm x 200cm, 30cm platform H" },
+      { "role": "Desk", "type": "OSB Panel Workbench Desk", "shape": "Edge-banded top, exposed steel A-frame", "dimensions": "125cm W x 55cm D x 75cm H" },
+      { "role": "Storage Divider", "type": "Pegboard Room Divider", "shape": "Painted MDF pegboard partition, double-sided hook storage", "dimensions": "180cm W x 5cm D x 210cm H" },
+      { "role": "Compact Multi-use Table", "type": "OSB Round Utility Table", "shape": "Edge-banded round top, exposed steel legs", "dimensions": "65cm dia x 42cm H" }
+    ],
+    "weaver_intimate": [
+      { "role": "Sleep Piece (Bed/Sofa-bed)", "type": "Cane-Panel Daybed", "shape": "Woven cane side panels, bouclé bolster cushions", "dimensions": "140cm x 200cm, 35cm frame H" },
+      { "role": "Desk", "type": "Warm Oak Cane-Front Desk", "shape": "Cane drawer front, solid oak writing surface", "dimensions": "120cm W x 52cm D x 75cm H" },
+      { "role": "Storage Divider", "type": "Cane-Door Divider Cabinet", "shape": "Woven cane doors, double-sided oak carcass", "dimensions": "185cm W x 42cm D x 210cm H" },
+      { "role": "Compact Multi-use Table", "type": "Cane-Front Terracotta Table", "shape": "Rounded top, warm cane detailing", "dimensions": "65cm dia x 40cm H" }
+    ],
+    "weaver_dynamic": [
+      { "role": "Sleep Piece (Bed/Sofa-bed)", "type": "Honey Oak Sofa-Bed", "shape": "Sealed high-traffic frame, washable upholstery, converts to bed", "dimensions": "140cm x 195cm (bed), 32cm H" },
+      { "role": "Desk", "type": "Honey Oak Sealed Desk", "shape": "Sealed high-traffic surface, brushed-brass hardware", "dimensions": "125cm W x 55cm D x 75cm H" },
+      { "role": "Storage Divider", "type": "Honey Oak Sliding Divider", "shape": "Wide sliding-door double-sided cabinet partition", "dimensions": "190cm W x 45cm D x 210cm H" },
+      { "role": "Compact Multi-use Table", "type": "Honey Oak Rounded Table", "shape": "Soft-cornered round table, sealed finish", "dimensions": "65cm dia x 40cm H" }
+    ]
+  },
+  "open_plan": {
+    "sovereign_clinical": [
+      { "role": "Sofa (Anchor)", "type": "Low-Slung Modular Sofa", "shape": "Rectilinear, deep seat, recessed plinth", "dimensions": "260cm W x 95cm D x 68cm H" },
+      { "role": "Dining Set", "type": "Concrete Table + Steel Chairs (x6)", "shape": "Flat-edge slab table with cantilevered steel chairs", "dimensions": "Table 200cm x 95cm x 75cm H" },
+      { "role": "Kitchen Island / Peninsula", "type": "Flush Matte Island", "shape": "Continuous matte volume, integrated appliance bay, no visible pulls", "dimensions": "220cm W x 100cm D x 90cm H" },
+      { "role": "Media Console", "type": "Flush Push-to-Open Console", "shape": "Wall-mounted floating volume, zero hardware", "dimensions": "220cm W x 40cm D x 45cm H" },
+      { "role": "Zone Divider / Rug Anchor", "type": "Flat-Weave Charcoal Rug", "shape": "Single solid tone, sharp rectangular boundary", "dimensions": "300cm x 220cm" }
+    ],
+    "sovereign_precision": [
+      { "role": "Sofa (Anchor)", "type": "Book-Matched Walnut Sofa", "shape": "Symmetrical tailored silhouette, piped seams", "dimensions": "250cm W x 92cm D x 72cm H" },
+      { "role": "Dining Set", "type": "Walnut Table + Steel Chairs (x6)", "shape": "Bookmatch walnut table, fine steel-leg chairs", "dimensions": "Table 210cm x 100cm x 75cm H" },
+      { "role": "Kitchen Island / Peninsula", "type": "Walnut Grid Island", "shape": "Symmetrical door/drawer grid, fine linear pulls", "dimensions": "230cm W x 100cm D x 90cm H" },
+      { "role": "Media Console", "type": "Linear Walnut Credenza", "shape": "Symmetrical door grid, brushed-steel pulls", "dimensions": "220cm W x 42cm D x 48cm H" },
+      { "role": "Zone Divider / Rug Anchor", "type": "Structured Wool Flannel Rug", "shape": "Precise piped border, tailored tone-on-tone weave", "dimensions": "300cm x 220cm" }
+    ],
+    "sage_hermit": [
+      { "role": "Sofa (Anchor)", "type": "Oiled-Oak Cocoon Sofa", "shape": "Low, deep-seat, high-sided enclosure", "dimensions": "240cm W x 100cm D x 70cm H" },
+      { "role": "Dining Set", "type": "Raw Oak Table + Felt Benches", "shape": "Single-slab table, felt-padded bench seating", "dimensions": "Table 190cm x 90cm x 74cm H" },
+      { "role": "Kitchen Island / Peninsula", "type": "Felt-Fronted Island", "shape": "Fully enclosed, acoustic felt panel doors", "dimensions": "210cm W x 95cm D x 90cm H" },
+      { "role": "Media Console", "type": "Felt-Fronted Storage Bench", "shape": "Fully enclosed, felt panel doors, blackened iron pull", "dimensions": "190cm W x 40cm D x 42cm H" },
+      { "role": "Zone Divider / Rug Anchor", "type": "Undyed Wool Boundary Rug", "shape": "Heavy raw texture, matte natural tone", "dimensions": "280cm x 200cm" }
+    ],
+    "sage_scholar": [
+      { "role": "Sofa (Anchor)", "type": "Library Chesterfield Sofa", "shape": "Rolled arms, tufted back, aged leather/tweed", "dimensions": "235cm W x 95cm D x 78cm H" },
+      { "role": "Dining Set", "type": "Ash Farmhouse Table + Leather Chairs (x6)", "shape": "Open-grain table, ladder-back leather-seat chairs", "dimensions": "Table 195cm x 95cm x 75cm H" },
+      { "role": "Kitchen Island / Peninsula", "type": "Open Oak Library Island", "shape": "Partial open shelving with closed drawer base", "dimensions": "220cm W x 95cm D x 92cm H" },
+      { "role": "Media Console", "type": "Open Oak Shelving Ladder", "shape": "Vertical open-grain shelving, aged brass fitting", "dimensions": "100cm W x 32cm D x 190cm H" },
+      { "role": "Zone Divider / Rug Anchor", "type": "Wool Tweed Library Rug", "shape": "Muted textured tone, calm boundary marker", "dimensions": "290cm x 210cm" }
+    ],
+    "alchemist_fluid": [
+      { "role": "Sofa (Anchor)", "type": "Modular Caster Sofa (3-Piece)", "shape": "Splits into independent modules, locking casters", "dimensions": "each 80cm W x 90cm D x 70cm H" },
+      { "role": "Dining Set", "type": "Glide Table + Stackable Stools", "shape": "Height-adjustable table, lightweight caster stools", "dimensions": "Table 170cm x 90cm x 40-95cm H" },
+      { "role": "Kitchen Island / Peninsula", "type": "Rolling Modular Island Cart", "shape": "Mobile multi-tier island, quick-release bins", "dimensions": "160cm W x 80cm D x 90cm H" },
+      { "role": "Media Console", "type": "Rolling Modular Storage Cart", "shape": "3-tier open cart, quick-release panels", "dimensions": "75cm W x 45cm D x 80cm H" },
+      { "role": "Zone Divider / Rug Anchor", "type": "Performance-Weave Modular Rug", "shape": "Stain-resistant, easily repositioned zone marker", "dimensions": "280cm x 200cm" }
+    ],
+    "alchemist_chaotic": [
+      { "role": "Sofa (Anchor)", "type": "Exposed-Bolt Plywood Sofa", "shape": "Visible structural joinery, canvas cushions", "dimensions": "245cm W x 90cm D x 72cm H" },
+      { "role": "Dining Set", "type": "OSB Table + Industrial Stools (x6)", "shape": "Edge-banded panel table, bolt-frame stools", "dimensions": "Table 190cm x 95cm x 75cm H" },
+      { "role": "Kitchen Island / Peninsula", "type": "Pegboard-Backed Island", "shape": "Exposed structure, pegboard storage face", "dimensions": "220cm W x 95cm D x 90cm H" },
+      { "role": "Media Console", "type": "Pegboard Wall Storage Unit", "shape": "Painted MDF pegboard, exposed bracket shelving", "dimensions": "190cm W x 35cm D x 200cm H" },
+      { "role": "Zone Divider / Rug Anchor", "type": "Canvas Utility Rug", "shape": "Durable flat-weave, visibly functional boundary", "dimensions": "290cm x 210cm" }
+    ],
+    "weaver_intimate": [
+      { "role": "Sofa (Anchor)", "type": "Curved Bouclé Nest Sofa", "shape": "Organic L-curve, wraps into conversational nook", "dimensions": "280cm W x 100cm D x 75cm H" },
+      { "role": "Dining Set", "type": "Warm Oak Table + Cane Chairs (x6)", "shape": "Rounded gathering table, woven cane-back chairs", "dimensions": "Table 210cm x 100cm x 75cm H" },
+      { "role": "Kitchen Island / Peninsula", "type": "Warm Oak Cane-Front Island", "shape": "Cane door panels over solid oak carcass", "dimensions": "220cm W x 100cm D x 92cm H" },
+      { "role": "Media Console", "type": "Warm Oak Cane-Door Console", "shape": "Woven cane door panels, oak carcass", "dimensions": "210cm W x 42cm D x 48cm H" },
+      { "role": "Zone Divider / Rug Anchor", "type": "High-Pile Jute Boundary Rug", "shape": "Warm textured anchor for the social zone", "dimensions": "300cm x 220cm" }
+    ],
+    "weaver_dynamic": [
+      { "role": "Sofa (Anchor)", "type": "High-Traffic Sectional Sofa", "shape": "Wide L-sectional, stain-resistant weave", "dimensions": "300cm W x 160cm D x 78cm H" },
+      { "role": "Dining Set", "type": "Honey Oak Extendable Table + Chairs (x6)", "shape": "Expandable table, washable-weave chairs", "dimensions": "Table 180-230cm x 95cm x 75cm H" },
+      { "role": "Kitchen Island / Peninsula", "type": "Honey Oak Sliding-Door Island", "shape": "Wide sliding-door cabinetry, brushed-brass hardware", "dimensions": "230cm W x 100cm D x 92cm H" },
+      { "role": "Media Console", "type": "Honey Oak Media Credenza", "shape": "Wide sliding-door console, brushed-brass pulls", "dimensions": "230cm W x 45cm D x 50cm H" },
+      { "role": "Zone Divider / Rug Anchor", "type": "Washable-Weave Boundary Rug", "shape": "Durable, warm-toned zone anchor", "dimensions": "300cm x 220cm" }
+    ]
+  },
+  "home_office": {
+    "sovereign_clinical": [
+      { "role": "Desk (Anchor)", "type": "Wall-Mounted Cantilever Desk", "shape": "Zero-leg floating desk, zero visible hardware", "dimensions": "140cm W x 60cm D x 75cm H" },
+      { "role": "Ergonomic Chair", "type": "Structural Steel-Frame Task Chair", "shape": "Angular frame, minimal flat cushion, no ornamentation", "dimensions": "60cm W x 60cm D x 100-110cm H" },
+      { "role": "Storage / Bookshelf", "type": "Flush Matte Storage Wall", "shape": "Full-height push-to-open cabinetry", "dimensions": "220cm W x 40cm D x 230cm H" }
+    ],
+    "sovereign_precision": [
+      { "role": "Desk (Anchor)", "type": "Book-Matched Walnut Desk", "shape": "Symmetrical grain, fine steel bracket support", "dimensions": "145cm W x 62cm D x 75cm H" },
+      { "role": "Ergonomic Chair", "type": "Brushed-Steel Task Chair", "shape": "Slim tapered frame, structured wool seat pad", "dimensions": "60cm W x 62cm D x 100-112cm H" },
+      { "role": "Storage / Bookshelf", "type": "Walnut Grid Bookshelf", "shape": "Symmetrical door/drawer grid, fine linear pulls", "dimensions": "200cm W x 42cm D x 220cm H" }
+    ],
+    "sage_hermit": [
+      { "role": "Desk (Anchor)", "type": "Raw Oak Floating Desk", "shape": "Cantilevered oak slab, zero leg clutter", "dimensions": "130cm W x 58cm D x 74cm H" },
+      { "role": "Ergonomic Chair", "type": "Felt-Padded Task Chair", "shape": "Minimal frame, wool-felt cushion, quiet materiality", "dimensions": "58cm W x 60cm D x 98-108cm H" },
+      { "role": "Storage / Bookshelf", "type": "Felt-Panel Acoustic Bookshelf", "shape": "Wool-felt clad partial-enclosure shelving", "dimensions": "200cm W x 38cm D x 220cm H" }
+    ],
+    "sage_scholar": [
+      { "role": "Desk (Anchor)", "type": "Solid Ash Library Desk", "shape": "Open-grain writing surface with side shelving", "dimensions": "150cm W x 65cm D x 75cm H" },
+      { "role": "Ergonomic Chair", "type": "Aged-Leather Task Chair", "shape": "Wood-frame swivel base, aged leather cushion", "dimensions": "60cm W x 62cm D x 100-110cm H" },
+      { "role": "Storage / Bookshelf", "type": "Open Oak Library Shelving", "shape": "Full-height open-grain shelving, aged brass fittings", "dimensions": "220cm W x 35cm D x 230cm H" }
+    ],
+    "alchemist_fluid": [
+      { "role": "Desk (Anchor)", "type": "Glide Height-Adjustable Desk", "shape": "Gas-lift sit-stand top, locking casters", "dimensions": "135cm W x 60cm D x 70-110cm H" },
+      { "role": "Ergonomic Chair", "type": "Rolling Task Chair (Caster Base)", "shape": "Lightweight composite shell, locking casters, quick-release height", "dimensions": "58cm W x 60cm D x 95-115cm H" },
+      { "role": "Storage / Bookshelf", "type": "Rolling Modular Shelving Units (x2)", "shape": "Mobile shelving, quick-release panels", "dimensions": "each 60cm W x 40cm D x 180cm H" }
+    ],
+    "alchemist_chaotic": [
+      { "role": "Desk (Anchor)", "type": "OSB Panel Workbench Desk", "shape": "Edge-banded top, exposed steel A-frame", "dimensions": "145cm W x 65cm D x 75cm H" },
+      { "role": "Ergonomic Chair", "type": "Industrial Bolt-Frame Task Chair", "shape": "Exposed bolted joints, canvas seat pad", "dimensions": "58cm W x 60cm D x 95-108cm H" },
+      { "role": "Storage / Bookshelf", "type": "Pegboard Storage Wall", "shape": "Painted MDF pegboard, exposed bracket shelving", "dimensions": "210cm W x 35cm D x 220cm H" }
+    ],
+    "weaver_intimate": [
+      { "role": "Desk (Anchor)", "type": "Warm Oak Cane-Front Desk", "shape": "Cane drawer front, solid oak writing surface", "dimensions": "140cm W x 60cm D x 75cm H" },
+      { "role": "Ergonomic Chair", "type": "Cane-Back Task Chair", "shape": "Woven cane backrest, bouclé cushion, oak swivel base", "dimensions": "58cm W x 60cm D x 98-108cm H" },
+      { "role": "Storage / Bookshelf", "type": "Cane-Door Bookshelf Cabinet", "shape": "Woven cane doors over solid oak carcass", "dimensions": "200cm W x 42cm D x 220cm H" }
+    ],
+    "weaver_dynamic": [
+      { "role": "Desk (Anchor)", "type": "Honey Oak Sealed Desk", "shape": "Sealed high-traffic surface, brushed-brass hardware", "dimensions": "145cm W x 62cm D x 75cm H" },
+      { "role": "Ergonomic Chair", "type": "Washable-Weave Task Chair", "shape": "Tight-weave washable cushion, sealed oak swivel base", "dimensions": "60cm W x 62cm D x 100-112cm H" },
+      { "role": "Storage / Bookshelf", "type": "Honey Oak Sliding-Door Bookshelf", "shape": "Wide sliding-door cabinetry, brushed-brass hardware", "dimensions": "210cm W x 45cm D x 220cm H" }
+    ]
+  }
+}

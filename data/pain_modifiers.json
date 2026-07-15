@@ -1,0 +1,1213 @@
+{
+  "room_pains": {
+    "living_room": [
+      {
+        "key": "storage",
+        "title": "I feel overwhelmed by visual clutter",
+        "desc": "Visual noise and storage failure. Objects pile up on flat surfaces."
+      },
+      {
+        "key": "circulation",
+        "title": "I feel restless and can't find peace here",
+        "desc": "Circulation pathway conflict. Movement is blocked by static layouts."
+      },
+      {
+        "key": "atmosphere",
+        "title": "I don't feel inspired or warm in this space",
+        "desc": "Atmosphere and lighting issues. The space feels cold or uninviting."
+      },
+      {
+        "key": "zoning",
+        "title": "The space feels chaotic and doesn't work",
+        "desc": "Zoning deficit. Seating is pushed to perimeters, lacking a gravity center."
+      }
+    ],
+    "kitchen": [
+      {
+        "key": "workspace",
+        "title": "I feel claustrophobic and out of space",
+        "desc": "Workspace deficit. Countertops are cluttered, leaving no prep space."
+      },
+      {
+        "key": "storage",
+        "title": "I feel overwhelmed by the constant mess",
+        "desc": "Pantry and cabinetry failure. No designated place for dry goods."
+      },
+      {
+        "key": "workflow",
+        "title": "Cooking here feels chaotic and stressful",
+        "desc": "Workflow friction. The path between active zones is awkward."
+      },
+      {
+        "key": "kitchen_triangle",
+        "title": "I feel disconnected from the rest of the home",
+        "desc": "Neufert triangle failure. Sink, stove, and fridge are too distant."
+      }
+    ],
+    "bedroom": [
+      {
+        "key": "sleep_quality",
+        "title": "I never feel fully rested or safe here",
+        "desc": "Sleep cocoon failure. The bed feels exposed to transit lines."
+      },
+      {
+        "key": "storage",
+        "title": "I feel visually overwhelmed and crowded",
+        "desc": "Wardrobe containment failure. Open garments block cognitive rest."
+      },
+      {
+        "key": "privacy",
+        "title": "I don't feel private or fully enclosed",
+        "desc": "Vestibule shielding failure. Bedroom entry directly exposes the bed."
+      },
+      {
+        "key": "atmosphere",
+        "title": "The space feels cold and uninviting",
+        "desc": "Atmosphere deficit. Harsh lighting and hard surfaces."
+      }
+    ],
+    "home_office": [
+      {
+        "key": "focus",
+        "title": "I feel exposed and can't focus",
+        "desc": "Command desk failure. Desk faces a wall or leaves your back exposed."
+      },
+      {
+        "key": "workspace",
+        "title": "I feel cramped and limited by my setup",
+        "desc": "Desk size deficit. No dedicated space for reference documents."
+      },
+      {
+        "key": "atmosphere",
+        "title": "The room feels mentally draining and cold",
+        "desc": "Lighting glare and surface exhaustion. Cold overhead lighting."
+      },
+      {
+        "key": "storage",
+        "title": "I feel overwhelmed by the disorganization",
+        "desc": "Reference storage failure. Cables and papers are scattered."
+      }
+    ],
+    "balcony": [
+      {
+        "key": "functionality",
+        "title": "I feel disconnected from the space entirely",
+        "desc": "Functionality failure. Rigid seating layout prevents daily habits."
+      },
+      {
+        "key": "privacy",
+        "title": "I feel exposed to neighbors and sightlines",
+        "desc": "Screening deficit. Exposed sightlines from neighbor balconies."
+      },
+      {
+        "key": "transition",
+        "title": "The threshold feels blocked and awkward",
+        "desc": "Threshold flow failure. Transition door blocks active connection."
+      },
+      {
+        "key": "atmosphere",
+        "title": "It feels cold and lacks any comfort",
+        "desc": "Atmosphere deficit. Harsh lighting and ungrounded furniture."
+      }
+    ],
+    "open_plan": [
+      {
+        "key": "zoning",
+        "title": "Everything feels blended without clean lines",
+        "desc": "Zoning failure. Lacks clear rug boundaries or light drops."
+      },
+      {
+        "key": "hierarchy",
+        "title": "The whole space feels chaotic and ungrounded",
+        "desc": "Visual hierarchy failure. No primary gravity center to ground the eye."
+      },
+      {
+        "key": "behavioral_separation",
+        "title": "I feel distracted by competing activities",
+        "desc": "Acoustic and routine bleed. Living noise floods the workspace nook."
+      },
+      {
+        "key": "storage",
+        "title": "I feel visually overwhelmed by everything at once",
+        "desc": "Concealed wall cabinet failure. Open kitchen clutter dominates the view."
+      }
+    ],
+    "studio": [
+      {
+        "key": "privacy",
+        "title": "I feel exposed sleeping so close to the door",
+        "desc": "Sightline shielding failure. Sleep cocoon directly open to the entryway."
+      },
+      {
+        "key": "storage",
+        "title": "I feel overwhelmed by the lack of storage",
+        "desc": "Multipurpose utility storage failure. Murphy bed area is blocked."
+      },
+      {
+        "key": "behavioral_separation",
+        "title": "I can't separate work from my personal rest",
+        "desc": "Behavioral boundary bleed. Work desk axis faces the bed."
+      },
+      {
+        "key": "circulation",
+        "title": "I feel restricted and can't host friends",
+        "desc": "Circulation corridor failure. Static furniture blocks center transit."
+      }
+    ]
+  },
+  "pain_details": {
+    "storage": {
+      "emotion": "Overwhelm",
+      "underlying_cause": "Visual Clutter",
+      "correction_protocol": "Concealment Strategy",
+      "label": "Visual Clutter & Mess",
+      "diagnoses": {
+        "sovereign": "Your room is not suffering from a decoration problem. It is suffering from closed storage failure and visual overload, forcing too many objects into focus simultaneously.",
+        "sage": "Your environment's storage boundary has collapsed, causing visual noise that blocks mental decompressing.",
+        "alchemist": "Your space's modular flow is paralyzed by static pile-ups. It needs concealed active boundaries.",
+        "weaver": "The cozy warmth of the room has turned into chaotic clutter, choking social pathways and face-to-face seating flow."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Remove all open display shelving below eye level. Every shelf you can see from your normal standing position contributes to baseline cognitive load. Box items into uniform closed containers within the same session — IKEA Kuggis or similar closed boxes work ($12–18 each).",
+          "Consolidate loose daily items — remote controls, cables, charging pads — into a single closed cabinet with push-to-open doors. The rule: if it has no designated closed home, it does not belong on the surface. One session, one surface at a time.",
+          "Bundle and hide every visible cable behind the desk or media console using cable management channels attached to the underside of the furniture. This alone removes ~30% of visual noise in most setups. Cable trays: $15–25."
+        ],
+        "sage": [
+          "Enclose open reference shelves behind solid matte or frosted glass sliding doors. Clear shelves in a Sage room are the single biggest source of sensory load — even books you love become visual noise when they're always visible. Sliding door inserts: $40–90.",
+          "Clear all flat horizontal surfaces — desk, dresser, nightstand — of active paperwork by end of day. Place a single closed tray or folder near the desk as the one landing zone. Anything not in that tray gets filed or tossed. Closed felt trays: $15–30.",
+          "Create a designated, enclosed bin at your room's entry threshold for incoming items — packages, mail, bags. This prevents threshold stress bleed into your main space. One lidded basket or closed cabinet near the door: $20–50."
+        ],
+        "alchemist": [
+          "Install vertical wall-mounted pegboard rails to lift mobile gear, cables, and tools off the floor and horizontal surfaces. Position the pegboard at arm reach from your main work or project zone. Pegboard kit: $25–60.",
+          "Swap any static coffee or side table for a lightweight rolling storage cart with closed bins. Alchemist spaces need surfaces that can move — a fixed table that accumulates clutter is the enemy. IKEA Råskog cart: $30.",
+          "Store yoga mats, sports equipment, or bulk hobby materials in a single dedicated rolling container with a lid, pushed to the room's perimeter when not active. Rolling bin with lid: $25–45."
+        ],
+        "weaver": [
+          "Introduce a low, wide media console with deep closed drawers to absorb loose clutter near the sofa zone. The key is that it sits at seated eye level — so guests look across it, not into it. Dimensions: minimum 140cm wide, 45cm deep. Budget: $120–300.",
+          "Use uniform textile baskets with lids — not open baskets — to contain blankets and pillows near the couch. Open baskets become clutter magnets within weeks. Lidded woven baskets: $20–40 each.",
+          "Clear the dining table completely except for one central object — a ceramic bowl, a candle, or a small plant. One object. The table is a gathering surface, not a filing surface. Everything else goes in a drawer or closed bin."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "Opak Minimal Storage Box with Integrated Lid",
+          "brand": "IKEA Kuggis",
+          "cost": "$12",
+          "benefit": "Encloses surface clutter within a clean, uniform geometric volume.",
+          "link": "https://www.amazon.com/s?k=ikea+kuggis&tag=yorukoglu-20"
+        },
+        {
+          "item": "Concealed Under-Desk Cable Management Tray",
+          "brand": "D-Line / IKEA Signum",
+          "cost": "$19",
+          "benefit": "Helps organize visual wire chaos below primary work plane.",
+          "link": "https://www.amazon.com/s?k=under+desk+cable+management&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint identifies the clutter and storage failure. The audit designs integrated custom millwork and closed panels to swallow visual noise."
+    },
+    "circulation": {
+      "emotion": "Restlessness",
+      "underlying_cause": "Circulation Friction",
+      "correction_protocol": "Flow Optimization",
+      "label": "Crowded Flow & Traffic",
+      "diagnoses": {
+        "sovereign": "Your layout forces movements too close to active focus zones, violating standard Neufert clearance boundaries.",
+        "sage": "Transit lanes slice directly through your recovery zone, preventing deep, uninterrupted rest.",
+        "alchemist": "Static furniture anchors block fluid path transitions, choking physical and routine mode shifts.",
+        "weaver": "Social seating lacks proper clearance nooks, making guests feel blocked and circulation restricted."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Float the main sofa 60cm away from all external walls — not pushed against them. This single move creates a dedicated peripheral corridor and immediately makes the room feel less crowded. Use painter's tape to test the position first before moving anything.",
+          "Remove any furniture placed diagonally. Every diagonal chair or table creates two conflicting axis lines in your visual field. Move everything parallel to walls or at 90° to existing pieces. Takes under an hour, costs nothing.",
+          "Measure and enforce a minimum of 80cm clear space around all desk chairs. If you cannot walk a full circle around your desk chair without touching something, the layout is creating friction you've stopped noticing. Move the blocking item out of the room entirely."
+        ],
+        "sage": [
+          "Rotate your main resting chair so it does not face active entry doors or kitchen zones. Your nervous system tracks movement in your peripheral vision automatically — even when you think you've tuned it out. Chair facing a calm corner or window: immediate effect on rest quality.",
+          "Measure your main walking lane. If it is under 90cm at any point, move the blocking furniture piece to a different room or remove it entirely. 90cm is the Neufert standard for residential corridors — below that, subconscious tension accumulates.",
+          "Float reading chairs into low-stimulus corners — farthest from kitchen, bathroom, and entry paths. Corner placement with back to wall activates a neurological safety response that deepens rest. No cost, 10 minutes to reposition."
+        ],
+        "alchemist": [
+          "Protect a central 1.5m × 1.5m clear floor grid — no heavy coffee tables, no permanent furniture inside this zone. This is your mode-switching area. Every time you need to reconfigure the room, this grid is what makes it possible. Measure and mark it with tape first.",
+          "Replace any heavy static chairs that require two hands to move with lightweight alternatives that stack or fold. The rule: every seat in an Alchemist space should be moveable by one person in under 3 seconds. Folding chairs: $25–60 each.",
+          "Equip any room dividers or heavy furniture pieces you need to move regularly with lockable casters. This includes bookshelves used as dividers, storage units, and large ottomans. Caster kits: $15–30 per set."
+        ],
+        "weaver": [
+          "Measure and maintain a minimum 90cm pathway behind primary social seating — the path guests use to get to the couch or dining table. Below 90cm, guests feel they're squeezing past, which subconsciously reduces how long they stay.",
+          "Keep the walkway between kitchen counters and dining table at a minimum of 100cm. If hosting with 2+ people, this drops to 110cm to allow two people to pass comfortably. Measure it. If it's under, the dining table needs to move.",
+          "Arrange armchairs in a curved U-shape or V-shape rather than in a straight line. Centripetal seating — facing slightly inward — reduces conversation distance by ~40cm on average, which directly increases how natural social interaction feels."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "Space-Saving Wall-Mounted Drop-Leaf Folding Table",
+          "brand": "IKEA Norberg",
+          "cost": "$49",
+          "benefit": "Folds flat against the wall in seconds to clear the floor for movement.",
+          "link": "https://www.amazon.com/s?k=wall+mounted+drop+leaf+table&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint reveals why the room feels crowded and blocked. The audit rebuilds the entire layout and circulation flow around your daily routines."
+    },
+    "atmosphere": {
+      "emotion": "Sensory Coldness",
+      "underlying_cause": "Atmospheric Deficit",
+      "correction_protocol": "Sensory Anchoring",
+      "label": "Cold & Uninviting Atmosphere",
+      "diagnoses": {
+        "sovereign": "Your lighting setup relies on broad, flat overhead sources, washing out the room's high-value textures and details.",
+        "sage": "The room fails to establish a low-stimulus lighting cone, causing sensory and visual strain during recovery.",
+        "alchemist": "Static lighting limits your room's dynamic multi-mode potential, keeping it locked in a single cold state.",
+        "weaver": "The lighting lacks low eye-level warmth, failing to anchor shared conversation nooks."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Turn off every ceiling light in the room and run it for 48 hours using only floor lamps and table lamps. This is a test, not a permanent solution. If the room feels better, the ceiling fixture is the problem. Dimmable warm floor lamps, 2700K: $45–120.",
+          "Position two uplights in opposite corners of the room, aimed at the ceiling. This changes the room's apparent volume — the light comes from below eye level, which signals safety and transition out of active-alertness mode. Corner uplights: $25–60 each.",
+          "Add dimmer switches to all active lamps you use in the evening. Overhead lighting at full brightness after 7pm is the single most disruptive thing for cortisol-sleep transition. Smart dimmers or in-line dimmers: $15–40 each."
+        ],
+        "sage": [
+          "Place a single low-wattage amber reading light — maximum 25W equivalent — positioned strictly behind and above your main armchair, aimed at your lap, not your face. This is the only light you need on when resting. Clip-on or floor lamp with solid shade: $30–80.",
+          "Install blackout curtains or add a blackout lining to existing curtains. Sage rooms fail at atmosphere almost always because of uncontrolled external light — streetlights, morning sun, neighbor windows. Heavy blackout panels: $35–90 per window.",
+          "Audit every light source in the room. If you can see the bulb directly — no shade, no diffuser — it is generating visual stress. Cover or replace every naked bulb with an opaque matte shade. Replacement shades: $15–40 each."
+        ],
+        "alchemist": [
+          "Install LED strip lights under kitchen cabinets or behind shelves, controllable via phone or voice. This lets you switch instantly between bright daylight-mode and warm amber evening-mode without touching a single switch. Smart LED strips: $20–50.",
+          "Replace fixed overhead lamps with clamp-on spot lamps that attach to shelves, desks, or furniture edges. These can be repositioned in under a minute, which is essential when you reconfigure the room's layout. Clamp lamps: $25–60.",
+          "Replace standard incandescent or cool-white bulbs with voice or app-controlled smart bulbs (Philips Hue or similar). Set daytime to 4000K, evening to 2200K. Color-temperature shifting alone can change how functional the room feels throughout the day. Smart bulbs: $15–25 each."
+        ],
+        "weaver": [
+          "Hang a warm pendant light low over the central dining or gathering table — exactly 75cm above the tabletop surface. At this height it creates an intimate conversation envelope, separating the gathering zone from the rest of the room without a wall. Pendant lights: $40–150.",
+          "Place warm amber candles (real or LED flicker) at table level — not shelf level — near social seating. Table-level light sources feel significantly more welcoming than elevated ones during conversation. Rechargeable LED candles: $15–35 for a set.",
+          "Add warm-toned uplights in 2 corners behind social seating, aimed at the ceiling. This softens the perimeter walls and makes the gathering zone feel enclosed rather than exposed. Floor uplights: $25–60 each."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "2700K Directional Focus Task Spotlight",
+          "brand": "Royal Pearl",
+          "cost": "$45",
+          "benefit": "Carves out a precise amber illumination cone to support focus.",
+          "link": "https://www.amazon.com/s?k=2700k+led+spotlight&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint identifies the atmospheric deficit. The audit implements a comprehensive lighting plan and material layering strategy to bring warmth and recovery to your space."
+    },
+    "zoning": {
+      "emotion": "Spatial Chaos",
+      "underlying_cause": "Zoning Incoherence",
+      "correction_protocol": "Spatial Delineation",
+      "label": "Ambiguous Layout & Zones",
+      "diagnoses": {
+        "sovereign": "The lack of clear boundary divisions forces functional zones to compete visually, diluting spatial order.",
+        "sage": "Your resting zone is exposed to working sights, causing constant subconscious stress bleed.",
+        "alchemist": "Heavy stationary items prevent the room from switching between active and recovery zoning setups.",
+        "weaver": "The seating layout fails to define a centripetal conversational anchor, isolating guests."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Lay a large area rug under the seating zone — minimum 2×2.5m — so all four sofa legs are on it. The rug physically defines the lounge zone as separate from transit and other functions. Without this, furniture sits in an undefined field. Budget: $80–300.",
+          "Float the sofa at least 40cm away from the nearest wall — not touching it. A sofa pushed to the wall signals storage of furniture, not living with it. 40cm gap creates a visible corridor and makes the room read as having multiple zones. No cost to test.",
+          "Pick one axis — the window line, the door line, or the TV wall — and align every piece of furniture parallel or perpendicular to it. Remove every diagonal piece. Geometric alignment gives the Sovereign brain an immediate sense of legible order. Cost: nothing."
+        ],
+        "sage": [
+          "Float a tall bookcase, fabric panel, or vertical plant stand between your desk and your bed — minimum 160cm tall, minimum 60cm wide. This creates a visual separation between work mode and rest mode that your nervous system can read. The separation does not have to be opaque. Budget: $50–200.",
+          "Place acoustic wool or felt panels — minimum 60×90cm — on the wall directly behind your desk. This signals to your brain that the desk area has a defined boundary. It also reduces sound reflection, which lowers sensory load during focus work. Felt panels: $35–90.",
+          "Rotate your lounge or reading chair so it faces away from both your desk and the entry door. Your chair's back orientation defines your rest zone's direction. If the chair faces active zones, rest is perpetually on hold. No cost, 5 minutes."
+        ],
+        "alchemist": [
+          "Remove every heavy, static piece from the center of the room and push it to the perimeter. The center is your switching zone — the area that lets you reconfigure from work mode to movement mode to hosting mode. If furniture fills it, mode-switching becomes friction. Start with the coffee table.",
+          "Purchase or rent one lightweight sliding screen or room divider — minimum 150cm tall — that you can pull out to create a work boundary and fold away when done. Japanese shoji screens work well. Rolling dividers: $60–180.",
+          "Mount a pegboard or rail system — minimum 90cm wide — near the main work area at arm height. All cables, tools, and accessories that currently live on surfaces go onto the wall. Surfaces clear. Mode shifts become faster. Pegboard kits: $25–60."
+        ],
+        "weaver": [
+          "Arrange the main sofa and armchairs in a U-shape or curved horseshoe, not in a line. The open end of the U should face the entry or kitchen so guests can walk into the loop, not stand outside it. This is the single most impactful change for social quality in a living room.",
+          "Place a large, high-texture rug — boucle, jute, or wool — under the entire social seating zone. Minimum size: 2×3m. The rug defines the zone's boundaries for guests instinctively. Without it, the space feels like furniture floating in emptiness. Budget: $80–350.",
+          "Introduce a low, wide credenza or console — minimum 120cm wide — on the wall facing the seating zone. This anchors the room's visual hierarchy and gives guests something to focus on. Fill it with 3–5 curated objects only, not clutter. Budget: $100–400."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "Curved Centripetal Velvet Stool / Footrest",
+          "brand": "HomePop Velvet",
+          "cost": "$65",
+          "benefit": "Arranges in U-shaped groups to draw social seating physically closer.",
+          "link": "https://www.amazon.com/s?k=curved+velvet+stool&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint maps your zoning conflict. The audit redesigns the layout with architectural partitions, customized rug boundaries, and layout coordinates to lock features in place."
+    },
+    "workspace": {
+      "emotion": "Physical Restriction",
+      "underlying_cause": "Prep Surface Deficit",
+      "correction_protocol": "Workspace Expansion",
+      "label": "Insufficient Work Area",
+      "diagnoses": {
+        "sovereign": "Your desk setup lacks flat horizontal surface capacity, forcing focus work and accessories into a cramped heap.",
+        "sage": "Your work surface is too shallow, bringing secondary visual noise too close to your primary sightline.",
+        "alchemist": "Your workspace setup is too rigid, preventing quick transition from computer work to manual tasks.",
+        "weaver": "The workspace feels isolated from the domestic core, cutting you off from companion presence."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Upgrade to a desk with a minimum depth of 75cm to secure proper monitor-to-eye distance.",
+          "Clear all decorative objects from the desk surface, keeping only active tools visible.",
+          "Mount monitors on wall arms to reclaim flat desktop surface area."
+        ],
+        "sage": [
+          "Desk must face a calm window view rather than active doorways or messy closets.",
+          "Place a low desk lamp with a solid shadow hood to concentrate light strictly on the paper plane.",
+          "Keep reference books on a floating shelf above the desk, not stacked on the active workspace."
+        ],
+        "alchemist": [
+          "Use a drop-leaf desk or folding tabletop to expand your workspace when working on physical projects.",
+          "Use a rolling utility cart to store chargers and tools, keeping the main desk free for focus work.",
+          "Integrate modular pegboards to hang cables, headphones, and tools within arm's reach."
+        ],
+        "weaver": [
+          "Position your workspace near the kitchen island or dining table to allow shared working routines.",
+          "Choose a timber desk with soft, rounded timber corners to invite companion presence and comfort.",
+          "Add a second cozy chair near the work desk to allow light conversation intervals."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "High-Performance LED Under-Cabinet Light Bar",
+          "brand": "Lutron / Litever",
+          "cost": "$35",
+          "benefit": "Projects indirect light to illuminate vertical reference grids.",
+          "link": "https://www.amazon.com/s?k=led+under+cabinet+light+bar&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint identifies your workspace bottleneck. The audit redesigns a custom, high-productivity home office layout with optimized desk dimensions and cable millwork."
+    },
+    "workflow": {
+      "emotion": "Tension",
+      "underlying_cause": "Workflow Friction",
+      "correction_protocol": "Path Streamlining",
+      "label": "Cramped Culinary Workflow",
+      "diagnoses": {
+        "sovereign": "Your kitchen layout suffers from counter segmentation, interrupting clean preparation pathways.",
+        "sage": "Kitchen prep zones lack acoustic and visual shielding, exposing you to domestic noise during task routines.",
+        "alchemist": "Rigid appliance positions stop you from adjusting culinary zones to match different prep routines.",
+        "weaver": "The preparation flow shuts out companion interaction, turning cooking into an isolated chore."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Clear the primary 90cm stretch of counter space between sink and cooktop completely.",
+          "Store all small appliances (toasters, blenders) inside closed base cabinets.",
+          "Use matching wooden cutting boards that sit flush over the sink to expand active counter space."
+        ],
+        "sage": [
+          "Add soft felt or acoustic liners inside kitchen drawers to quiet cooking noise.",
+          "Use matte, low-glare countertop materials to prevent eye strain under task spotlights.",
+          "Place small plants or herb pots on the counter to block views of active doorways."
+        ],
+        "alchemist": [
+          "Equip dry ingredient storage bins with labels and place them on a rolling cart.",
+          "Use magnetic wall rails to hang active knives, freeing up drawer and counter space.",
+          "Use mobile, lockable cutting boards to create preparation zones where needed."
+        ],
+        "weaver": [
+          "Add fabric counter stools to the kitchen island to welcome friends during prep.",
+          "Hang warm pendant lights low over the prep zone to create a welcoming social envelope.",
+          "Position the cooking prep plane facing toward the room center to keep you connected with the home."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "Heavy-Duty Multi-Tier Rolling Utility Cart",
+          "brand": "IKEA Råskog",
+          "cost": "$32",
+          "benefit": "Provides mobile storage that can travel effortlessly between active zones.",
+          "link": "https://www.amazon.com/s?k=ikea+raskog+utility+cart&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint maps your workflow friction. The audit redesigns your kitchen geometry, adjusting the triangle pathways and adding customized island space."
+    },
+    "kitchen_triangle": {
+      "emotion": "Isolation",
+      "underlying_cause": "Triangle Disconnection",
+      "correction_protocol": "Neufert Alignment",
+      "label": "Inefficient Kitchen Triangle",
+      "diagnoses": {
+        "sovereign": "The distance between your sink, refrigerator, and cooktop exceeds Neufert standard limits, wasting movement energy.",
+        "sage": "Your cooking path crosses directly through the home's main corridor, interrupting focus.",
+        "alchemist": "Fixed appliance placements block the kitchen from adapting to multi-user preparation.",
+        "weaver": "The cooktop is isolated from social areas, separating the host from the conversation loop."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Re-align dry storage items near the refrigerator to consolidate the prep starting point.",
+          "Keep the transit corridor between the island and wall counter strictly at 100cm.",
+          "Position active waste bins directly below the sink to prevent unnecessary cross-room travel."
+        ],
+        "sage": [
+          "Float a tall planter or screen to block the kitchen work path from the lounge entry.",
+          "Consolidate pantry items within a single, dedicated floor-to-ceiling cabinet.",
+          "Angle preparation zones away from noisy appliance corridors."
+        ],
+        "alchemist": [
+          "Use a central prep cart on casters to bridge the gap between sink and stove.",
+          "Store active kitchen tools on wall pegboards to keep transit zones free.",
+          "Use multi-functional, modular prep inserts inside sink basins."
+        ],
+        "weaver": [
+          "Float a central wood dining island to bridge the gap between cooktop and sink.",
+          "Arrange seating nooks near the refrigerator to allow light social sharing.",
+          "Add warm eye-level lighting over the triangle paths to invite companion flow."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "Heavy-Duty Multi-Tier Rolling Utility Cart",
+          "brand": "IKEA Råskog",
+          "cost": "$32",
+          "benefit": "Provides mobile storage that can travel effortlessly between active zones.",
+          "link": "https://www.amazon.com/s?k=ikea+raskog+utility+cart&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint maps the kitchen triangle failure. The audit redesigns the layout, rebuilding path connections and counter extensions."
+    },
+    "sleep_quality": {
+      "emotion": "Vulnerability",
+      "underlying_cause": "Sleep Cocoon Exposure",
+      "correction_protocol": "Shielding Strategy",
+      "label": "Exposed Bed & Poor Rest",
+      "diagnoses": {
+        "sovereign": "Your bed lacks a solid headboard backing wall, exposing your sleep envelope to visual instability.",
+        "sage": "Your bed faces open doorway sightlines directly, preventing deep sensory decompressing.",
+        "alchemist": "The bed position is static in a multi-modal room, blocking space transitions.",
+        "weaver": "Bed placement lacks tactile warmth and cozy enclosure, feeling cold and exposed."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Move the bed so the headboard is flush against a solid interior wall — not an exterior wall, not a window wall. This is the single highest-impact structural change for sleep quality. If the headboard has empty space behind it, your nervous system reads it as exposure. No budget required, just commitment to the move.",
+          "Measure the clearance on both sides of the bed. If either side is under 55cm, the room is generating physical friction during nighttime movement, which disrupts sleep continuity. Target: 65cm minimum on the secondary side, 80cm on the primary exit side.",
+          "Choose a flat, high-upholstered headboard — minimum 110cm tall — and mount it directly to the wall. The headboard's function is psychological: it defines the boundary of your sleep envelope. Without it, the bed is furniture in a field. Budget: $80–300."
+        ],
+        "sage": [
+          "Reposition the bed so that when you are lying down with your head on the pillow, you cannot see the active entry door frame in your direct sightline. If you can see the door, your nervous system keeps a partial watch on it during sleep. Even a 20-degree rotation of the bed can eliminate this. No cost.",
+          "Install heavy blackout curtains — minimum triple-weave fabric — that fully cover the window from ceiling to floor with 5cm overlap on each side. Light leakage is the most underestimated sleep disruptor in compact rooms. Heavy blackout panels: $35–90 per window.",
+          "Place a single low-wattage amber nightstand lamp (maximum 15W equivalent, 2200K) on your primary bedside. This is your only light source during the last 60 minutes before sleep. No overhead lights, no phone brightness above 30% during this window. Bedside lamp: $30–80."
+        ],
+        "alchemist": [
+          "If the room serves multiple functions during the day, consider a wall-mounted folding bed (Murphy bed) or a low platform bed on casters that can be rolled to the room's perimeter. The bed should not dominate the room during daytime. Murphy bed kits: $500–1200 installed.",
+          "Use lightweight sliding canvas or fabric panels — hung from ceiling-mounted tracks — to visually isolate the bed from active work desks during the day. Close them at the start of your wind-down routine. Panel + track system: $80–200.",
+          "Equip your nightstands with small lockable wheels so you can clear them when reconfiguring the space for daytime use. Bedside caster kits: $15–30 per set."
+        ],
+        "weaver": [
+          "Layer the bed with minimum 3 textile weights: a fitted sheet, a mid-weight blanket, and a heavy throw on top. The physical weight of multiple layers improves perceived enclosure during sleep, which is distinct from temperature comfort. Organic linen sets: $60–150.",
+          "Place two warm bedside lamps at pillow height — not above the headboard, not below the mattress line. Lamp height equal to your pillow when lying down creates an envelope of light that signals safety and rest, not task mode. Bedside lamps: $30–80 each.",
+          "Clear nightstands of everything except 1–2 intentional objects: a single candle, a small ceramic, one book. Clutter within arm's reach of the bed is the last sensory input before sleep. Clear nightstands directly improve sleep onset time."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "Heavy Triple-Weave Velvet Space-Dividing Curtain",
+          "brand": "NICETOWN Velvet",
+          "cost": "$48",
+          "benefit": "Acts as a thick visual and acoustic boundary near entry corridors.",
+          "link": "https://www.amazon.com/s?k=heavy+velvet+divider+curtain&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint reveals your sleeping envelope exposure. The audit designs custom headboard upholstery, acoustic panel insulation, and layout shifts to lock in deep rest."
+    },
+    "privacy": {
+      "emotion": "Exposure",
+      "underlying_cause": "Sightline Vulnerability",
+      "correction_protocol": "Visual Screening",
+      "label": "Lack of Spatial Privacy",
+      "diagnoses": {
+        "sovereign": "Your entry doorway opens directly to your active seating or resting core, exposing you to visual noise.",
+        "sage": "Exposed sightlines to outer traffic zones prevent your nervous system from exiting active threat-scanning.",
+        "alchemist": "A lack of physical dividers forces work and personal zones to bleed together visually.",
+        "weaver": "Social layouts expose private reading alcoves to main transit lines, interrupting connection."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Position a solid vertical panel — minimum 160cm tall, 50cm wide — between your bed or desk and the entry door. This does not need to be a wall. A bookcase, a tall cabinet, or a freestanding screen all work. The panel blocks the direct sightline from the threshold into your private zone. Budget: $80–300.",
+          "Replace any open-frame doors or curtain-only entries with flush, solid pocket doors where possible. If not, install a heavy door curtain — minimum triple-weave fabric — that fully overlaps the frame. Entry curtains: $40–90.",
+          "Map your room's transit lines on paper. Mark where you walk every morning. Any piece of furniture that your transit path passes within 40cm of is creating friction. Push those pieces to the perimeter."
+        ],
+        "sage": [
+          "Install a heavy, sound-dampening velvet or wool door curtain on every door that opens into your primary rest zone. This blocks both acoustic leaks and the visual flash of movement in adjacent rooms — both of which interrupt the nervous system's recovery state. Curtains: $40–90.",
+          "Rotate your reading or rest armchair so its back faces the room's active zones — kitchen, entry, or desk. You should be looking at a wall, a window, or plants — never at the door or a busy surface. No cost, takes 5 minutes.",
+          "On a balcony or open window line, position tall, dense planters — minimum 80cm height, minimum 3 plants — along the rail to block neighbor sightlines. Physical green screening that blocks outside visual access costs $30–80 in plants and pots."
+        ],
+        "alchemist": [
+          "Install ceiling-mounted fabric track systems — similar to hospital curtain tracks — that you can pull to divide the room into zones on demand. These allow you to create full privacy boundaries in under 10 seconds and return to open plan in the same time. Track + fabric: $80–200.",
+          "Use a large double-sided bookcase — minimum 30cm deep, 160cm tall — placed perpendicular to the main wall as a functional spatial divider. It stores things on both sides and physically separates zones without a permanent partition. Bookshelves as dividers: $100–300.",
+          "Mount lockable casters on your primary dividing furniture pieces — bookshelves, storage units — so you can quickly reconfigure the room when the privacy zones need to change. Caster kits: $15–30 per set."
+        ],
+        "weaver": [
+          "Float your primary social seating group at least 1 meter away from the main entry corridor. If guests walk in and immediately bump into the back of the sofa, the room's layout communicates barrier, not welcome. Pull everything inward, create a clear landing zone at the entry.",
+          "Use soft linen curtains — not blackout, not heavy — on the boundary between a private reading alcove and the main social space. The semi-transparency signals separation without cutting off connection. Sheer linen curtains: $30–70.",
+          "Position a wide credenza or sideboard — minimum 120cm wide — behind the main sofa, facing the entry. This catches visual noise from the transit corridor and gives the room a defined back wall for the social zone. Budget: $100–400."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "Heavy Triple-Weave Velvet Space-Dividing Curtain",
+          "brand": "NICETOWN Velvet",
+          "cost": "$48",
+          "benefit": "Acts as a thick visual and acoustic boundary near entry corridors.",
+          "link": "https://www.amazon.com/s?k=heavy+velvet+divider+curtain&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint maps your privacy leaks. The audit integrates custom partitions, sliding pocket doors, and planter screen guides to shield your private zones."
+    },
+    "focus": {
+      "emotion": "Distraction",
+      "underlying_cause": "Desk Axis Exposure",
+      "correction_protocol": "Command Delineation",
+      "label": "Constant Focus Distractions",
+      "diagnoses": {
+        "sovereign": "Your desk orientation leaves your back exposed to entry doorways, causing subconscious threat monitoring.",
+        "sage": "Your desk faces open sightlines to active closets or laundry piles, causing visual cognitive drain.",
+        "alchemist": "A static office desk orientation stops you from adjusting your layout to match focus shifts.",
+        "weaver": "The workspace setup is isolated from domestic warmth, causing cognitive fatigue."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Rotate the desk into the Command Position: facing the entry door, with a solid wall directly behind you. You should be able to see the door from your seated position without turning your head. If this is not possible due to layout, a large mirror angled to show the door reflection achieves ~70% of the effect.",
+          "Remove every object from the desk surface except: one monitor, one keyboard, one mouse, one water bottle. Everything else goes in a drawer, on a shelf, or out of the room. Run this stripped setup for 5 working days before adding anything back. The difference in focus quality will tell you exactly what belongs there.",
+          "Run every visible cable from your desk into a cable management tray mounted underneath. The brain registers tangled cables as unresolved tasks — low-level, but continuous. Under-desk cable trays: $15–25. Takes 20 minutes to install."
+        ],
+        "sage": [
+          "The desk must face a calm, minimal wall or window — never a closet door, never a laundry pile, never an active doorway. If facing a wall feels claustrophobic, add a single artwork or plant at eye level on that wall. The key is that what you see in your peripheral vision during work is stable, not moving.",
+          "Use a task lamp with a solid, opaque metal shade — not a globe, not a bare bulb — positioned to light only your work surface. The cone of light should not reach your face, your monitor, or the wall. Cone-restricted task lamps: $35–90.",
+          "Mount two acoustic felt panels — minimum 60×90cm each — on the wall directly behind the monitor. This absorbs high-frequency sound reflections that accumulate during focused work and creates a visual boundary that the brain reads as a dedicated zone. Felt panels: $35–90."
+        ],
+        "alchemist": [
+          "Replace any fixed-height desk with a height-adjustable sit-stand desk, preferably on lockable wheels. The ability to shift from sitting to standing — and to roll the desk to a different position — is essential for an Alchemist's focus rhythm. Height-adjustable desk: $150–400.",
+          "Mount a pegboard or vertical rail system — minimum 60cm wide — at arm reach from your desk. Active reference materials, notebooks, cables, and frequently used tools all go here instead of on the desk surface. Pegboard systems: $25–60.",
+          "Install a smart LED lighting system above or around the desk that you can switch between 5000K daylight-mode (focus) and 2700K amber-mode (wind-down) from your phone. The light temperature shift physically changes your brain's alertness state. Smart bulbs: $15–25 each."
+        ],
+        "weaver": [
+          "Choose a solid timber desk with rounded, smooth edges — not a glass or metal desk. Tactile warmth in a Weaver's workspace reduces the cognitive isolation that comes from hours at a screen. The material matters as much as the position. Timber desks: $150–400.",
+          "Place a soft, textured rug — minimum 120×180cm — under the work desk and chair. This grounds the workspace as a defined zone and reduces the hard-surface acoustic reflection that makes home offices feel clinical and draining. Wool or boucle rugs: $80–250.",
+          "Position a second comfortable chair — armchair, reading chair, or low stool — within 1.5m of the work desk. This invites a companion to sit nearby without disrupting your focus. The chair should be lower than the desk chair — not competing, accompanying."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "High-Density PET Acoustic Felt Wall Panels",
+          "brand": "Dekiru / Sound assured",
+          "cost": "$39",
+          "benefit": "Dampens sound reflections (RT60), creating a silent intellectual retreat.",
+          "link": "https://www.amazon.com/s?k=acoustic+felt+wall+panels&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint details your attention leaks. The audit configures an optimized Command Desk setup with acoustic felt panels and sightline shields."
+    },
+    "functionality": {
+      "emotion": "Apathy",
+      "underlying_cause": "Functionality Deficit",
+      "correction_protocol": "Utility Integration",
+      "label": "Wasted / Underutilized Space",
+      "diagnoses": {
+        "sovereign": "The space lacks clear geometric purpose, leaving it to function as a random transit zone.",
+        "sage": "A lack of quiet enclosure stops the space from functioning as a true recovery sanctuary.",
+        "alchemist": "Static layouts lock the space into a single mode, preventing it from serving multiple activities.",
+        "weaver": "The seating arrangement is isolated, failing to invite conversation or shared habits."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Define a single clear purpose for the space (e.g. coffee alcove or yoga zone).",
+          "Remove all non-essential items to restore clean, straight-line boundaries.",
+          "Position a single high-value furniture piece to anchor the space."
+        ],
+        "sage": [
+          "Float a single comfortable lounge chair facing green views.",
+          "Install wind-diffusing perimeter planters to create a quiet privacy pocket.",
+          "Place a low table nearby to hold books and tea cups."
+        ],
+        "alchemist": [
+          "Choose modular, multi-functional furniture that folds or stacks out of the way.",
+          "Leave the central floor grid free for movement, pushing items to perimeters.",
+          "Equip active pieces with rollers to easily adapt the layout."
+        ],
+        "weaver": [
+          "Arrange seating in a curved, centripetal loop to invite shared morning routines.",
+          "Layer soft outdoor textile throws to make the space feel cozy and grounded.",
+          "Hang warm string lights to invite evening gathering."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "Space-Saving Wall-Mounted Drop-Leaf Folding Table",
+          "brand": "IKEA Norberg",
+          "cost": "$49",
+          "benefit": "Folds flat against the wall in seconds to clear the floor for movement.",
+          "link": "https://www.amazon.com/s?k=wall+mounted+drop+leaf+table&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint identifies your wasted space. The audit turns your underutilized zone into a high-utility extension of your home."
+    },
+    "transition": {
+      "emotion": "Friction",
+      "underlying_cause": "Threshold Flow Failure",
+      "correction_protocol": "Threshold Definition",
+      "label": "Awkward Entry / Transition",
+      "diagnoses": {
+        "sovereign": "The transition doorway lacks threshold definition, allowing entry clutter to flood your room.",
+        "sage": "The entry corridor exposes private zones to acoustic leaks and draft, preventing rest.",
+        "alchemist": "A rigid entryway flow stops you from adapting the zone to match transition routines.",
+        "weaver": "The entrance path shuts out visitors, failing to create a welcoming social buffer."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Install a low, clean credenza near the entry to catch keys and mail immediately.",
+          "Use a large, heavy door mat to define the physical threshold.",
+          "Hide shoes and coats inside a closed wardrobe cabinet."
+        ],
+        "sage": [
+          "Hang a heavy velvet door curtain to block drafts and sound leaks.",
+          "Position a tall planter near the doorway to block direct views of the resting zone.",
+          "Place a soft, low-intensity light near the entry to ease transitions."
+        ],
+        "alchemist": [
+          "Use modular pegboards near the entry to hang keys, bags, and tools.",
+          "Choose a rolling shoe rack that can be pushed aside to clear paths.",
+          "Install drop-leaf drop zones near the door."
+        ],
+        "weaver": [
+          "Introduce a soft, cozy bench near the entry to welcome guests.",
+          "Place a warm, low bedside lamp near the threshold to cast a welcoming glow.",
+          "Use natural woven baskets near the door to catch daily items."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "Opak Minimal Storage Box with Integrated Lid",
+          "brand": "IKEA Kuggis",
+          "cost": "$12",
+          "benefit": "Encloses surface clutter within a clean, uniform geometric volume.",
+          "link": "https://www.amazon.com/s?k=ikea+kuggis&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint maps your transition conflict. The audit designs an optimized entryway zone with custom drop cabinetry and acoustic shields."
+    },
+    "hierarchy": {
+      "emotion": "Mental Fatigue",
+      "underlying_cause": "Hierarchy Deficit",
+      "correction_protocol": "Visual Anchoring",
+      "label": "Chaotic Layout & Lack of Order",
+      "diagnoses": {
+        "sovereign": "The room lacks a clear visual backbone, allowing competing zones to clutter the eye.",
+        "sage": "A lack of a single, quiet focal anchor causes cognitive overload during recovery.",
+        "alchemist": "Static layout anchors stop you from establishing clear focus points during mode shifts.",
+        "weaver": "The seating arrangement lacks a central focal anchor, making conversation feel ungrounded."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Define a single clear focal point (e.g. fireplace or travertine wall).",
+          "Arrange all furniture along a clean, symmetrical grid aligned with the focus.",
+          "Remove decorative clutter from vertical surfaces to preserve hierarchy."
+        ],
+        "sage": [
+          "Float your main resting chair facing a calm window view or a clean art piece.",
+          "Keep the wall behind the television dark and matte to reduce visual contrast.",
+          "Layer a single, large high-pile rug to ground the main recovery zone."
+        ],
+        "alchemist": [
+          "Use a modular modular sofa sectional that can split to define different focal centers.",
+          "Store gear and cables on wall-mounted rails to keep visual paths clear.",
+          "Use smart lighting grids to highlight active zones dynamically."
+        ],
+        "weaver": [
+          "Position a wide, low credenza or kitchen island to anchor conversational flow.",
+          "Arrange social seating in a curved loop around a low coffee table.",
+          "Hang a large, warm pendant light low over the central gathering table."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "Curved Centripetal Velvet Stool / Footrest",
+          "brand": "HomePop Velvet",
+          "cost": "$65",
+          "benefit": "Arranges in U-shaped groups to draw social seating physically closer.",
+          "link": "https://www.amazon.com/s?k=curved+velvet+stool&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint details your hierarchy deficit. The audit implements a clear layout hierarchy with custom millwork focal walls and zoning guides."
+    },
+    "behavioral_separation": {
+      "emotion": "Cognitive Overlap",
+      "underlying_cause": "Boundary Bleed",
+      "correction_protocol": "Zone Delineation",
+      "label": "Conflicting Activity Zones",
+      "diagnoses": {
+        "sovereign": "A lack of clear boundary division forces active work and resting nooks to compete, diluting focus.",
+        "sage": "Exposing the bed to work desk sightlines prevents your brain from exiting work stress mode.",
+        "alchemist": "Static zoning blocks the room from switching between focus work and manual activities.",
+        "weaver": "The work desk is isolated from social zones, separating you from companion presence."
+      },
+      "priority_actions": {
+        "sovereign": [
+          "Use a large, low-contrast area rug to physically delineate the desk work zone.",
+          "Rotate the desk away from the bed axis to prevent visual bleed.",
+          "Align furniture along a structured axis to keep work and rest zones separate."
+        ],
+        "sage": [
+          "Float a tall bookcase or vertical panel to shield the desk workspace from the bed.",
+          "Use acoustic wool felt panels on the wall behind the desk to create a quiet focus nook.",
+          "Angle your lounge chair away from work files or monitor screens."
+        ],
+        "alchemist": [
+          "Keep the central floor area clear of heavy furniture to allow rapid zoning changes.",
+          "Use lightweight sliding screens or rolling panels to split workspace and resting zones.",
+          "Equip dry ingredient storage bins with labels and place them on a rolling cart."
+        ],
+        "weaver": [
+          "Position your workspace near the kitchen island or dining table to allow shared working routines.",
+          "Choose a timber desk with soft, rounded corners to invite companion presence and comfort.",
+          "Add a second cozy chair near the work desk to allow light conversation intervals."
+        ]
+      },
+      "procurement": [
+        {
+          "item": "High-Density PET Acoustic Felt Wall Panels",
+          "brand": "Dekiru / Sound assured",
+          "cost": "$39",
+          "benefit": "Dampens sound reflections (RT60), creating a silent intellectual retreat.",
+          "link": "https://www.amazon.com/s?k=acoustic+felt+wall+panels&tag=yorukoglu-20"
+        }
+      ],
+      "upsell": "The blueprint maps your activity conflicts. The audit designs an optimized layout with custom partition screens and zoned lighting grids."
+    }
+  },
+  "behavioral_friction_matrix": {
+    "sovereign": {
+      "core_needs": [
+        "Control",
+        "Order",
+        "Hierarchy"
+      ],
+      "pains": {
+        "storage": {
+          "friction": "Visual Overload",
+          "identity_conflict": "Your environment is asking for adaptation when your personality is seeking control.",
+          "impacts": [
+            "Attention Leakage",
+            "Visual Tension",
+            "Constant Re-adjustment"
+          ],
+          "description": "Control is not a preference for you. It is the condition that allows you to think clearly. Currently, the room asks your attention to manage too many competing objects at once. As a result, the sense of order you rely on begins to disappear.",
+          "correction": [
+            "Reduce the number of competing objects in direct view.",
+            "Create a single dominant focal zone to ground the eye."
+          ]
+        },
+        "circulation": {
+          "friction": "Movement Friction",
+          "identity_conflict": "Your space forces random physical paths when your routine requires predictable order.",
+          "impacts": [
+            "Flow Interruption",
+            "Physical Irritation",
+            "Spatial Inefficiency"
+          ],
+          "description": "You navigate your space with deliberate intentions. When the layout forces awkward sidesteps or interrupts your path between core functions, the home stops feeling like a tool and starts feeling like an obstacle.",
+          "correction": [
+            "Eradicate diagonal circulation paths in favor of linear axes.",
+            "Protect primary walking paths from furniture protrusions."
+          ]
+        },
+        "atmosphere": {
+          "friction": "Sensory Coldness",
+          "identity_conflict": "Your senses seek architectural warmth, but your layout relies on flat, harsh illumination.",
+          "impacts": [
+            "Visual Fatigue",
+            "Atmospheric Static",
+            "Inability to Decompress"
+          ],
+          "description": "High-end minimalism is not cold; it is balanced. When your room relies on flat, unregulated overhead light, it washes out the structural depth of the space, leaving it feeling exposed and empty instead of calm.",
+          "correction": [
+            "Move illumination from ceiling level to lower eye-level coordinates.",
+            "Replace broad light washes with focused warm accents."
+          ]
+        },
+        "zoning": {
+          "friction": "Zoning Bleed",
+          "identity_conflict": "Your mind demands strict functional boundaries, but your room forces different activities to overlap.",
+          "impacts": [
+            "Cognitive Bleed",
+            "Routine Collapse",
+            "Loss of Sanctuary"
+          ],
+          "description": "You perform best when tasks are compartmentalized. When the boundary between rest, work, and daily utility collapses in a single zone, the mental clarity you rely on is replaced by constant distraction.",
+          "correction": [
+            "Establish clear visual perimeters between functional zones.",
+            "Position furniture to block sightlines from one active zone to another."
+          ]
+        },
+        "workspace": {
+          "friction": "Surface Compression",
+          "identity_conflict": "Your work requires an organized, open field of view, but your layout restricts your physical workspace.",
+          "impacts": [
+            "Physical Restriction",
+            "Process Block",
+            "Visual Clutter"
+          ],
+          "description": "You need physical capacity to think systematically. When your work surface or kitchen counter is cramped, you cannot arrange your tools in order, forcing your workflow into a state of compromise.",
+          "correction": [
+            "Maximize uninterrupted horizontal surface planes.",
+            "Move secondary tools and objects off the primary work surface."
+          ]
+        },
+        "privacy": {
+          "friction": "Exposure Stress",
+          "identity_conflict": "Your nervous system requires a secure command position, but your layout leaves your back exposed to entryways.",
+          "impacts": [
+            "Subconscious Vigilance",
+            "Focus Leaks",
+            "Boundary Vulnerability"
+          ],
+          "description": "To fully rest or focus, you must command the space. When your bed or desk faces away from the entrance, or is directly visible from public zones, you remain in a state of low-level vigilance, unable to relax.",
+          "correction": [
+            "Position primary resting and focus zones in the command quadrant of the room.",
+            "Introduce physical or visual shielding to protect exposed sightlines."
+          ]
+        },
+        "hierarchy": {
+          "friction": "Hierarchy Void",
+          "identity_conflict": "Your eye seeks a dominant focal point to organize the room, but your layout distributes visual weight randomly.",
+          "impacts": [
+            "Visual Drift",
+            "Ungrounded Space",
+            "Structural Discomfort"
+          ],
+          "description": "A room must have a clear visual hierarchy to feel intentional. When seating is pushed randomly to the edges or there is no central anchoring element, the space feels like a waiting room, lacking a visual anchor.",
+          "correction": [
+            "Anchor the room's main activity zone with a central gravity element.",
+            "Align furniture along primary architectural axes."
+          ]
+        }
+      }
+    },
+    "sage": {
+      "core_needs": [
+        "Isolation",
+        "Focus",
+        "Cocooning"
+      ],
+      "pains": {
+        "storage": {
+          "friction": "Visual Overload",
+          "identity_conflict": "Your thoughts seek deep quiet, but your environment is filled with constant visual noise.",
+          "impacts": [
+            "Focus Fragmentation",
+            "Sensory Intrusiveness",
+            "Mental Congestion"
+          ],
+          "description": "Focus is not a performance metric for you; it is a retreat. When your space is filled with visible objects and papers, your mind remains active, unable to sink into deep concentration.",
+          "correction": [
+            "Enclose reference materials behind solid, matte panels.",
+            "Clear active work planes at the end of every cycle."
+          ]
+        },
+        "circulation": {
+          "friction": "Movement Friction",
+          "identity_conflict": "Your mind seeks still, undisturbed corners, but your layout forces transit paths through your retreat.",
+          "impacts": [
+            "Focus Leakage",
+            "Incomplete Rest",
+            "Sensory Static"
+          ],
+          "description": "You require still zones to process your thoughts. When walking paths cut directly through your focus area or bedroom space, the constant movement of the house invades your sanctuary, breaking your concentration.",
+          "correction": [
+            "Protect quiet zones from through-movement.",
+            "Create a physical or visual buffer between active pathways and rest areas."
+          ]
+        },
+        "atmosphere": {
+          "friction": "Sensory Coldness",
+          "identity_conflict": "Your mind seeks a dark, warm cocoon, but your room is flooded with flat, clinical illumination.",
+          "impacts": [
+            "Sensory Strain",
+            "Visual Fatigue",
+            "Inability to Retreat"
+          ],
+          "description": "You decompress in soft, shadow-tuned spaces. When your room relies on harsh overhead lighting or lacks warm local pools of light, your nervous system remains in a high-alert state, preventing mental rest.",
+          "correction": [
+            "Eliminate direct exposure to bare bulbs using opaque shades.",
+            "Shield windows with light-absorbing textiles to control daylight quality."
+          ]
+        },
+        "zoning": {
+          "friction": "Zoning Bleed",
+          "identity_conflict": "Your mind seeks strict boundary lines to enter deep focus, but your layout allows active utility zones to bleed into your sanctuary.",
+          "impacts": [
+            "Cognitive Friction",
+            "Sensory Static",
+            "Interrupted Flow"
+          ],
+          "description": "To think deeply, you must step away from the active world. When your workspace faces your bed, or the kitchen noise floods your reading corner, your brain remains caught between work and recovery, unable to fully detach.",
+          "correction": [
+            "Orient your desk away from rest zones and primary visual entrances.",
+            "Use low-stimulation screens or dividers to separate task zones from quiet zones."
+          ]
+        },
+        "workspace": {
+          "friction": "Surface Compression",
+          "identity_conflict": "Your work requires keeping multiple reference materials open, but your workspace limits your active layout.",
+          "impacts": [
+            "Mental Congestion",
+            "Physical Restriction",
+            "Cognitive Friction"
+          ],
+          "description": "You learn by connecting references and materials. When your desk is small, you are forced to stack and hide books, creating a constant mental block that disrupts your cognitive flow.",
+          "correction": [
+            "Expand active horizontal workspace specifically for reference placement.",
+            "Position passive tools outside your primary focus arc."
+          ]
+        },
+        "privacy": {
+          "friction": "Exposure Stress",
+          "identity_conflict": "Your mind seeks a sheltered, enclosed cocoon, but your layout leaves your back open to sightlines.",
+          "impacts": [
+            "Subconscious Alertness",
+            "Focus Leakage",
+            "Incomplete Rest"
+          ],
+          "description": "To fully rest or think, you need to feel physically shielded. If your bed or desk faces an open doorway, or your back is exposed to transit paths, your nervous system stays on alert, preventing the deep quiet you need.",
+          "correction": [
+            "Orient your seat or bed to face doorways with a solid wall behind you.",
+            "Introduce high-sided backing or screens to protect exposed perimeters."
+          ]
+        },
+        "hierarchy": {
+          "friction": "Hierarchy Void",
+          "identity_conflict": "Your eyes require a quiet, anchored retreat to settle, but your layout lacks a central gravity point.",
+          "impacts": [
+            "Sensory Drift",
+            "Ungrounded Retreat",
+            "Spatial Disorientation"
+          ],
+          "description": "Reflection requires somewhere to settle. When every corner of a room carries equal visual weight, the mind keeps wandering instead of arriving.",
+          "correction": [
+            "Anchor your retreat nook with a single high-sided armchair.",
+            "Align the quiet zone's visual field toward a static, low-stimulus scene."
+          ]
+        }
+      }
+    },
+    "alchemist": {
+      "core_needs": [
+        "Adaptability",
+        "Fluidity",
+        "Transformation"
+      ],
+      "pains": {
+        "storage": {
+          "friction": "Visual Overload",
+          "identity_conflict": "Your lifestyle requires fluid transition, but your layout is paralyzed by static objects.",
+          "impacts": [
+            "Momentum Loss",
+            "Activity Collapse",
+            "Physical Restriction"
+          ],
+          "description": "A room is not a static gallery; it is a canvas for configuration. When visual clutter and loose items accumulate on your active perimeters, the room loses its adaptability, locking you into a single, rigid state.",
+          "correction": [
+            "Get inactive equipment off the floor plane.",
+            "Use closed, mobile storage units to keep transition paths clear."
+          ]
+        },
+        "circulation": {
+          "friction": "Movement Friction",
+          "identity_conflict": "Your routine requires effortless mode-switching, but your layout creates physical drag.",
+          "impacts": [
+            "Momentum Loss",
+            "Flow Resistance",
+            "Forced Simplification"
+          ],
+          "description": "You move dynamically between different activities. When transitions take physical effort, the momentum of your day disappears, and you stop switching modes altogether.",
+          "correction": [
+            "Protect a central clearance zone for physical movement.",
+            "Swivel or float furniture to allow multiple navigation options."
+          ]
+        },
+        "atmosphere": {
+          "friction": "Sensory Coldness",
+          "identity_conflict": "Your space hosts multiple active states, but your lighting remains locked in a single cold setup.",
+          "impacts": [
+            "Atmospheric Rigidity",
+            "Sensory Dissonance",
+            "Lack of Activation"
+          ],
+          "description": "A transformative space requires adaptable lighting. When your room relies on flat, uniform illumination, it cannot shift to match your changing activities, making the space feel sterile and unresponsive.",
+          "correction": [
+            "Install variable-temperature light sources to shift room mood.",
+            "Use adjustable, clamp-on fixtures that can be repositioned dynamically."
+          ]
+        },
+        "zoning": {
+          "friction": "Zoning Bleed",
+          "identity_conflict": "Your lifestyle demands parallel active stations, but your layout collapses these functions into a single messy blur.",
+          "impacts": [
+            "Cognitive Bleed",
+            "Zonal Overlap",
+            "Activity Collapse"
+          ],
+          "description": "You operate best when multiple modes are open and organized simultaneously. When your resting area, work setup, and creative gear share a single undefined plane, the boundary collapse creates constant mental drag.",
+          "correction": [
+            "Demarcate visual boundaries for parallel active stations.",
+            "Use lightweight dividers to separate active tasks from resting zones."
+          ]
+        },
+        "workspace": {
+          "friction": "Surface Compression",
+          "identity_conflict": "Your routine requires keeping parallel tasks active, but your horizontal surfaces force constant pack-up.",
+          "impacts": [
+            "Process Blockage",
+            "Zonal Compression",
+            "Task Interruption"
+          ],
+          "description": "To create, you need space to spread out. When your desk or counter is small, you are forced to pack away one project to start another, killing the momentum of your work.",
+          "correction": [
+            "Maximize flexible, multi-use horizontal surfaces.",
+            "Use nested or folding tables that expand active workspace on demand."
+          ]
+        },
+        "privacy": {
+          "friction": "Exposure Stress",
+          "identity_conflict": "Your active zones require a sense of privacy, but your layout exposes your main stations to entry corridors.",
+          "impacts": [
+            "Transit Exposure",
+            "Visual Distraction",
+            "Activity Hesitation"
+          ],
+          "description": "Spontaneous activity requires a sense of ease. When your active zones are constantly on display, you stop using them spontaneously. Exposure makes experimentation less likely.",
+          "correction": [
+            "Shield active zones from direct entry sightlines.",
+            "Position active workstations out of primary transit pathways."
+          ]
+        },
+        "hierarchy": {
+          "friction": "Hierarchy Void",
+          "identity_conflict": "Your room should support multiple versions of you, but your layout forces every activity to compete for the same territory.",
+          "impacts": [
+            "Functional Disorientation",
+            "Visual Wander",
+            "Spatial Disconnection"
+          ],
+          "description": "A modular space must still be functional. When furniture is scattered without zoning anchors, the space fails to support your parallel active states, leaving the room feeling disconnected.",
+          "correction": [
+            "Anchor active zones using dedicated floor planes or perimeters.",
+            "Align modular pieces to create distinct, readable clusters."
+          ]
+        }
+      }
+    },
+    "weaver": {
+      "core_needs": [
+        "Connection",
+        "Togetherness",
+        "Presence"
+      ],
+      "pains": {
+        "storage": {
+          "friction": "Visual Overload",
+          "identity_conflict": "Your space seeks to welcome others, but your layout is choked by visual noise.",
+          "impacts": [
+            "Social Friction",
+            "Visual Static",
+            "Blocked Gathering"
+          ],
+          "description": "Gathering requires visual ease. When clutter and loose objects pile up on your shared surfaces, the room loses its welcoming atmosphere, making both you and your guests feel restless instead of present.",
+          "correction": [
+            "Clear common horizontal surfaces of daily utility items.",
+            "Consolidate loose objects into uniform, closed cabinetry."
+          ]
+        },
+        "circulation": {
+          "friction": "Movement Friction",
+          "identity_conflict": "Your daily rituals center around shared moments, but your layout restricts physical flow.",
+          "impacts": [
+            "Blocked Gathering",
+            "Transit Awkwardness",
+            "Circulation Bottleneck"
+          ],
+          "description": "Hosting should feel natural and effortless. When guests must squeeze past furniture or walk through active prep zones, the physical friction breaks the relaxed rhythm of the gathering.",
+          "correction": [
+            "Protect primary walking paths behind seating areas.",
+            "Separate guest transit paths from active food preparation zones."
+          ]
+        },
+        "atmosphere": {
+          "friction": "Sensory Coldness",
+          "identity_conflict": "Your personality seeks a sense of belonging, but your room relies on flat, harsh lighting.",
+          "impacts": [
+            "Emotional Distance",
+            "Sensory Discomfort",
+            "Formal Stiffness"
+          ],
+          "description": "A shared presence is built through soft, local lighting. When a room relies on flat overhead light, it washes out the intimate pockets of the space, creating an environment that feels sterile and distant.",
+          "correction": [
+            "Replace harsh overhead sources with soft, low-level accent lamps.",
+            "Position local pools of light to anchor shared seating nooks."
+          ]
+        },
+        "zoning": {
+          "friction": "Zoning Bleed",
+          "identity_conflict": "Your space should host shared gatherings, but your layout allows private routines to bleed into social zones.",
+          "impacts": [
+            "Boundary Tension",
+            "Social Distraction",
+            "Disrupted Presence"
+          ],
+          "description": "A welcoming home requires clean boundaries. When your workspace or private utility is fully visible from your social seating, the visual overlap makes the gathering feel ungrounded and distracted.",
+          "correction": [
+            "Shield private task zones from direct sightlines of social areas.",
+            "Establish clear visual boundaries between hosting areas and private spaces."
+          ]
+        },
+        "workspace": {
+          "friction": "Surface Compression",
+          "identity_conflict": "You want to prepare meals or host gatherings, but your layout restricts your serving planes.",
+          "impacts": [
+            "Blocked Hospitality",
+            "Workflow Tension",
+            "Functional Crowding"
+          ],
+          "description": "Preparing food for others is a social ritual. When kitchen counters or dining surfaces are small and crowded, the simple act of preparing and sharing a meal becomes stressful rather than connecting.",
+          "correction": [
+            "Maximize shared horizontal preparation areas.",
+            "Move daily utility appliances off primary serving counters."
+          ]
+        },
+        "privacy": {
+          "friction": "Exposure Stress",
+          "identity_conflict": "You seek intimate conversation, but your seating is exposed to drafts and entry sightlines.",
+          "impacts": [
+            "Conversational Stiffness",
+            "Restless Seating",
+            "Boundary Vulnerability"
+          ],
+          "description": "To connect deeply, people must feel secure in their seat. When sofa arrangements face open doorways or sit directly in public paths, guests remain subtly uncomfortable, unable to relax into shared presence.",
+          "correction": [
+            "Position primary social seating in a protected, face-to-face quadrant.",
+            "Introduce screens or visual buffers to shield seating from entryways."
+          ]
+        },
+        "hierarchy": {
+          "friction": "Hierarchy Void",
+          "identity_conflict": "Your eye seeks a central gathering anchor, but your layout scatters seating to the perimeters.",
+          "impacts": [
+            "Social Disconnection",
+            "Visual Dispersal",
+            "Awkward Seating"
+          ],
+          "description": "A social room must have a clear visual gravity center. When seating is pushed randomly to the walls or lacks a central anchoring element, guests feel disconnected, and the space fails to invite conversation.",
+          "correction": [
+            "Group seating in a centripetal, face-to-face arrangement.",
+            "Anchor the conversational group with a central rug or soft lighting drop."
+          ]
+        }
+      }
+    }
+  }
+}

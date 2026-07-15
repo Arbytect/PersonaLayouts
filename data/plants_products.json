@@ -1,0 +1,140 @@
+{
+  "furniture": [
+    {
+      "id": "sofa_monolith",
+      "name": "Monolith Architectural Sofa",
+      "why": "A stark, low-slung sofa with absolute geometric lines. Provides strong orthogonal framing and anchors the room's primary axis.",
+      "tag": "Axial Anchor",
+      "persona_alignment": ["sovereign", "sage"],
+      "room_alignment": ["living_room", "open_plan"],
+      "price_range": "$1,200-2,800",
+      "link": "https://www.amazon.com/s?k=low+profile+modern+sofa&tag=yorukoglu-20"
+    },
+    {
+      "id": "chair_command",
+      "name": "Sartorial Armchair",
+      "why": "High-backed leather lounge chair with strict structural steel legs. Positions the user in an authoritative high-comfort command point.",
+      "tag": "Command Seat",
+      "persona_alignment": ["sovereign"],
+      "room_alignment": ["living_room", "bedroom", "studio"],
+      "price_range": "$450-900",
+      "link": "https://www.amazon.com/s?k=high+back+leather+armchair&tag=yorukoglu-20"
+    },
+    {
+      "id": "sofa_nest",
+      "name": "Boucle Intimate Nest Sofa",
+      "why": "Curved, organically shaped L-sofa wrapped in ultra-soft boucle. Subconsciously draws family members inward to a conversational circle.",
+      "tag": "Social Anchor",
+      "persona_alignment": ["weaver"],
+      "room_alignment": ["living_room", "open_plan"],
+      "price_range": "$900-2,200",
+      "link": "https://www.amazon.com/s?k=boucle+curved+sectional+sofa&tag=yorukoglu-20"
+    },
+    {
+      "id": "chair_cuddle",
+      "name": "Textured Cozy Tub Chair",
+      "why": "Soft rounded tub armchair with low center of gravity. Provides warm acoustic containment and social comfort.",
+      "tag": "Cozy Cocoon",
+      "persona_alignment": ["weaver"],
+      "room_alignment": ["living_room", "bedroom", "studio"],
+      "price_range": "$350-700",
+      "link": "https://www.amazon.com/s?k=boucle+tub+chair&tag=yorukoglu-20"
+    },
+    {
+      "id": "chair_isolation",
+      "name": "Deep-Focus Acoustic Wingback",
+      "why": "Deeply recessed wingback chair with high acoustic fabric panels to isolate the reader and block background visual distractions.",
+      "tag": "Sanctuary Seat",
+      "persona_alignment": ["sage"],
+      "room_alignment": ["living_room", "bedroom", "studio"],
+      "price_range": "$500-1,100",
+      "link": "https://www.amazon.com/s?k=wingback+reading+chair&tag=yorukoglu-20"
+    },
+    {
+      "id": "desk_cantilever",
+      "name": "Minimalist Oak Floating Desk",
+      "why": "A clean, wall-mounted cantilever desk with zero leg clutter. Preserves maximum negative space and maintains clinical visual purity.",
+      "tag": "Focus Zone",
+      "persona_alignment": ["sage", "sovereign"],
+      "room_alignment": ["bedroom", "studio"],
+      "price_range": "$180-450",
+      "link": "https://www.amazon.com/s?k=wall+mounted+floating+desk&tag=yorukoglu-20"
+    },
+    {
+      "id": "sofa_modular_kinetic",
+      "name": "Kinetic Modular Lounge",
+      "why": "A 3-piece modular sectional lounge that can be easily split, nested, or rearranged to transition from relaxation to social workspace.",
+      "tag": "Dynamic Modular",
+      "persona_alignment": ["alchemist"],
+      "room_alignment": ["living_room", "open_plan", "studio"],
+      "price_range": "$800-1,900",
+      "link": "https://www.amazon.com/s?k=modular+sectional+sofa+casters&tag=yorukoglu-20"
+    },
+    {
+      "id": "table_adjustable_kinetic",
+      "name": "Glide Height-Adjustable Table",
+      "why": "Gas-lift dining and coffee table hybrid on soft casters. Instantly transforms the room from a formal dining area to a standing focus hub.",
+      "tag": "Adaptable Node",
+      "persona_alignment": ["alchemist"],
+      "room_alignment": ["living_room", "kitchen", "studio"],
+      "price_range": "$220-500",
+      "link": "https://www.amazon.com/s?k=height+adjustable+coffee+table+casters&tag=yorukoglu-20"
+    }
+  ],
+  "plants": [
+    {
+      "name": "Cast Iron Plant",
+      "sci": "Aspidistra elatior",
+      "safety": "safe",
+      "light": "Low to medium filtered light",
+      "water": "Allow soil to dry out between waterings",
+      "why": "Extremely robust with dark green, broad architectural leaves. Adds highly structured organic presence to dark corners without creating chaotic visual noise.",
+      "persona_alignment": ["sovereign", "sage"]
+    },
+    {
+      "name": "Parlor Palm",
+      "sci": "Chamaedorea elegans",
+      "safety": "safe",
+      "light": "Medium to bright indirect light",
+      "water": "Keep soil evenly damp but never soggy",
+      "why": "Soft, feathery compound leaves that filter light beautifully. Perfect for softening sharp corners and introducing warm, organic shadows to shared social spaces.",
+      "persona_alignment": ["weaver"]
+    },
+    {
+      "name": "Boston Fern",
+      "sci": "Nephrolepis exaltata",
+      "safety": "safe",
+      "light": "Bright indirect light, high humidity",
+      "water": "Water regularly, keep soil moist",
+      "why": "Cascading lush fronds that create an enclosing green canopy when placed on high shelves, providing sensory relief and a monastic cocoon feel.",
+      "persona_alignment": ["sage"]
+    },
+    {
+      "name": "Areca Palm",
+      "sci": "Dypsis lutescens",
+      "safety": "safe",
+      "light": "Bright indirect light",
+      "water": "Water when top 2cm of soil feels dry",
+      "why": "Fast-growing, dynamic tropical leaves that add movement and creative kinetic energy to flexible spaces.",
+      "persona_alignment": ["alchemist"]
+    },
+    {
+      "name": "Snake Plant",
+      "sci": "Sansevieria trifasciata",
+      "safety": "risk",
+      "light": "Low to bright indirect light",
+      "water": "Water only when soil is bone dry",
+      "why": "Stiff, vertical sword-like leaves that establish strong orthomorphic accents, reinforcing vertical design axes and visual authority.",
+      "persona_alignment": ["sovereign"]
+    },
+    {
+      "name": "Swiss Cheese Plant",
+      "sci": "Monstera deliciosa",
+      "safety": "risk",
+      "light": "Bright indirect light",
+      "water": "Water when top half of soil is dry",
+      "why": "Dramatic graphic split leaves that act as an organic sculptural focal point, bringing rich tropical complexity and high design energy.",
+      "persona_alignment": ["alchemist", "weaver"]
+    }
+  ]
+}

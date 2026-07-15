@@ -1,0 +1,130 @@
+{
+  "command_sightline": {
+    "num": "#01",
+    "name": "Command Sightline",
+    "src": "Neufert §12",
+    "rule": "Primary seat must face the room's main entry point. <strong>No back to the door.</strong> Visual authority over the full space. Float the primary seating minimum 60cm from the wall to establish an authoritative command position.",
+    "measure_val": "180°",
+    "measure_unit": "Visual field min"
+  },
+  "surface_hierarchy": {
+    "num": "#02",
+    "name": "Surface Hierarchy",
+    "src": "Ching §4",
+    "rule": "Every horizontal surface has <strong>one designated function.</strong> In compact rooms, this is critical — surfaces bleed immediately. Secondary items must go vertical only, preserving the primary focus.",
+    "measure_val": "1",
+    "measure_unit": "Function per surface"
+  },
+  "invisible_threshold": {
+    "num": "#11",
+    "name": "Invisible Threshold",
+    "src": "Ching §6",
+    "rule": "<strong>A rug defines a zone as firmly as a partition</strong> — without reducing physical space. Position all primary seating legs fully within the rug's perimeter to firmly anchor the visual zone.",
+    "measure_val": "200×160",
+    "measure_unit": "Rug min cm"
+  },
+  "ortho_axial": {
+    "num": "#15",
+    "name": "Ortho-Axial Alignment",
+    "src": "Neufert §5",
+    "rule": "All furniture aligns to the room's primary axis. <strong>Diagonal placement is prohibited.</strong> In a square room, you must create this axis artificially with the longest furniture piece.",
+    "measure_val": "2°",
+    "measure_unit": "Max deviation"
+  },
+  "social_gravity": {
+    "num": "#03",
+    "name": "Social Gravity",
+    "src": "Ching §3",
+    "rule": "Arrange primary seating in a conversational circle. <strong>No TV focus.</strong> Seating is focused entirely on social interaction, drawing people together organically in cozy configurations.",
+    "measure_val": "120",
+    "measure_unit": "Circle radius cm"
+  },
+  "soft_threshold": {
+    "num": "#07",
+    "name": "Soft Threshold",
+    "src": "Ching §7",
+    "rule": "Use soft organic textiles and layered rugs to define shared boundaries without creating harsh barriers. Soft textures create subconscious safety and spatial comfort.",
+    "measure_val": "3",
+    "measure_unit": "Max texture layers"
+  },
+  "shared_radius": {
+    "num": "#08",
+    "name": "Shared Radius",
+    "src": "Neufert §8",
+    "rule": "Provide a shared circulation zone with wide clearances. In family environments, maintain clear pathways to prevent physical collision and reduce friction.",
+    "measure_val": "90",
+    "measure_unit": "Clearance min cm"
+  },
+  "acoustic_softening": {
+    "num": "#09",
+    "name": "Acoustic Softening",
+    "src": "Ching §9",
+    "rule": "Use textured wall panels, thick curtains, and soft rugs to absorb vocal frequencies, allowing quiet private conversations even in a bustling multi-generational shared room.",
+    "measure_val": "0.4",
+    "measure_unit": "Absorption coeff"
+  },
+  "monastic_isolation": {
+    "num": "#04",
+    "name": "Monastic Isolation",
+    "src": "Neufert §4",
+    "rule": "Create an isolated work or reading nook facing away from traffic paths. Provide absolute visual and acoustic privacy for deep concentration.",
+    "measure_val": "0",
+    "measure_unit": "Traffic visibility"
+  },
+  "focused_sightline": {
+    "num": "#05",
+    "name": "Focused Sightline",
+    "src": "Ching §11",
+    "rule": "Ensure the primary seat is oriented away from visual distractions like hallways or doors. Place the desk/chair facing a calm natural window view.",
+    "measure_val": "0",
+    "measure_unit": "Distraction count"
+  },
+  "luminous_envelope": {
+    "num": "#06",
+    "name": "Luminous Envelope",
+    "src": "Neufert §7",
+    "rule": "Avoid harsh overhead lighting. Establish layered, highly focused pools of warm, low-level illumination strictly over active study or reading zones.",
+    "measure_val": "2700K",
+    "measure_unit": "Warm temp max"
+  },
+  "minimal_clutter": {
+    "num": "#10",
+    "name": "Minimal Clutter",
+    "src": "Ching §2",
+    "rule": "All horizontal storage must be enclosed. Out of sight, out of mind. Every intellectual book and tool has a closed cupboard address.",
+    "measure_val": "100%",
+    "measure_unit": "Enclosed storage"
+  },
+  "modular_delineation": {
+    "num": "#12",
+    "name": "Modular Delineation",
+    "src": "Ching §8",
+    "rule": "Use multi-functional, flexible furniture (modular sectionals, nesting tables) to redefine the layout instantly based on current activity.",
+    "measure_val": "4",
+    "measure_unit": "Mode configurations"
+  },
+  "multi_axial": {
+    "num": "#13",
+    "name": "Multi-Axial Flow",
+    "src": "Neufert §9",
+    "rule": "Create multiple diagonal and orthomorphic pathways through the room, allowing multiple activities to proceed side-by-side without interference.",
+    "measure_val": "2",
+    "measure_unit": "Active flow lines"
+  },
+  "adaptable_height": {
+    "num": "#14",
+    "name": "Adaptable Height",
+    "src": "Ching §12",
+    "rule": "Incorporate height-adjustable tables and desks to allow seamless transitions from sitting focus to dynamic standing collaborative work.",
+    "measure_val": "72-115",
+    "measure_unit": "Height range cm"
+  },
+  "kinetic_flow": {
+    "num": "#16",
+    "name": "Kinetic Flow",
+    "src": "Neufert §10",
+    "rule": "Keep circulation pathways dynamic and wide, using rounded or organic furniture silhouettes to facilitate fluid kinetic movement through small spaces.",
+    "measure_val": "85",
+    "measure_unit": "Path width min cm"
+  }
+}

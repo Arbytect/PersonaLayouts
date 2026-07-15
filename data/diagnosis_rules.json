@@ -1,0 +1,221 @@
+{
+  "sovereign_micro": {
+    "brutal_observation": "In a micro volume, visual chaos instantly overpowers structural order. The primary seat is pinned against the wall, creating an acute command deficit.",
+    "what_is_causing_this": [
+      "No physical buffer between the entry point and primary resting zones.",
+      "Horizontal surfaces hold secondary utilities, causing surface hierarchy collapse.",
+      "The micro square boundaries trap kinetic flow, forcing constant scanning."
+    ],
+    "stress_indicators": { "visual_noise": 8.8, "command_deficit": 8.5, "zone_ambiguity": 7.5, "size_pressure": 9.2 }
+  },
+  "sovereign_tight": {
+    "brutal_observation": "The room is functional but emotionally rigid. Your seat has its back to the room flow, causing low-level subconscious surveillance fatigue.",
+    "what_is_causing_this": [
+      "Circulation lanes cut through active zones rather than bypassing them.",
+      "Decor elements compete for visual priority, creating cognitive noise.",
+      "Lack of a clear orthomorphic axis causes the eyes to scan constantly."
+    ],
+    "stress_indicators": { "visual_noise": 8.0, "command_deficit": 7.8, "zone_ambiguity": 7.0, "size_pressure": 8.0 }
+  },
+  "sovereign_compact": {
+    "brutal_observation": "At ~16m², the square room lacks a natural axis. Every element is in everyone else's visual territory, diluting your command authority.",
+    "what_is_causing_this": [
+      "Multiple functions compete without firm zone boundaries.",
+      "No single dominant furniture piece defines a primary focal point.",
+      "Horizontal surfaces are bleeding utilities, causing constant cognitive load."
+    ],
+    "stress_indicators": { "visual_noise": 7.5, "command_deficit": 8.0, "zone_ambiguity": 6.5, "size_pressure": 5.8 }
+  },
+  "sovereign_standart": {
+    "brutal_observation": "The medium volume is functional, but lack of orthomorphic alignment makes the layout feel disjointed, weakening structural control.",
+    "what_is_causing_this": [
+      "Furniture pieces are placed at non-standard angles, breaking geometry.",
+      "The carpet perimeter fails to encompass all seating legs.",
+      "Visual clutter on open shelving competes with primary focal axes."
+    ],
+    "stress_indicators": { "visual_noise": 6.2, "command_deficit": 6.8, "zone_ambiguity": 5.8, "size_pressure": 4.5 }
+  },
+  "sovereign_large": {
+    "brutal_observation": "A large space with no primary axis feels empty rather than prestigious. Visual authority is dispersed across too many scattered seating spots.",
+    "what_is_causing_this": [
+      "The seating arrangement is isolated, leaving massive dead gaps.",
+      "Lighting is too general, washing out spatial hierarchy and drama.",
+      "Furniture lacks a clear alignment relationship to structural columns."
+    ],
+    "stress_indicators": { "visual_noise": 5.0, "command_deficit": 6.2, "zone_ambiguity": 6.0, "size_pressure": 3.0 }
+  },
+  "sovereign_generous": {
+    "brutal_observation": "Maximum space but zero focal control. The layout feels like a gallery of items rather than an authoritative, structured environment.",
+    "what_is_causing_this": [
+      "The massive open floor has no architectural anchor points.",
+      "Ancillary zones bleed into the main sitting circle without buffers.",
+      "Excessive negative space creates scale pressure rather than comfort."
+    ],
+    "stress_indicators": { "visual_noise": 4.5, "command_deficit": 5.8, "zone_ambiguity": 5.5, "size_pressure": 2.0 }
+  },
+
+  "weaver_micro": {
+    "brutal_observation": "In a micro space, social gravity collapses into physical crowding. Sharing this room forces high friction and zero visual relief.",
+    "what_is_causing_this": [
+      "Circulation lanes overlap directly with seating knee room.",
+      "No soft thresholds to define private corners from shared zones.",
+      "Massive horizontal surface overload causes constant domestic clutter."
+    ],
+    "stress_indicators": { "social_friction": 9.0, "acoustic_chatter": 8.8, "zone_overlap": 9.2, "size_pressure": 9.5 }
+  },
+  "weaver_tight": {
+    "brutal_observation": "The tight bounds force seating against the walls, creating a linear arrangement that blocks face-to-face eye contact.",
+    "what_is_causing_this": [
+      "Linear furniture placement prevents conversational circular gravity.",
+      "Harsh bare surfaces bounce acoustic reflections, causing voice fatigue.",
+      "Narrow clearances make collaborative movement through the space clunky."
+    ],
+    "stress_indicators": { "social_friction": 8.2, "acoustic_chatter": 7.8, "zone_overlap": 8.0, "size_pressure": 8.2 }
+  },
+  "weaver_compact": {
+    "brutal_observation": "Social warmth is limited because the seating layout is focused on a wall or TV rather than centering the family.",
+    "what_is_causing_this": [
+      "Primary armchair is isolated from the main conversation cluster.",
+      "No visual rug threshold to anchor and group the furniture.",
+      "Circulation paths slice right through the active conversation circle."
+    ],
+    "stress_indicators": { "social_friction": 7.0, "acoustic_chatter": 6.8, "zone_overlap": 6.5, "size_pressure": 5.5 }
+  },
+  "weaver_standart": {
+    "brutal_observation": "The room volume is healthy, but the layout is cold. Seating zones are too far apart to foster organic connection.",
+    "what_is_causing_this": [
+      "Distance between primary chairs exceeds comfortable vocal range.",
+      "Bare hard floors amplify empty acoustic reflections.",
+      "Zone transitions are too abrupt, lacking soft boundaries."
+    ],
+    "stress_indicators": { "social_friction": 6.0, "acoustic_chatter": 5.8, "zone_overlap": 5.2, "size_pressure": 4.2 }
+  },
+  "weaver_large": {
+    "brutal_observation": "The large scale causes cozy social energy to disperse. The family feels scattered and isolated across separate furniture items.",
+    "what_is_causing_this": [
+      "A massive single rug fails to delineate secondary reading or play zones.",
+      "Lack of warm lighting clusters makes the space feel cavernous.",
+      "Seating is spread along the room edges, preventing conversational circles."
+    ],
+    "stress_indicators": { "social_friction": 5.5, "acoustic_chatter": 5.0, "zone_overlap": 4.8, "size_pressure": 3.0 }
+  },
+  "weaver_generous": {
+    "brutal_observation": "In a generous volume, the absolute lack of intimate nodes makes the space feel like a hotel lobby rather than a warm home sanctuary.",
+    "what_is_causing_this": [
+      "Seating groupings are isolated and look lost in the vast floor space.",
+      "High ceilings amplify empty chatter and background echoes.",
+      "No cozy visual envelopes to anchor small private conversations."
+    ],
+    "stress_indicators": { "social_friction": 5.0, "acoustic_chatter": 4.5, "zone_overlap": 4.0, "size_pressure": 1.8 }
+  },
+
+  "sage_micro": {
+    "brutal_observation": "A micro volume leaves no sanctuary for isolation. Outer traffic directly penetrates your reading field, causing cognitive friction.",
+    "what_is_causing_this": [
+      "The primary reading seat directly faces the main entryway.",
+      "No spatial buffer to block visual movement from adjacent zones.",
+      "Open storage of books and tools creates constant visual clutter."
+    ],
+    "stress_indicators": { "distraction_level": 9.2, "sensory_overload": 8.8, "clutter_friction": 8.5, "isolation_deficit": 9.5 }
+  },
+  "sage_tight": {
+    "brutal_observation": "Your study desk is pushed into a dark corner, forcing you to work under harsh glare that causes eye strain.",
+    "what_is_causing_this": [
+      "Harsh overhead light casts shadows directly onto the reading surface.",
+      "Bookcases are placed along traffic lines, causing physical friction.",
+      "No dedicated window sightline to allow cognitive relief."
+    ],
+    "stress_indicators": { "distraction_level": 8.0, "sensory_overload": 7.5, "clutter_friction": 7.8, "isolation_deficit": 8.0 }
+  },
+  "sage_compact": {
+    "brutal_observation": "The compact layout lacks spatial insulation. Any activity elsewhere in the house immediately breaches your quiet study boundary.",
+    "what_is_causing_this": [
+      "Desk faces the center of the room instead of a calm wall or window.",
+      "Horizontal workspace is shared with domestic items, breaking concentration.",
+      "Lighting is generic and washes out private focal envelopes."
+    ],
+    "stress_indicators": { "distraction_level": 7.2, "sensory_overload": 6.8, "clutter_friction": 6.5, "isolation_deficit": 7.0 }
+  },
+  "sage_standart": {
+    "brutal_observation": "The space is quiet, but open shelves and uncurated objects create low-level sensory background noise that hinders focus.",
+    "what_is_causing_this": [
+      "Chaotic arrangement on open shelves creates minor visual clutter.",
+      "The reading seat is placed along the room's main diagonal axis.",
+      "Overhead lights are too bright, washing out ambient focus pools."
+    ],
+    "stress_indicators": { "distraction_level": 5.8, "sensory_overload": 5.2, "clutter_friction": 5.5, "isolation_deficit": 5.8 }
+  },
+  "sage_large": {
+    "brutal_observation": "A large study with no cozy envelope feels cold and exposed. You feel visually vulnerable rather than cocooned in deep focus.",
+    "what_is_causing_this": [
+      "The reading armchair is positioned in an open, unanchored floor zone.",
+      "Bookshelves are scattered, failing to form an enclosing study library.",
+      "Lack of low-level task lighting creates a cavernous atmosphere."
+    ],
+    "stress_indicators": { "distraction_level": 4.5, "sensory_overload": 4.0, "clutter_friction": 4.2, "isolation_deficit": 5.0 }
+  },
+  "sage_generous": {
+    "brutal_observation": "Vast space leads to focus dispersion. Without dedicated micro-zones, the mind wanders across the empty floor boundaries.",
+    "what_is_causing_this": [
+      "The main workspace is too far from natural light sources.",
+      "Excessive open scale prevents the feeling of intellectual containment.",
+      "Acoustic echoes from high walls create minor sensory fatigue."
+    ],
+    "stress_indicators": { "distraction_level": 4.0, "sensory_overload": 3.5, "clutter_friction": 3.0, "isolation_deficit": 4.5 }
+  },
+
+  "alchemist_micro": {
+    "brutal_observation": "A micro room leaves zero room for flexibility. Heavy fixed furniture locks the space, preventing multi-mode activity.",
+    "what_is_causing_this": [
+      "Heavy fixed sofas prevent the creation of open activity zones.",
+      "Lack of modular storage blocks quick changes between work and rest.",
+      "Linear circulation pathways trap movement, causing spatial claustrophobia."
+    ],
+    "stress_indicators": { "kinetic_rigidity": 9.5, "mode_friction": 9.0, "space_confinement": 9.2, "clutter_buildup": 8.8 }
+  },
+  "alchemist_tight": {
+    "brutal_observation": "Your layout forces a single fixed function. Transitioning from work to relaxation requires cumbersome physical effort.",
+    "what_is_causing_this": [
+      "Fixed dining or coffee tables block fluid kinetic flow lines.",
+      "No modular elements to adapt seating for different group sizes.",
+      "Lighting is single-mode, preventing atmospheric transitions."
+    ],
+    "stress_indicators": { "kinetic_rigidity": 8.5, "mode_friction": 8.0, "space_confinement": 8.2, "clutter_buildup": 7.8 }
+  },
+  "alchemist_compact": {
+    "brutal_observation": "The layout is functional but static. The room is configured for one scenario, blocking your creative need for spatial change.",
+    "what_is_causing_this": [
+      "Central rug is too small to serve multiple overlapping activities.",
+      "Furniture arrangement cannot be easily expanded or folded away.",
+      "No dedicated open floor sector is reserved for dynamic movement."
+    ],
+    "stress_indicators": { "kinetic_rigidity": 7.2, "mode_friction": 7.0, "space_confinement": 6.8, "clutter_buildup": 6.2 }
+  },
+  "alchemist_standart": {
+    "brutal_observation": "The room has potential, but the furniture is static. Moving pieces around to accommodate guests feels clunky.",
+    "what_is_causing_this": [
+      "Sofas lack modular sectionals to support different configurations.",
+      "Table heights are static, preventing standing work options.",
+      "The pathway structure is rigid, blocking multi-axial kinetic flow."
+    ],
+    "stress_indicators": { "kinetic_rigidity": 6.0, "mode_friction": 5.8, "space_confinement": 5.0, "clutter_buildup": 5.2 }
+  },
+  "alchemist_large": {
+    "brutal_observation": "A large space that is permanently zoned is a missed opportunity. Fixed boundaries block dynamic collaboration and creative reuse.",
+    "what_is_causing_this": [
+      "Cavernous open zones lack modular screens or moveable partitions.",
+      "Storage is static and can't be adapted as project needs shift.",
+      "The single fixed lighting grid prevents localized mood adjustment."
+    ],
+    "stress_indicators": { "kinetic_rigidity": 5.0, "mode_friction": 4.8, "space_confinement": 4.0, "clutter_buildup": 4.2 }
+  },
+  "alchemist_generous": {
+    "brutal_observation": "A massive open room that lacks kinetic orchestration. The vast scale is wasted on a static, conventional furniture placement.",
+    "what_is_causing_this": [
+      "Fixed seating is grouped too rigidly in the center.",
+      "No dynamic focal points to guide fluid movement through the volume.",
+      "Lack of moveable acoustic buffers makes multi-mode projects noisy."
+    ],
+    "stress_indicators": { "kinetic_rigidity": 4.2, "mode_friction": 4.0, "space_confinement": 3.0, "clutter_buildup": 3.2 }
+  }
+}

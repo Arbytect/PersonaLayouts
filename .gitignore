@@ -1,0 +1,14 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Dependencies and generated customer artifacts
+node_modules/
+output/
+*.log
+
+# Local tooling
+.netlify/
+.gemini/
+.cache/
