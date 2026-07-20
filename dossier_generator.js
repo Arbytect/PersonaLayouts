@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
 const { loadEnvFile, getChromeExecutablePath } = require('./env-loader');
+const { findRealProduct } = require('./shared/product_matcher');
 
 // Define Paths
 const DATA_DIR = path.join(__dirname, 'data');
@@ -635,23 +636,6 @@ function buildPhotoAuditPages(config, aiEnrichment, generatedVisual) {
   </div>
   <div class="pg-ftr"><div class="pg-ftr-l">PersonaLayouts Room Transform</div><div class="pg-ftr-r">RT-02 - Photo Audit</div></div>
 </div>`;
-}
-
-// Finds a real, purchasable product match from the plants_products.json furniture catalog for a
-// given piece role. Physical fit is never relaxed before style: preferring an exact persona-family +
-// size-bucket match, then a size-safe match of any persona (a wrong-size item is a real-world failure,
-// a wrong-style item is just a mismatch of taste), then a persona match regardless of size only if no
-// size-safe option exists at all, so every piece has the best available real link rather than none.
-function findRealProduct(catalog, roomType, role, personaBase, sizeKey) {
-    const pool = (catalog.furniture || []).filter(item => item.role === role && (item.room_alignment || []).includes(roomType));
-    if (pool.length === 0) return null;
-    const fitsSize = item => !item.size_alignment || item.size_alignment.includes(sizeKey);
-    const exact = pool.find(item => (item.persona_alignment || []).includes(personaBase) && fitsSize(item));
-    if (exact) return exact;
-    const sizeMatch = pool.find(fitsSize);
-    if (sizeMatch) return sizeMatch;
-    const personaMatch = pool.find(item => (item.persona_alignment || []).includes(personaBase));
-    return personaMatch || pool[0];
 }
 
 // Applies the deterministic, code-enforced size_modifiers.json rules on top of a persona's base

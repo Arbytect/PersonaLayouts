@@ -1,7 +1,65 @@
 {
   "_meta": {
     "description": "Deterministic, code-enforced architectural/ergonomic constraints per room_type x size bucket. Not GPT-generated — these are hard facts (clearances, thresholds, appliance logic) that must never be contradicted by AI-generated prose. GPT/enrichment layers may explain or stylize these, but may not override them.",
-    "size_keys": { "micro": "Under 10m²", "tight": "10–14m²", "compact": "14–18m²", "standard": "18–23m²", "generous": "23–30m²", "large": "30m²+" }
+    "size_keys": { "micro": "Under 10m²", "tight": "10–14m²", "compact": "14–18m²", "standard": "18–23m²", "generous": "23–30m²", "large": "30m²+" },
+    "preview_rules": {
+      "kitchen": {
+        "micro": "No island fits: this footprint cannot preserve the required 105cm clearance.",
+        "tight": "A true island still fails; even a rolling cart must leave 105cm clear.",
+        "compact": "A peninsula is capped at 60 x 150cm and still needs a 105cm walkway.",
+        "standard": "An island starts at 90 x 150cm with 105cm clear on every side.",
+        "generous": "A 100 x 180cm island can support two functions without choking circulation.",
+        "large": "A 120 x 240cm island can combine prep, seating and a secondary sink."
+      },
+      "bedroom": {
+        "micro": "Bed, wardrobe and desk cannot all remain fixed; one must fold away.",
+        "tight": "Queen is the practical bed ceiling if usable side clearance is preserved.",
+        "compact": "Choose a desk or reading chair beside the bed and wardrobe, not both.",
+        "standard": "A King only works when the room's shortest side reaches 3.4m.",
+        "generous": "A King plus a dedicated seating or work zone fits with full clearance.",
+        "large": "A full suite works only when every zone keeps its own clearance envelope."
+      },
+      "balcony": {
+        "micro": "A dining set consumes the walking path; furniture must fold or mount to a wall.",
+        "tight": "A folding two-seat bistro set is the maximum safe furniture load.",
+        "compact": "A fixed two-seat table fits, but a four-seat set still overloads the footprint.",
+        "standard": "A two-to-four-seat dining setup now fits without folding away.",
+        "generous": "Lounge and dining can coexist when furniture depth stays below 70cm.",
+        "large": "Outdoor living, dining and planting still require separate circulation buffers."
+      },
+      "living_room": {
+        "micro": "A sectional's 95cm+ depth removes the room's usable circulation lane.",
+        "tight": "A two-seater plus one chair is the ceiling if 90cm circulation is kept.",
+        "compact": "A three-seater and one chair fit only when the sofa floats 60cm off the wall.",
+        "standard": "A three-seater, two accents and media storage fit within clearance minimums.",
+        "generous": "A sectional or two-sofa conversation circle both fit this footprint.",
+        "large": "Multiple seating zones are viable, but each needs a distinct circulation lane."
+      },
+      "studio": {
+        "micro": "A permanent bed removes the living zone; the sleep piece must convert or fold.",
+        "tight": "A low platform bed works only with a compact wall-mounted or folding desk.",
+        "compact": "Sleep and living zones can separate with furniture, without building a wall.",
+        "standard": "A full bed, proper desk and compact lounge fit with one defined divider.",
+        "generous": "Sleep, work and social zones can coexist with independent circulation.",
+        "large": "Extra area does not replace zoning; the studio still needs readable boundaries."
+      },
+      "open_plan": {
+        "micro": "Do not force three zones under 10m²; treat the footprint as one flexible room.",
+        "tight": "A drop-leaf table preserves daily circulation and expands only for hosting.",
+        "compact": "Use a peninsula, not a full island, to mark the kitchen boundary.",
+        "standard": "Cook, dine and lounge can coexist only with separate clearance envelopes.",
+        "generous": "Three complete zones fit; cross-room sightlines become the main constraint.",
+        "large": "Every zone boundary still needs a real circulation lane, not a visual suggestion."
+      },
+      "home_office": {
+        "micro": "A fold-down desk is the ceiling when the room carries another function.",
+        "tight": "A 100-110cm desk and ergonomic chair fit, but secondary seating does not.",
+        "compact": "A 120cm desk, ergonomic chair and slim storage fit within clearance.",
+        "standard": "Desk, storage and one secondary seat fit with usable circulation.",
+        "generous": "An L-shaped desk or separate focus and reading zones both work.",
+        "large": "An executive layout still requires a clearance envelope around every zone."
+      }
+    }
   },
   "kitchen": {
     "micro": {
