@@ -1,0 +1,170 @@
+{
+  "_meta": {
+    "description": "Applied on top of furniture_recommendations.json's persona-selected pieces, keyed by room_type x size bucket (micro/tight/compact/standard/generous/large — same keys as room_constraints.json). exclude_roles drops a role entirely. dimension_overrides replaces ONLY the dimensions string of a matching role (type/shape stay persona-flavored). add_pieces appends new size-specific pieces not part of the base persona table. size_note is a one-line rationale shown next to the furniture table, tying back to room_constraints.json."
+  },
+  "kitchen": {
+    "micro": {
+      "dimension_overrides": { "Dining Table": "80cm W x 40cm D (wall-mounted fold-down)" },
+      "add_pieces": [{ "role": "Space-Saving Addition", "type": "Under-Oven Storage Drawer", "shape": "Slide-out drawer beneath a built-in oven, no separate base cabinet required", "dimensions": "60cm W x 50cm D x 15cm H" }],
+      "size_note": "No island or peninsula fits at this size — see Technical Protocol for the full kitchen layout rules."
+    },
+    "tight": {
+      "dimension_overrides": { "Dining Table": "100cm W open / 50cm folded x 70cm D — drop-leaf" },
+      "add_pieces": [
+        { "role": "Space-Saving Addition", "type": "Under-Oven Storage Drawer", "shape": "Slide-out drawer beneath a built-in oven, no separate base cabinet required", "dimensions": "60cm W x 50cm D x 15cm H" },
+        { "role": "Space-Saving Addition", "type": "Pull-Out Corner Carousel", "shape": "Rotating shelves inside the blind-corner cabinet", "dimensions": "90cm diameter sweep" }
+      ],
+      "size_note": "Still no true island — a narrow rolling cart is the ceiling, only if 105cm walkway clearance holds."
+    },
+    "compact": {
+      "add_pieces": [{ "role": "Space-Saving Addition", "type": "Under-Oven Storage Drawer", "shape": "Slide-out drawer beneath a built-in oven, no separate base cabinet required", "dimensions": "60cm W x 50cm D x 15cm H" }],
+      "size_note": "A slim peninsula (max 60cm depth) is the ceiling until 18m²+ — see Technical Protocol."
+    },
+    "standard": {
+      "add_pieces": [{ "role": "Kitchen Island (Single-Function)", "type": "Compact Prep Island", "shape": "One assigned function only — prep OR seating OR sink, not combined", "dimensions": "90cm x 150cm x 90cm H" }],
+      "size_note": "A true island is now viable at minimum 90×150cm with 105cm clearance on every side."
+    },
+    "generous": {
+      "add_pieces": [{ "role": "Kitchen Island (Dual-Function)", "type": "Prep + Casual Seating Island", "shape": "Combines two functions since the clearance budget allows it", "dimensions": "100cm x 180cm x 90cm H" }],
+      "size_note": "Island can grow to two combined functions; a distinct 4-6 seat dining zone is also appropriate."
+    },
+    "large": {
+      "add_pieces": [
+        { "role": "Kitchen Island (Full-Scale)", "type": "Prep + Secondary Sink + Seating Island", "shape": "Full-scale multi-function island, the only bracket where this combination avoids congestion", "dimensions": "120cm x 240cm x 90cm H" },
+        { "role": "Space-Saving Addition", "type": "Under-Oven Storage Drawer", "shape": "Still standard practice even at this scale", "dimensions": "60cm W x 50cm D x 15cm H" }
+      ],
+      "size_note": "A separate walk-in or butler's pantry is architecturally justified at this size."
+    }
+  },
+  "bedroom": {
+    "micro": {
+      "exclude_roles": ["Reading Chair"],
+      "dimension_overrides": { "Bed (Anchor)": "137cm W x 191cm D (Double/Full — capped for room size)" },
+      "add_pieces": [{ "role": "Space-Saving Addition", "type": "Wall-Mounted Floating Nightstand Pair (replaces freestanding units)", "shape": "Single floating shelf per side, no legs touching the floor", "dimensions": "30cm W x 20cm D x 10cm H each" }],
+      "size_note": "Wardrobe, desk and bed will not all fit — pick two as fixed, treat the third as fold-away."
+    },
+    "tight": {
+      "dimension_overrides": { "Bed (Anchor)": "153cm W x 203cm D (Queen — capped, King exceeds clearance)" },
+      "add_pieces": [{ "role": "Space-Saving Addition", "type": "Under-Bed Storage Drawer Set", "shape": "Two rolling drawers sized to the bed frame width", "dimensions": "140cm W x 50cm D x 18cm H" }],
+      "size_note": "Queen is the practical ceiling; wardrobe depth caps at 60cm."
+    },
+    "compact": {
+      "dimension_overrides": { "Bed (Anchor)": "153cm W x 203cm D (Queen)" },
+      "size_note": "Queen plus a compact wardrobe and one additional piece is the realistic ceiling."
+    },
+    "standard": { "size_note": "Queen or King both viable; King needs the room's shortest side at minimum 3.4m." },
+    "generous": { "size_note": "King with full clearance, plus a dedicated seating or work zone, fits without compromise." },
+    "large": { "size_note": "Full suite layout fits, but each zone still needs its own clearance envelope." }
+  },
+  "balcony": {
+    "micro": {
+      "exclude_roles": ["Side Table"],
+      "dimension_overrides": { "Lounge Seating": "Foldable single chair, stored when not in use — 50cm W x 55cm D x 80cm H" },
+      "add_pieces": [{ "role": "Garden Storage", "type": "Self-Watering Vertical Herb Garden", "shape": "Wall-mounted tiered planter with an integrated reservoir — no floor footprint, minimal watering upkeep", "dimensions": "40cm W x 15cm D x 90cm H" }],
+      "size_note": "No dining set fits — furniture must be wall-mounted or foldable."
+    },
+    "tight": {
+      "dimension_overrides": { "Lounge Seating": "Foldable 2-seat bistro set — 60cm dia table + 2 chairs" },
+      "add_pieces": [{ "role": "Garden Storage", "type": "Weatherproof Garden Tool Storage Box", "shape": "Slim lockable storage box that doubles as an extra seat or side surface", "dimensions": "70cm W x 35cm D x 40cm H" }],
+      "size_note": "A slim 2-seat set is the ceiling, and only if it folds or stores away."
+    },
+    "compact": {
+      "add_pieces": [{ "role": "Garden Storage", "type": "Compact Drip-Irrigation Planter Trio", "shape": "Self-watering planter set on a shared drip line — minimal-maintenance minimal-footprint greenery", "dimensions": "3x 30cm dia x 35cm H" }],
+      "size_note": "A fixed 2-seat table works without folding; a 4-seat set is still too much."
+    },
+    "standard": {
+      "add_pieces": [{ "role": "Garden Storage", "type": "Weatherproof Garden Tool Storage Box", "shape": "Slim lockable storage box that doubles as an extra seat or side surface", "dimensions": "70cm W x 35cm D x 40cm H" }],
+      "size_note": "A proper 2-4 seat dining setup fits without folding requirements."
+    },
+    "generous": {
+      "add_pieces": [{ "role": "Garden Storage", "type": "Compact Drip-Irrigation Planter Trio", "shape": "Self-watering planter set on a shared drip line — minimal-maintenance minimal-footprint greenery", "dimensions": "3x 30cm dia x 35cm H" }],
+      "size_note": "Distinct lounge and dining zones can coexist if furniture depth stays under 70cm per zone."
+    },
+    "large": {
+      "add_pieces": [{ "role": "Garden Storage", "type": "Weatherproof Garden Tool Storage Box", "shape": "Slim lockable storage box that doubles as an extra seat or side surface", "dimensions": "70cm W x 35cm D x 40cm H" }],
+      "size_note": "Full outdoor living setup is justified, but each zone still needs its own circulation buffer."
+    }
+  },
+  "living_room": {
+    "micro": {
+      "exclude_roles": ["Media Console / Storage"],
+      "dimension_overrides": { "Sofa (Anchor)": "160cm W x 85cm D x 68cm H (2-seater)" },
+      "add_pieces": [{ "role": "Space-Saving Addition", "type": "Wall-Mounted Floating AV Shelf (replaces console)", "shape": "Single floating shelf below a wall-mounted TV, no floor footprint", "dimensions": "120cm W x 25cm D x 8cm H" }],
+      "size_note": "No sectional fits — depth alone will not leave a walkable circulation lane."
+    },
+    "tight": {
+      "exclude_roles": ["Media Console / Storage"],
+      "dimension_overrides": { "Sofa (Anchor)": "180cm W x 88cm D x 70cm H (2-seater)" },
+      "add_pieces": [{ "role": "Space-Saving Addition", "type": "Wall-Mounted Floating AV Shelf (replaces console)", "shape": "Single floating shelf below a wall-mounted TV, no floor footprint", "dimensions": "120cm W x 25cm D x 8cm H" }],
+      "size_note": "2-seater plus one accent chair is the ceiling — a 3-seater fails the 90cm circulation minimum."
+    },
+    "compact": { "size_note": "3-seater plus one accent chair fits if floated 60cm off the rear wall." },
+    "standard": { "size_note": "Full 3-seater plus 2 accent pieces and a proper media console all fit within clearance minimums." },
+    "generous": { "size_note": "An L-shaped sectional or two full sofas in a conversational circle both work at this size." },
+    "large": { "size_note": "Multiple seating zones (primary + secondary reading/media nook) are appropriate and expected." }
+  },
+  "studio": {
+    "micro": {
+      "dimension_overrides": { "Sleep Piece (Bed/Sofa-bed)": "Murphy bed or sofa-bed — folded footprint 120cm W x 30cm D (open: 137cm x 191cm)" },
+      "add_pieces": [{ "role": "Zone Marker", "type": "Storage Ottoman Bench (seat + storage + occasional table)", "shape": "Upholstered lid-top bench with a hollow interior; performs three functions in one footprint", "dimensions": "90cm W x 40cm D x 45cm H" }],
+      "size_note": "A murphy bed or sofa-bed is mandatory — a permanent frame leaves no room for any living function."
+    },
+    "tight": {
+      "dimension_overrides": { "Sleep Piece (Bed/Sofa-bed)": "Low-profile platform bed with under-bed storage — 137cm W x 191cm D" },
+      "add_pieces": [{ "role": "Zone Marker", "type": "Storage Ottoman Bench (seat + storage + occasional table)", "shape": "Upholstered lid-top bench with a hollow interior; performs three functions in one footprint", "dimensions": "90cm W x 40cm D x 45cm H" }],
+      "size_note": "A platform bed becomes viable, still paired with a compact fold-down or wall-mounted desk."
+    },
+    "compact": {
+      "add_pieces": [{ "role": "Zone Marker", "type": "Color-Blocked Zone Rug (marks the activity side only)", "shape": "Applies the persona's zone accent color to one rug only, on the desk/activity side of the furniture divider", "dimensions": "160cm x 230cm" }],
+      "size_note": "Distinct sleep and living zones become possible using a furniture-based divider."
+    },
+    "standard": {
+      "add_pieces": [{ "role": "Zone Marker", "type": "Color-Blocked Zone Rug (marks the activity side only)", "shape": "Applies the persona's zone accent color to one rug only, on the desk/activity side of the furniture divider", "dimensions": "170cm x 240cm" }],
+      "size_note": "A full bed plus a proper desk and a compact living area all fit with a defined divider."
+    },
+    "generous": { "size_note": "Three functional zones (sleep, work, living/social) can coexist with their own circulation buffers." },
+    "large": { "size_note": "Functions closer to a true one-bedroom in practice — zoning discipline still matters." }
+  },
+  "open_plan": {
+    "micro": {
+      "exclude_roles": ["Kitchen Island / Peninsula"],
+      "size_note": "Under 10m² cannot support an island or peninsula — treat this as one unified zone, not three."
+    },
+    "tight": {
+      "exclude_roles": ["Kitchen Island / Peninsula"],
+      "add_pieces": [{ "role": "Zone Definer", "type": "Half-Height Counter Divider (replaces island)", "shape": "Fixed half-height counter defining the kitchen boundary without full upper cabinets", "dimensions": "150cm W x 45cm D x 90cm H" }],
+      "size_note": "Same clearance math as a standalone tight kitchen applies here — no true island."
+    },
+    "compact": {
+      "dimension_overrides": { "Kitchen Island / Peninsula": "Peninsula only, max 60cm depth x 150cm length" },
+      "size_note": "A peninsula can define the kitchen edge while keeping zones visually connected."
+    },
+    "standard": {
+      "dimension_overrides": { "Kitchen Island / Peninsula": "90cm x 150cm, single-function" },
+      "size_note": "Full dining table, small island/peninsula, and a living cluster coexist if each keeps its own clearance."
+    },
+    "generous": {
+      "dimension_overrides": { "Kitchen Island / Peninsula": "100cm x 180cm, seating on one side" },
+      "size_note": "Three fully distinct zones each get real furniture commitments; sightline management is the main constraint."
+    },
+    "large": {
+      "dimension_overrides": { "Kitchen Island / Peninsula": "120cm x 240cm, full-scale multi-function" },
+      "size_note": "Full-scale zoning is appropriate, but every zone boundary still needs a real circulation lane."
+    }
+  },
+  "home_office": {
+    "micro": {
+      "exclude_roles": ["Storage / Bookshelf"],
+      "dimension_overrides": { "Desk (Anchor)": "Fold-down wall desk — folded depth 10cm (open: 90cm W x 40cm D)" },
+      "size_note": "A fold-down wall desk is the ceiling if this room shares another primary function."
+    },
+    "tight": {
+      "dimension_overrides": { "Desk (Anchor)": "100-110cm W x 55cm D compact desk" },
+      "size_note": "A compact desk plus an ergonomic chair fits, but there's no room for a secondary seating element."
+    },
+    "compact": { "size_note": "Desk (120cm) plus ergonomic chair and a slim storage unit all fit within standard clearance." },
+    "standard": { "size_note": "Full desk, proper storage, and a small secondary seat all fit with room to spare." },
+    "generous": { "size_note": "An L-shaped desk or a dual-zone setup both work at this size." },
+    "large": { "size_note": "A full executive layout is justified, but each zone still needs its own clearance." }
+  }
+}

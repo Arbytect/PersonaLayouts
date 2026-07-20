@@ -1,0 +1,24 @@
+{
+  "_meta": {
+    "description": "Room-specific material/color corrections layered on top of materials_matrix.json's persona palette. materials_matrix.json is persona-only (same finishes regardless of room), which is wrong for balcony (needs weatherproof materials, not indoor lacquer/wool) and studio (needs a livelier zone-marking accent since one flat palette across a multi-function room works against zone separation)."
+  },
+  "balcony": {
+    "override_note": "Balcony is a weather-exposed space — indoor finishes (lacquer, veneer, wool/bouclé) don't hold up outdoors. Keep the persona's color family, swap the material vocabulary for weatherproof equivalents.",
+    "primary_material_override": "Weatherproof powder-coated aluminum, sealed teak, or all-weather woven resin — not interior lacquer or wood veneer.",
+    "textile_override": "UV-stable, water-resistant outdoor-grade fabric (solution-dyed acrylic or equivalent) in the persona's tonal family — not indoor wool or bouclé.",
+    "hardware_override": "Marine-grade or powder-coated stainless hardware, rust- and salt-resistant."
+  },
+  "studio": {
+    "zone_note": "A studio holds a sleep zone and an activity zone in one room. Keep the shared base palette across both, but apply the zone accent color decisively to ONE zone only — typically the desk/activity side — so the two zones read as visually distinct without breaking material cohesion. This does more to separate the zones than any physical divider alone.",
+    "zone_accents": {
+      "sovereign_clinical": { "name": "Cobalt Signal", "hex": "#1f5fd1" },
+      "sovereign_precision": { "name": "Burnished Copper", "hex": "#b5651d" },
+      "sage_hermit": { "name": "Emerald Focus", "hex": "#0b6e4f" },
+      "sage_scholar": { "name": "Amber Glow", "hex": "#c9822a" },
+      "weaver_intimate": { "name": "Terracotta Bloom", "hex": "#c1583a" },
+      "weaver_dynamic": { "name": "Coral Signal", "hex": "#e2543f" },
+      "alchemist_fluid": { "name": "Kinetic Teal", "hex": "#17a3a3" },
+      "alchemist_chaotic": { "name": "Signal Yellow", "hex": "#e8b400" }
+    }
+  }
+}

@@ -1,0 +1,306 @@
+{
+  "_meta": {
+    "description": "Deterministic, code-enforced architectural/ergonomic constraints per room_type x size bucket. Not GPT-generated — these are hard facts (clearances, thresholds, appliance logic) that must never be contradicted by AI-generated prose. GPT/enrichment layers may explain or stylize these, but may not override them.",
+    "size_keys": { "micro": "Under 10m²", "tight": "10–14m²", "compact": "14–18m²", "standard": "18–23m²", "generous": "23–30m²", "large": "30m²+" }
+  },
+  "kitchen": {
+    "micro": {
+      "hard_rules": [
+        "No island or peninsula — under 10m² cannot absorb the ~105cm clearance an island requires on both sides.",
+        "Never place the stove flush in a corner with no landing counter beside it — keep a minimum 40cm clear counter on at least one side of the cooktop for pot handling.",
+        "Single-wall or galley layout only; an L-shape needs more corner depth than this footprint allows."
+      ],
+      "space_saving_tips": [
+        "Stack the oven under the counter with a storage drawer above or below it instead of a separate base cabinet — reclaims roughly 40cm of floor-level storage.",
+        "Use a combined oven+microwave unit to save counter width rather than two separate appliances.",
+        "Wall-mounted rail systems for utensils and pans free up drawer space entirely."
+      ],
+      "avoid": ["Full-size refrigerator — use a slim or under-counter unit.", "Upper cabinets on both walls in a galley layout — leave one wall open-shelving-only to avoid a tunnel feel."]
+    },
+    "tight": {
+      "hard_rules": [
+        "Still no true island; a narrow rolling cart (under 60cm depth) is the ceiling, and only if it leaves 105cm of clear walkway.",
+        "The stove clearance rule still applies — minimum 40cm landing zone beside the cooktop.",
+        "If an L-shape is used, the inside corner needs a carousel or blind-corner pull-out, not a dead unusable corner."
+      ],
+      "space_saving_tips": [
+        "Under-oven drawer for baking trays and pan lids is the single best space recovery move at this size.",
+        "A pull-out pantry unit (15–20cm wide) beside the fridge uses otherwise wasted gap space.",
+        "Open shelving above the counter reduces visual bulk versus stacked upper cabinets."
+      ],
+      "avoid": ["Double-basin sink — a single basin with an integrated drainer frees counter length.", "Decorative backsplash tile that doesn't also serve as the counter-to-cabinet gap filler."]
+    },
+    "compact": {
+      "hard_rules": [
+        "A slim peninsula (max 60cm depth, under 150cm length) becomes viable only if 105cm clearance is kept on the walkway side.",
+        "The work triangle (sink–stove–fridge) must stay under 6m combined leg length or the layout is inefficient regardless of square footage.",
+        "Size the ventilation hood to the cooktop width, not the room — undersized hoods are the most common compact-kitchen mistake."
+      ],
+      "space_saving_tips": [
+        "Under-oven drawer remains a permanent default at this size, not just a small-kitchen fix.",
+        "Corner carousel unit if an L-shape corner exists.",
+        "Vertical divider slots next to the oven (trays and cutting boards stored upright) save more than a drawer would."
+      ],
+      "avoid": ["A full kitchen island — a peninsula is the ceiling until 18m²+.", "Open shelving on more than one full wall — some closed storage is still needed for visual calm at this size."]
+    },
+    "standard": {
+      "hard_rules": [
+        "A true island becomes possible here, but only at minimum 90×150cm with 105cm clearance maintained on every side.",
+        "If an island is added, it should take on at most one function (prep OR seating OR sink) — combining more than one on a small island creates congestion.",
+        "Keep the work triangle intact even with an island present; don't let it interrupt the sink–stove–fridge path."
+      ],
+      "space_saving_tips": [
+        "A dedicated small dining nook (2–4 seats) can now be split off from the cooking zone with a rug or half-wall.",
+        "Under-oven drawer remains standard practice regardless of available space.",
+        "Deep drawers instead of cabinet doors for pots and pans reduce bending and reclaim corner reach."
+      ],
+      "avoid": ["An island larger than 150cm on this footprint — it will choke the walkway clearance."]
+    },
+    "generous": {
+      "hard_rules": [
+        "The island can grow to 100×180cm and take on two functions (e.g. prep + casual seating) since the clearance budget allows it.",
+        "A distinct dining zone (4–6 seats) is appropriate and should be visually separated from the cook zone, not merged into one continuous surface.",
+        "A pantry zone (even a single tall cabinet run) becomes worth dedicating space to at this size."
+      ],
+      "space_saving_tips": [
+        "Under-oven drawer plus a second drawer stack for small appliances keeps counters clear.",
+        "An appliance garage (roll-front cabinet) hides small appliances without eating into usable counter."
+      ],
+      "avoid": ["Leaving the extra square meterage as unassigned open floor — every zone should have a function or it reads as wasted space."]
+    },
+    "large": {
+      "hard_rules": [
+        "The island can be full-scale (120×240cm) and absorb prep, secondary sink, and seating — this is the only bracket where that combination doesn't create congestion.",
+        "A separate walk-in or butler's pantry is architecturally justified here.",
+        "Multiple work zones can coexist, but each still needs its own clear circulation lane — size doesn't remove the clearance rules, it just gives room to satisfy them."
+      ],
+      "space_saving_tips": [
+        "Under-oven drawer and a full drawer bank for cookware remain the default even at this scale — big kitchens fail from poor internal organization just as often as small ones.",
+        "An appliance garage or dedicated coffee station keeps the large island's surface from becoming permanent clutter."
+      ],
+      "avoid": ["Treating the extra space as license to skip zoning — an unstructured 35m² kitchen creates more wasted motion than a well-organized 12m² one."]
+    }
+  },
+  "bedroom": {
+    "micro": {
+      "hard_rules": [
+        "A full wardrobe, a desk, and the bed will not all fit — pick two as fixed and treat the third as fold-away or shared with another room.",
+        "Swing-door wardrobes need a 70–90cm clearance arc to open; at this size that arc alone can consume a functional corner — use sliding or bi-fold doors instead.",
+        "Bed size caps at a Double/Full — a Queen leaves under 60cm clearance on both sides, which fails the minimum walk clearance."
+      ],
+      "space_saving_tips": [
+        "Wall-mounted floating nightstands instead of freestanding units reclaim floor area.",
+        "A bed frame with integrated drawer storage replaces a separate dresser entirely.",
+        "Over-door hooks and a slim vertical shelf beside the wardrobe use vertical space the floor plan can't offer."
+      ],
+      "avoid": ["A reading chair as a separate piece — fold this function into the bed with a wall-mounted reading light and a slim shelf instead."]
+    },
+    "tight": {
+      "hard_rules": [
+        "Queen bed is the practical ceiling; a King requires more clearance than 12m² supports on both long sides.",
+        "Wardrobe depth must stay at 60cm max (standard hanging depth) — deeper eats into the walk path.",
+        "Sliding wardrobe doors remain the default; swing doors are only viable if the wardrobe sits on the wall opposite the bed with no crossing traffic."
+      ],
+      "space_saving_tips": [
+        "Under-bed drawers absorb seasonal storage that would otherwise need a dresser.",
+        "A slim floating desk (40cm depth) can double as a vanity/console near natural light."
+      ],
+      "avoid": ["A full-length dresser at the foot of the bed — it narrows the walk path below the 60cm minimum."]
+    },
+    "compact": {
+      "hard_rules": [
+        "Queen bed plus a compact wardrobe and one additional piece (desk OR reading chair, not both) is the realistic ceiling.",
+        "Maintain minimum 60cm clearance on both sides of the bed and 90cm in the primary walk path per Neufert circulation minimums."
+      ],
+      "space_saving_tips": [
+        "A slim bench at the foot of the bed replaces a full reading chair while using less depth.",
+        "Corner wardrobe placement can free a usable strip along the adjacent wall for a desk."
+      ],
+      "avoid": ["Placing the wardrobe and desk on the same wall — it creates one congested zone instead of distributing function around the room."]
+    },
+    "standard": {
+      "hard_rules": [
+        "Queen or King both work now, but King requires the room's shortest side to be at minimum 3.4m to keep clearances intact.",
+        "A genuine reading nook (chair + side table) is appropriate here and should sit away from the direct bed sightline per the Sage/Sovereign privacy protocols."
+      ],
+      "space_saving_tips": ["A walk-in-style wardrobe zone (open on one side, not a full closet room) is achievable without sacrificing the reading nook."],
+      "avoid": ["Wall-to-wall area rugs — a rug should define the bed zone, not the whole room, or it flattens the zoning logic."]
+    },
+    "generous": {
+      "hard_rules": [
+        "King bed with full clearance on all sides, plus a dedicated seating or work zone, fits without compromise.",
+        "This is the first bracket where a proper walk-in wardrobe (not just a wardrobe zone) is architecturally justified."
+      ],
+      "space_saving_tips": ["Use the extra footprint to separate 'sleep' and 'dress/work' into distinct zones with a rug or low console rather than letting furniture drift toward the center."],
+      "avoid": ["Filling the extra space with more furniture instead of more clearance — the persona system rewards breathing room, not density."]
+    },
+    "large": {
+      "hard_rules": [
+        "A full suite layout (bed, seating, desk, walk-in wardrobe) can coexist, but each zone still needs its own clearance envelope — size doesn't waive the 60–90cm minimums, it just makes them easy to satisfy.",
+        "Consider whether the room genuinely needs every function, or whether splitting into 'bedroom' plus an adjacent dressing area serves the persona better."
+      ],
+      "space_saving_tips": ["A furniture-based zone divider (open bookshelf, bench-back console) keeps the room from reading as one oversized undifferentiated box."],
+      "avoid": ["A single oversized bed as the only anchor with everything else pushed to the walls — this creates a hollow, unresolved center."]
+    }
+  },
+  "balcony": {
+    "micro": {
+      "hard_rules": ["No dining set — even a 2-seat table needs more room than a micro balcony can spare alongside a walkable path.", "Furniture must be wall-mounted or foldable; nothing freestanding should occupy floor space when not in use."],
+      "space_saving_tips": ["Railing-mounted planter boxes replace floor planters entirely.", "A single fold-down wall shelf serves as the only 'table' surface needed."],
+      "avoid": ["Floor-standing planters — the single most common balcony space mistake at this size."]
+    },
+    "tight": {
+      "hard_rules": ["A slim 2-seat bistro set is the ceiling, and only if it folds or stores away.", "Keep a minimum 45cm clear path to the railing at all times."],
+      "space_saving_tips": ["Vertical/tiered planter walls instead of ground planters.", "Foldable chairs stored against the wall when not hosting."],
+      "avoid": ["A permanent umbrella base — dead weight taking floor space year-round for occasional shade."]
+    },
+    "compact": {
+      "hard_rules": ["A fixed 2-seat table becomes viable without needing to fold, but a 4-seat set is still too much for this footprint."],
+      "space_saving_tips": ["Built-in bench seating along one rail with storage underneath is more efficient than freestanding chairs."],
+      "avoid": ["Mixing more than two furniture styles — visual clutter reads worse on a small balcony than indoors."]
+    },
+    "standard": {
+      "hard_rules": ["A proper 2–4 seat dining setup fits without folding requirements."],
+      "space_saving_tips": ["A corner bench with an integrated planter box combines seating and greenery in one footprint."],
+      "avoid": ["Leaving the balcony purely decorative when the occupancy answers indicate daily-use intent."]
+    },
+    "generous": {
+      "hard_rules": ["Distinct lounge and dining zones can coexist if furniture depth stays under 70cm per zone."],
+      "space_saving_tips": ["A weather-resistant storage bench doubles as extra seating during hosting."],
+      "avoid": ["Oversized furniture scaled for an indoor room — outdoor pieces should stay visually lighter even when the footprint allows more."]
+    },
+    "large": {
+      "hard_rules": ["A full outdoor living setup (lounge + dining + planting zone) is justified, but each zone still needs its own circulation buffer, same as indoor rooms."],
+      "space_saving_tips": ["A pergola or shade structure becomes worth the footprint at this size, freeing the layout from needing a movable umbrella."],
+      "avoid": ["Under-using the space as one big open zone with no defined activities — it reads as unfinished rather than generous."]
+    }
+  },
+  "living_room": {
+    "micro": {
+      "hard_rules": ["No sectional — depth alone (typically 95–100cm+) will not leave a walkable circulation lane.", "TV must be wall-mounted, not on a console, to reclaim floor depth."],
+      "space_saving_tips": ["A nesting coffee table (smaller table stows under the larger one) instead of one fixed piece.", "Floating shelves instead of a media console for AV storage."],
+      "avoid": ["An area rug sized for a bigger room — oversized rugs make a small living room look smaller, not larger."]
+    },
+    "tight": {
+      "hard_rules": ["A 2-seater sofa plus one accent chair is the ceiling — a 3-seater will not leave the 90cm circulation minimum."],
+      "space_saving_tips": ["A wall-mounted TV with a slim floating shelf below instead of a console.", "An ottoman with storage doubles as coffee table and extra seating."],
+      "avoid": ["A bulky sectional 'just in case' — it will dominate every sightline in the room."]
+    },
+    "compact": {
+      "hard_rules": ["A 3-seater sofa plus one accent chair fits if floated 60cm off the rear wall per the persona's command-position standard."],
+      "space_saving_tips": ["A slim console (under 35cm depth) rather than a deep media unit."],
+      "avoid": ["Placing the sofa diagonally 'to open up' the room — ortho-axial alignment reads calmer and uses less footprint."]
+    },
+    "standard": {
+      "hard_rules": ["A full 3-seater plus 2 accent pieces and a proper media console are all viable within Neufert clearance minimums."],
+      "space_saving_tips": ["A defined rug boundary (200×160cm+) anchors the seating zone without adding furniture."],
+      "avoid": ["Pushing every piece against the walls 'to save space' — floating the primary seating reads as considered, not cramped."]
+    },
+    "generous": {
+      "hard_rules": ["An L-shaped sectional or two full sofas in a conversational-circle layout both work at this size."],
+      "space_saving_tips": ["A secondary reading zone can be split off from the main seating cluster with a rug or bookshelf-back divider."],
+      "avoid": ["One oversized sectional as the sole anchor — it under-uses the room's zoning potential."]
+    },
+    "large": {
+      "hard_rules": ["Multiple seating zones (primary conversation circle + secondary reading/media nook) are appropriate and expected at this size."],
+      "space_saving_tips": ["Furniture-based zone dividers keep the room from reading as one undifferentiated hall."],
+      "avoid": ["Symmetric 'showroom' arrangements that ignore the actual traffic pattern between doors — layout should follow real circulation, not just visual balance."]
+    }
+  },
+  "studio": {
+    "micro": {
+      "hard_rules": ["A murphy bed or sofa-bed is mandatory — a permanent bed frame will not leave room for any living function.", "Storage must be entirely vertical since floor footprint is fully committed to sleep plus one activity zone."],
+      "space_saving_tips": ["A fold-down wall desk doubles as counter space when closed.", "Under-platform storage drawers if a platform bed base is used instead of a full murphy unit."],
+      "avoid": ["A coffee table and a desk as two separate pieces — combine them into one adjustable-height surface."]
+    },
+    "tight": {
+      "hard_rules": ["A low-profile platform bed with under-bed storage becomes viable, still paired with a compact fold-down or wall-mounted desk."],
+      "space_saving_tips": ["A slim bookshelf turned perpendicular to the wall acts as both storage and a soft room divider."],
+      "avoid": ["A full dining table — a wall-mounted drop-leaf serves the same function in a fraction of the footprint."]
+    },
+    "compact": {
+      "hard_rules": ["Distinct sleep and living zones become possible using a furniture-based divider (bookshelf back, low console) rather than a wall."],
+      "space_saving_tips": ["A daybed-style frame lets the 'bed zone' double as casual seating during the day."],
+      "avoid": ["A zone boundary that isn't reinforced by furniture — a rug alone won't read as a real division in a studio."]
+    },
+    "standard": {
+      "hard_rules": ["A full bed (not murphy-dependent) plus a proper desk and a compact living seating area all fit with a defined divider."],
+      "space_saving_tips": ["A tall open shelving unit as the room divider adds storage capacity while doubling as the zone boundary."],
+      "avoid": ["Treating the studio as one continuous room — even at this size, missing zoning is the most common studio complaint."]
+    },
+    "generous": {
+      "hard_rules": ["Three functional zones (sleep, work, living/social) can coexist if each keeps its own circulation buffer."],
+      "space_saving_tips": ["A half-height partition or furniture wall gives the sleep zone real privacy without a full renovation."],
+      "avoid": ["Spreading furniture evenly across the whole footprint 'to fill the space' — defined zones with real gaps read better than uniform density."]
+    },
+    "large": {
+      "hard_rules": ["At this size a studio functions closer to a true one-bedroom in practice — zoning discipline still matters even though square footage no longer forces it."],
+      "space_saving_tips": ["A furniture-defined spine (console table run) between zones mimics the wayfinding a real hallway would give."],
+      "avoid": ["Under-using the extra space as one large open living area with the bed pushed to a corner — this reads as unfinished rather than intentionally large."]
+    }
+  },
+  "open_plan": {
+    "micro": {
+      "hard_rules": ["True open-plan function is difficult under 10m² — treat it as one unified zone rather than three sub-zones; don't force a kitchen island or a separate dining table into this footprint."],
+      "space_saving_tips": ["A single multi-function table serves as both prep-adjacent dining and work surface."],
+      "avoid": ["Attempting three distinct zones — pick two (e.g. cook+eat) and let the third borrow from an adjacent room if possible."]
+    },
+    "tight": {
+      "hard_rules": ["A drop-leaf or extendable dining table lets the zone flex between 2-seat daily use and 4-seat hosting without a permanent footprint commitment."],
+      "space_saving_tips": ["Define the kitchen edge with a half-height counter instead of full uppers, keeping sightlines open across the whole zone."],
+      "avoid": ["A kitchen island — the same clearance math as a standalone kitchen this size applies here."]
+    },
+    "compact": {
+      "hard_rules": ["A peninsula (not a full island) can define the kitchen edge while keeping the dining and living zones visually connected."],
+      "space_saving_tips": ["Rug boundaries separate the living zone from the dining/kitchen run without adding walls or bulk."],
+      "avoid": ["Uniform lighting across the whole zone — distinct lighting temperature per function is what actually makes an open plan read as zoned."]
+    },
+    "standard": {
+      "hard_rules": ["A full dining table (4–6 seats), a small kitchen island or peninsula, and a proper living seating cluster all coexist if each keeps its own clearance envelope."],
+      "space_saving_tips": ["A sofa back facing the dining zone acts as a soft divider without blocking sightlines."],
+      "avoid": ["Letting the kitchen work triangle bleed into the main walking path between the entry and the living zone."]
+    },
+    "generous": {
+      "hard_rules": ["Three fully distinct zones (cook, dine, lounge) each get real furniture commitments, with sightline management (Neufert §12) across all three becoming the main design constraint."],
+      "space_saving_tips": ["An island with seating on one side reduces the need for a fully separate breakfast nook."],
+      "avoid": ["Symmetric furniture placement that ignores which zone people actually enter from first."]
+    },
+    "large": {
+      "hard_rules": ["Full-scale zoning (cook, dine, lounge, plus a possible fourth zone) is appropriate, but every zone boundary still needs a real circulation lane, not just implied furniture gaps."],
+      "space_saving_tips": ["A furniture 'spine' (console, bench, or low shelving run) organizes circulation between zones the way a hallway would in a compartmentalized plan."],
+      "avoid": ["Treating the extra space as a buffer instead of a zone — every square meter should belong to a function or it reads as unresolved."]
+    }
+  },
+  "home_office": {
+    "micro": {
+      "hard_rules": ["A fold-down wall desk is the realistic ceiling if this room shares another primary function; a full stationary desk plus a visitor chair will not both fit."],
+      "space_saving_tips": ["Vertical cable management and a wall-mounted monitor arm reclaim desk depth."],
+      "avoid": ["A visitor/guest chair as a fixed piece — bring in a stool from another room only when needed."]
+    },
+    "tight": {
+      "hard_rules": ["A compact desk (100–110cm) fits with an ergonomic chair, but there's no room for a secondary seating or meeting element."],
+      "space_saving_tips": ["Wall-mounted shelving above the desk instead of a floor-standing bookshelf."],
+      "avoid": ["Facing the desk toward a blank wall if the room has a window — daylight orientation affects focus more than most other layout choices at this size."]
+    },
+    "compact": {
+      "hard_rules": ["A desk (120cm) plus ergonomic chair and a slim storage unit all fit within standard clearance."],
+      "space_saving_tips": ["A rolling file cart tucks under the desk when not in use instead of a permanent filing cabinet."],
+      "avoid": ["Placing the desk in the room's dead center 'for symmetry' — against a wall with a window view supports focus better and frees circulation."]
+    },
+    "standard": {
+      "hard_rules": ["A full desk, proper storage/bookshelf, and a small secondary seat (for calls or reading) all fit with room to spare."],
+      "space_saving_tips": ["A credenza behind the desk doubles as extra work surface and storage."],
+      "avoid": ["An oversized desk that doesn't match actual work needs — bigger isn't always more functional, and it eats into flexibility."]
+    },
+    "generous": {
+      "hard_rules": ["An L-shaped desk or a dual-zone setup (focus desk + casual reading corner) both work at this size."],
+      "space_saving_tips": ["A bookshelf-back room divider separates 'deep work' from 'call/meeting' zones within the same room."],
+      "avoid": ["Filling the extra footprint with decorative furniture unrelated to work function — it dilutes the room's primary purpose."]
+    },
+    "large": {
+      "hard_rules": ["A full executive layout (desk, meeting nook, storage wall, reading chair) is justified, but each zone still needs its own clearance, same as any other room at this size."],
+      "space_saving_tips": ["A furniture spine or rug boundary keeps 'focus' and 'meeting' zones from blurring into one undifferentiated space."],
+      "avoid": ["Treating a large home office as license to add non-work furniture that competes with the room's primary function."]
+    }
+  }
+}

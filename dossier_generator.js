@@ -42,7 +42,7 @@ function assertNoUnresolvedPlaceholders(html) {
     }
 }
 
-// â”€â”€ 1. HELPERS FOR ARGUMENT PARSING â”€â”€
+// 1. HELPERS FOR ARGUMENT PARSING
 function parseArgs() {
     const args = {};
     process.argv.slice(2).forEach(val => {
@@ -71,7 +71,7 @@ function parseArgs() {
     };
 }
 
-// â”€â”€ 2. DATABASES FOR DESIGN MANIFESTO â”€â”€
+// 2. DATABASES FOR DESIGN MANIFESTO
 const DESIGN_LANGUAGES = {
     sovereign: {
         style: 'Refined Contemporary',
@@ -180,7 +180,7 @@ const ZONES_DATA = {
     ]
 };
 
-// â”€â”€ 3. DYNAMIC SVG OVERLAY GENERATORS â”€â”€
+// 3. DYNAMIC SVG OVERLAY GENERATORS
 function generateSVGOverlay(persona, roomSize, isAfter = false) {
     let width = 400;
     let height = 300;
@@ -244,7 +244,7 @@ function generateSVGOverlay(persona, roomSize, isAfter = false) {
     return svg;
 }
 
-// â”€â”€ 4. DETAILED SPECIFICATIONS RESOLVER â”€â”€
+// 4. DETAILED SPECIFICATIONS RESOLVER
 function resolveSpecifications(persona) {
     if (persona === 'sovereign') {
         return {
@@ -383,7 +383,7 @@ function resolvePainSpec(painKey) {
     return specs[painKey] || null;
 }
 
-// â”€â”€ 5. CORE COMPILER FUNCTION â”€â”€
+// 5. CORE COMPILER FUNCTION
 
 function resolvePainNarrative(painKey) {
     const narratives = {
@@ -637,6 +637,72 @@ function buildPhotoAuditPages(config, aiEnrichment, generatedVisual) {
 </div>`;
 }
 
+// Finds a real, purchasable product match from the plants_products.json furniture catalog for a
+// given piece role. Physical fit is never relaxed before style: preferring an exact persona-family +
+// size-bucket match, then a size-safe match of any persona (a wrong-size item is a real-world failure,
+// a wrong-style item is just a mismatch of taste), then a persona match regardless of size only if no
+// size-safe option exists at all, so every piece has the best available real link rather than none.
+function findRealProduct(catalog, roomType, role, personaBase, sizeKey) {
+    const pool = (catalog.furniture || []).filter(item => item.role === role && (item.room_alignment || []).includes(roomType));
+    if (pool.length === 0) return null;
+    const fitsSize = item => !item.size_alignment || item.size_alignment.includes(sizeKey);
+    const exact = pool.find(item => (item.persona_alignment || []).includes(personaBase) && fitsSize(item));
+    if (exact) return exact;
+    const sizeMatch = pool.find(fitsSize);
+    if (sizeMatch) return sizeMatch;
+    const personaMatch = pool.find(item => (item.persona_alignment || []).includes(personaBase));
+    return personaMatch || pool[0];
+}
+
+// Applies the deterministic, code-enforced size_modifiers.json rules on top of a persona's base
+// furniture piece list: drops roles that don't physically fit, overrides dimensions for roles that
+// need capping at this size, and appends genuine space-saving additions. This must never be left to
+// GPT/enrichment layers — these are hard architectural facts (island thresholds, clearances), not
+// stylistic choices.
+function applySizeModifiers(basePieces, sizeMod) {
+    if (!basePieces) return basePieces;
+    let pieces = basePieces.slice();
+    const excludeSet = new Set(sizeMod.exclude_roles || []);
+    pieces = pieces.filter(p => !excludeSet.has(p.role));
+    if (sizeMod.dimension_overrides) {
+        pieces = pieces.map(p => sizeMod.dimension_overrides[p.role] ? Object.assign({}, p, { dimensions: sizeMod.dimension_overrides[p.role] }) : p);
+    }
+    if (sizeMod.add_pieces && sizeMod.add_pieces.length) {
+        pieces = pieces.concat(sizeMod.add_pieces);
+    }
+    return pieces;
+}
+
+// Builds a real, catalog-backed procurement list (Page 7) instead of the old 2-item generic
+// fallback — one real product per distinct role available for this room, persona-matched where
+// possible, reshaped into the {item, brand, cost, benefit, link} shape the Page 7 renderer expects.
+function buildCatalogProcurementList(catalog, roomType, personaBase, sizeKey, limit) {
+    const rolesInRoom = Array.from(new Set((catalog.furniture || []).filter(item => (item.room_alignment || []).includes(roomType)).map(item => item.role)));
+    const picked = rolesInRoom
+        .map(role => findRealProduct(catalog, roomType, role, personaBase, sizeKey))
+        .filter(Boolean)
+        .slice(0, limit || 6);
+    return picked.map(product => ({
+        item: product.name,
+        brand: product.tag || 'Curated match',
+        cost: product.price_range,
+        benefit: product.why,
+        link: product.link
+    }));
+}
+
+function buildTechnicalProtocolHtml(constraints) {
+    if (!constraints) return '';
+    const listItems = (arr) => (arr || []).map(item => `<li style="margin-bottom: 5px; line-height: 1.4;">${escapeHtml(item)}</li>`).join('');
+    return `
+    <div class="technical-protocol-block" style="margin-bottom: 14px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-soft); font-weight: bold; margin-bottom: 6px;">Technical Protocol — size-specific constraints</div>
+      ${constraints.hard_rules && constraints.hard_rules.length ? `<div style="font-size: 8.5pt; margin-bottom: 6px;"><strong>Hard rules:</strong><ul style="margin: 4px 0 0 16px; padding: 0;">${listItems(constraints.hard_rules)}</ul></div>` : ''}
+      ${constraints.space_saving_tips && constraints.space_saving_tips.length ? `<div style="font-size: 8.5pt; margin-bottom: 6px;"><strong>Space-saving moves:</strong><ul style="margin: 4px 0 0 16px; padding: 0;">${listItems(constraints.space_saving_tips)}</ul></div>` : ''}
+      ${constraints.avoid && constraints.avoid.length ? `<div style="font-size: 8.5pt;"><strong>Avoid:</strong><ul style="margin: 4px 0 0 16px; padding: 0;">${listItems(constraints.avoid)}</ul></div>` : ''}
+    </div>`;
+}
+
 async function compileDossier() {
     const config = parseArgs();
     console.log('=== Starting Parametric Spatial Dossier Compiler ===');
@@ -679,6 +745,12 @@ async function compileDossier() {
     const diagnosisRoomModifiers = fs.existsSync(diagnosisRoomModifiersPath) ? JSON.parse(fs.readFileSync(diagnosisRoomModifiersPath, 'utf8')) : {};
     const furnitureRecommendationsPath = path.join(DATA_DIR, 'furniture_recommendations.json');
     const furnitureRecommendations = fs.existsSync(furnitureRecommendationsPath) ? JSON.parse(fs.readFileSync(furnitureRecommendationsPath, 'utf8')) : {};
+    const roomConstraintsPath = path.join(DATA_DIR, 'room_constraints.json');
+    const roomConstraints = fs.existsSync(roomConstraintsPath) ? JSON.parse(fs.readFileSync(roomConstraintsPath, 'utf8')) : {};
+    const sizeModifiersPath = path.join(DATA_DIR, 'size_modifiers.json');
+    const sizeModifiersDB = fs.existsSync(sizeModifiersPath) ? JSON.parse(fs.readFileSync(sizeModifiersPath, 'utf8')) : {};
+    const roomMaterialNotesPath = path.join(DATA_DIR, 'room_material_notes.json');
+    const roomMaterialNotes = fs.existsSync(roomMaterialNotesPath) ? JSON.parse(fs.readFileSync(roomMaterialNotesPath, 'utf8')) : {};
     const matrixExtractedPath = path.join(DATA_DIR, 'matrix_extracted.json');
     const matrixExtracted = fs.existsSync(matrixExtractedPath) ? JSON.parse(fs.readFileSync(matrixExtractedPath, 'utf8')) : null;
 
@@ -809,7 +881,23 @@ async function compileDossier() {
     const personaVariantKey = `${config.persona}_${suffix}`;
     const roomData = roomDetailsMatrix[config.room_type] || roomDetailsMatrix['living_room'];
     const variantData = roomData[personaVariantKey] || roomData['sovereign_clinical'];
-    const materialsProfile = materialsMatrix[personaVariantKey] || null;
+    let materialsProfile = materialsMatrix[personaVariantKey] || null;
+    const roomMaterialNote = roomMaterialNotes[config.room_type] || null;
+    // Balcony is weather-exposed — materials_matrix.json is persona-only and defaults to indoor
+    // finishes (lacquer, wool, veneer) that don't survive outdoors. Swap in weatherproof
+    // equivalents while keeping the persona's color family intact.
+    if (roomMaterialNote && config.room_type === 'balcony' && materialsProfile) {
+        materialsProfile = Object.assign({}, materialsProfile, {
+            primary_material: roomMaterialNote.primary_material_override || materialsProfile.primary_material,
+            textile: roomMaterialNote.textile_override || materialsProfile.textile,
+            metal_hardware: roomMaterialNote.hardware_override || materialsProfile.metal_hardware
+        });
+    }
+    // Studio holds two zones (sleep + activity) in one room — a single flat palette works against
+    // zone separation, so we surface a livelier per-persona accent color specifically for marking
+    // one zone, on top of (not replacing) the shared base palette.
+    const studioZoneAccent = (config.room_type === 'studio' && roomMaterialNote) ? (roomMaterialNote.zone_accents || {})[personaVariantKey] : null;
+    const studioZoneNote = (config.room_type === 'studio' && roomMaterialNote) ? roomMaterialNote.zone_note : null;
 
     const thirdKeyMap = {
         living_room: 'dining',
@@ -842,23 +930,34 @@ async function compileDossier() {
     // every piece in the room for a given persona-variant, so they're rendered once below the
     // per-piece table rather than repeated on every row — avoids duplicating the same material/
     // color/placement text 3-5 times on one page.
-    const furniturePieces = (furnitureRecommendations[config.room_type] || {})[personaVariantKey] || null;
+    const furniturePiecesBase = (furnitureRecommendations[config.room_type] || {})[personaVariantKey] || null;
+    const sizeMod = (sizeModifiersDB[config.room_type] || {})[config.room_size] || {};
+    const roomConstraintEntry = (roomConstraints[config.room_type] || {})[config.room_size] || null;
+    const furniturePieces = applySizeModifiers(furniturePiecesBase, sizeMod);
     let furnitureRecommendationHtml;
     if (furniturePieces && furniturePieces.length > 0) {
         const colorNames = materialsProfile ? (materialsProfile.palette || []).map(c => c.name).join(', ') : 'See material palette on the previous page.';
         const materialText = materialsProfile ? `${materialsProfile.primary_material}; secondary: ${materialsProfile.secondary_material}; textile: ${materialsProfile.textile}; hardware: ${materialsProfile.metal_hardware}` : 'See material palette on the previous page.';
         const placementText = variantData.geometry || 'Position according to the Spatial Geometry specification on the previous page.';
-        const pieceRows = furniturePieces.map(piece => `
+        const technicalProtocolHtml = buildTechnicalProtocolHtml(roomConstraintEntry);
+        const pieceRows = furniturePieces.map(piece => {
+            const realProduct = findRealProduct(plantsProducts, config.room_type, piece.role, config.persona, config.room_size);
+            const realProductLine = realProduct
+                ? `<div style="margin-top:3px; font-size: 7.5pt;"><a href="${realProduct.link}" target="_blank" style="color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent-soft);">${escapeHtml(realProduct.name)}</a> · ${escapeHtml(realProduct.price_range)}</div>`
+                : '';
+            return `
                 <tr>
                   <td class="specs-label">${escapeHtml(piece.role || piece.type)}</td>
-                  <td class="specs-val">${escapeHtml(piece.type)}</td>
+                  <td class="specs-val">${escapeHtml(piece.type)}${realProductLine}</td>
                   <td class="specs-val">${escapeHtml(piece.shape)}</td>
                   <td class="specs-val">${escapeHtml(piece.dimensions)}</td>
-                </tr>`).join('');
+                </tr>`;
+        }).join('');
         furnitureRecommendationHtml = `
-            <div class="furniture-tagline">${furniturePieces.length} recommended pieces — ${escapeHtml(config.room_type.replace(/_/g, ' '))} · ${escapeHtml(personaProfile.display_name || config.persona)} (${escapeHtml(suffix)})</div>
+            ${technicalProtocolHtml}
+            <div class="furniture-tagline">${furniturePieces.length} recommended pieces — ${escapeHtml(config.room_type.replace(/_/g, ' '))} · ${escapeHtml(personaProfile.display_name || config.persona)} (${escapeHtml(suffix)})${sizeMod.size_note ? ' — ' + escapeHtml(sizeMod.size_note) : ''}</div>
             <table class="specs-table">
-              <thead><tr><th style="width: 22%;">Piece</th><th style="width: 26%;">Type</th><th style="width: 32%;">Shape</th><th style="width: 20%;">Dimensions</th></tr></thead>
+              <thead><tr><th style="width: 22%;">Piece</th><th style="width: 26%;">Type / Real Product</th><th style="width: 32%;">Shape</th><th style="width: 20%;">Dimensions</th></tr></thead>
               <tbody>${pieceRows}
               </tbody>
             </table>
@@ -982,6 +1081,7 @@ async function compileDossier() {
         { name: 'Ground', hex: '#d2c4b3' },
         { name: 'Anchor', hex: '#302821' }
     ]).slice(0, 3);
+    if (studioZoneAccent) palette.push(studioZoneAccent);
     const materialPaletteHtml = `
       <div class="visual-module">
         <div class="visual-module-head"><div class="visual-module-kicker">Material evidence board</div><div class="visual-module-note">Use these finishes as a controlled family, not isolated samples</div></div>
@@ -991,6 +1091,8 @@ async function compileDossier() {
             <div class="material-sample"><strong>Primary body</strong><span>${escapeHtml(materialsProfile?.primary_material || 'Low-sheen continuous surfaces with controlled grain.')}</span></div>
             <div class="material-sample"><strong>Touch layer</strong><span>${escapeHtml(materialsProfile?.textile || 'Durable tactile textile in one quiet tonal family.')}</span></div>
             <div class="material-sample"><strong>Hardware rule</strong><span>${escapeHtml(materialsProfile?.metal_hardware || 'Keep hardware visually subordinate to the furniture volume.')}</span></div>
+            ${roomMaterialNote && config.room_type === 'balcony' ? `<div class="material-sample"><strong>Weatherproofing</strong><span>${escapeHtml(roomMaterialNote.override_note)}</span></div>` : ''}
+            ${studioZoneAccent ? `<div class="material-sample"><strong>Zone accent — ${escapeHtml(studioZoneAccent.name)}</strong><span>${escapeHtml(studioZoneNote)}</span></div>` : ''}
           </div>
         </div>
       </div>`;
@@ -1097,10 +1199,11 @@ async function compileDossier() {
             { item: '3000K Wall-Washer Pair', brand: 'Plug-in, asymmetric beam', cost: '$25', benefit: 'Perimeter glow that replaces the ceiling flood.', day: 'Day 6 dependency' }
         ];
     } else if (activeProcurementList.length === 0) {
-        activeProcurementList = fallbackProcurement[procurementKey] || [
+        const catalogList = buildCatalogProcurementList(plantsProducts, config.room_type, config.persona, config.room_size, 6);
+        activeProcurementList = catalogList.length > 0 ? catalogList : (fallbackProcurement[procurementKey] || [
             { item: "Acoustic Felt Wall Panel Grid", brand: "Sound Assured", cost: "$39", benefit: "Dampens sound reflections to secure a silent sanctuary." },
             { item: "Dimmable warm task floor lamp", brand: "Globe Electric", cost: "$59", benefit: "Restricts illumination strictly to reading task cones." }
-        ];
+        ]);
     }
 
     let procurementTableHtml = activeProcurementList.map((item, idx) => {
@@ -1392,7 +1495,7 @@ async function compileDossier() {
         }
     }
 
-    console.log('\nâœ… DYNAMIC DOSSIER GENERATION COMPLETE!');
+    console.log('\nDYNAMIC DOSSIER GENERATION COMPLETE!');
 }
 
 compileDossier().catch(console.error);
