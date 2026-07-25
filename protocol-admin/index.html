@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Persona Layouts Protocol Admin</title>
+  <link rel="stylesheet" href="/protocol-admin/admin.css">
+</head>
+<body>
+  <main id="login-view" class="login-view" hidden>
+    <section class="login-panel" aria-labelledby="login-title">
+      <div class="brand-mark">PL</div>
+      <p class="product-label">PERSONA LAYOUTS</p>
+      <h1 id="login-title">Protocol Admin</h1>
+      <form id="login-form" class="login-form">
+        <label for="login-email">E-posta</label>
+        <input id="login-email" name="email" type="email" autocomplete="username" required>
+        <label for="login-password">Parola</label>
+        <input id="login-password" name="password" type="password" autocomplete="current-password" minlength="12" required>
+        <button type="submit" class="primary-button">Giriş yap</button>
+      </form>
+      <p id="login-error" class="form-error" role="alert" hidden></p>
+      <p id="setup-message" class="setup-message" hidden></p>
+    </section>
+  </main>
+
+  <div id="app-view" class="app-shell" hidden>
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-mark small">PL</span>
+        <div>
+          <strong>Protocol Admin</strong>
+          <span>Persona Layouts</span>
+        </div>
+      </div>
+      <nav aria-label="Ana navigasyon">
+        <button class="nav-button active" type="button" data-view="projects">Projeler</button>
+      </nav>
+      <div class="sidebar-user">
+        <div>
+          <strong id="user-name"></strong>
+          <span id="user-role"></span>
+        </div>
+        <button id="logout-button" class="quiet-button" type="button">Çıkış</button>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="workspace-header">
+        <div>
+          <p class="section-kicker">AUDIT WORKSPACE</p>
+          <h1>Projeler</h1>
+        </div>
+        <button id="new-project-button" class="primary-button compact" type="button">
+          <span aria-hidden="true">+</span> Yeni proje
+        </button>
+      </header>
+
+      <section id="project-list-view" class="content-section">
+        <div class="list-toolbar">
+          <label class="search-field" for="project-search">
+            <span>Proje ara</span>
+            <input id="project-search" type="search" placeholder="Kod, proje veya müşteri">
+          </label>
+          <span id="project-count" class="record-count">0 proje</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Kod</th>
+                <th>Proje</th>
+                <th>Müşteri</th>
+                <th>Mekân</th>
+                <th>Revizyon</th>
+                <th>Durum</th>
+              </tr>
+            </thead>
+            <tbody id="project-table-body"></tbody>
+          </table>
+          <div id="empty-projects" class="empty-state" hidden>Henüz proje bulunmuyor.</div>
+        </div>
+      </section>
+
+      <section id="new-project-view" class="content-section editor-section" hidden>
+        <div class="editor-heading">
+          <div>
+            <p class="section-kicker">NEW AUDIT</p>
+            <h2>Proje girişi</h2>
+          </div>
+          <button id="cancel-project-button" class="quiet-button" type="button">İptal</button>
+        </div>
+        <form id="project-form" class="project-form">
+          <fieldset>
+            <legend>Proje</legend>
+            <div class="form-grid three">
+              <label>Proje adı<input name="project_name" maxlength="160" required></label>
+              <label>Mekân türü
+                <select name="space_type" required>
+                  <option value="apartment">Daire</option>
+                  <option value="residence">Konut</option>
+                  <option value="office">Ofis</option>
+                  <option value="commercial">Ticari mekân</option>
+                </select>
+              </label>
+              <label>Rapor dili
+                <select name="output_language" required>
+                  <option value="tr">Türkçe</option>
+                  <option value="en">English</option>
+                </select>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Müşteri</legend>
+            <div class="form-grid two">
+              <label>Müşteri adı<input name="client_name" maxlength="160" required></label>
+              <label>E-posta<input name="client_email" type="email" maxlength="254"></label>
+            </div>
+            <label class="full-field">Müşteri anlatımı
+              <textarea name="client_narrative" rows="11" maxlength="50000" required></textarea>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Geometri ve sabitler</legend>
+            <div class="form-grid two">
+              <label>Ölçüler
+                <textarea name="measurements" rows="8" maxlength="20000"></textarea>
+              </label>
+              <label>Sabit elemanlar
+                <textarea name="fixed_elements" rows="8" maxlength="20000"></textarea>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <p id="project-form-error" class="form-error" role="alert" hidden></p>
+            <button id="create-project-submit" class="primary-button" type="submit">Projeyi oluştur</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="project-detail-view" class="content-section editor-section" hidden>
+        <div class="editor-heading">
+          <div>
+            <p id="detail-code" class="section-kicker"></p>
+            <h2 id="detail-name"></h2>
+          </div>
+          <button id="back-projects-button" class="quiet-button" type="button">Projelere dön</button>
+        </div>
+        <dl class="project-meta">
+          <div><dt>Müşteri</dt><dd id="detail-client"></dd></div>
+          <div><dt>Mekân</dt><dd id="detail-space"></dd></div>
+          <div><dt>Revizyon</dt><dd id="detail-revision"></dd></div>
+          <div><dt>Durum</dt><dd id="detail-status"></dd></div>
+        </dl>
+        <section class="detail-block">
+          <h3>Müşteri anlatımı</h3>
+          <p id="detail-narrative"></p>
+        </section>
+        <div class="detail-columns">
+          <section class="detail-block">
+            <h3>Ölçüler</h3>
+            <p id="detail-measurements"></p>
+          </section>
+          <section class="detail-block">
+            <h3>Sabit elemanlar</h3>
+            <p id="detail-fixed"></p>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="loading-screen" class="loading-screen">
+    <div class="brand-mark">PL</div>
+    <span>Protocol Admin</span>
+  </div>
+
+  <script src="/protocol-admin/admin.js"></script>
+</body>
+</html>

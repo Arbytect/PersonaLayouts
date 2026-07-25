@@ -4,6 +4,8 @@ const path = require('path');
 const crypto = require('crypto');
 const fs = require('fs');
 const { loadEnvFile } = require('../env-loader');
+const { closePool } = require('./protocol_admin_db');
+const { createProtocolAdminRouter } = require('./protocol_admin_router');
 
 const ROOT = path.resolve(__dirname, '..');
 loadEnvFile(path.join(ROOT, '.env'));
@@ -12,6 +14,7 @@ const PORT = Number(process.env.PORT || process.env.DELIVERY_SERVER_PORT || 8787
 const HOST = process.env.DELIVERY_SERVER_HOST || '127.0.0.1'; // explicit bind; set to 0.0.0.0 only if you intend this to be reachable off-box
 const SECRET = process.env.DELIVERY_WEBHOOK_SECRET || '';
 const ALLOWED_ORIGIN = process.env.DELIVERY_ALLOWED_ORIGIN || ''; // leave unset for a pure server-to-server webhook (no CORS needed)
+const protocolAdmin = createProtocolAdminRouter(ROOT);
 
 if (!SECRET) {
   console.error('[delivery_server] FATAL: DELIVERY_WEBHOOK_SECRET is not set. Refusing to start with auth disabled.');
@@ -125,6 +128,7 @@ async function runIdempotent(payload) {
 }
 
 const server = http.createServer(async (req, res) => {
+  if (await protocolAdmin.handle(req, res)) return;
   if (req.method === 'OPTIONS') return send(res, 200, { ok: true });
   if (req.method === 'GET' && req.url === '/health') return send(res, 200, { ok: true, service: 'persona-layouts-delivery', port: PORT });
   if (req.method !== 'POST' || req.url !== '/api/compile-order') return send(res, 404, { error: 'Not found' });
@@ -148,4 +152,12 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, HOST, () => {
   console.log(`Persona Layouts delivery server listening on http://${HOST}:${PORT}`);
   console.log('POST /api/compile-order');
+  console.log('GET /protocol-admin');
+  protocolAdmin.initialize().then(state => {
+    if (state.ready) console.log('Protocol Admin initialized.');
+    else if (!state.configured) console.log('Protocol Admin disabled: DATABASE_URL is not configured.');
+    else if (state.setupRequired) console.log('Protocol Admin setup required: bootstrap credentials are missing.');
+  });
 });
+
+server.on('close', () => closePool().catch(() => {}));

@@ -74,6 +74,19 @@ CREATE TABLE project_revisions (
   UNIQUE (project_id, revision_number)
 );
 
+CREATE TABLE project_intakes (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  project_id uuid NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+  revision_id uuid NOT NULL UNIQUE REFERENCES project_revisions(id) ON DELETE CASCADE,
+  client_narrative text NOT NULL,
+  measurements jsonb NOT NULL DEFAULT '{}'::jsonb,
+  fixed_elements jsonb NOT NULL DEFAULT '[]'::jsonb,
+  report_level text NOT NULL DEFAULT 'full_audit' CHECK (report_level IN ('diagnostic', 'full_audit')),
+  created_by uuid NOT NULL REFERENCES users(id),
+  created_at timestamptz NOT NULL DEFAULT now(),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+
 CREATE TABLE source_files (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   project_id uuid NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
@@ -393,6 +406,7 @@ CREATE INDEX idx_integration_jobs_status ON integration_jobs(status, available_a
 CREATE TRIGGER users_set_updated_at BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER clients_set_updated_at BEFORE UPDATE ON clients FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER projects_set_updated_at BEFORE UPDATE ON projects FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER project_intakes_set_updated_at BEFORE UPDATE ON project_intakes FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER evidence_set_updated_at BEFORE UPDATE ON evidence FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER rooms_set_updated_at BEFORE UPDATE ON rooms FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 CREATE TRIGGER frictions_set_updated_at BEFORE UPDATE ON spatial_frictions FOR EACH ROW EXECUTE FUNCTION set_updated_at();
