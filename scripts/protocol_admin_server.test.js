@@ -32,6 +32,9 @@ async function run() {
   const deliveryServer = fs.readFileSync(path.join(root, 'scripts', 'delivery_server.js'), 'utf8');
   assert(deliveryServer.indexOf('protocolAdmin.handle(req, res)') < deliveryServer.indexOf("req.url !== '/api/compile-order'"));
 
+  const router = fs.readFileSync(path.join(root, 'scripts', 'protocol_admin_router.js'), 'utf8');
+  assert(!router.includes("'project', $1::text"), 'Audit entity ID must not reuse the UUID query parameter as text.');
+
   const migration = fs.readFileSync(path.join(root, 'db', 'migrations', '001_protocol_admin_core.sql'), 'utf8');
   assert(migration.includes('CREATE TABLE project_intakes'));
   assert(migration.includes('CREATE TABLE auth_sessions'));

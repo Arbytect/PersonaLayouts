@@ -245,8 +245,14 @@ function createProtocolAdminRouter(root) {
       await client.query(
         `INSERT INTO audit_log
           (project_id, revision_id, actor_user_id, actor_type, action, entity_type, entity_id, new_value)
-         VALUES ($1, $2, $3, 'admin', 'create', 'project', $1::text, $4::jsonb)`,
-        [project.id, revision.id, user.id, JSON.stringify({ project_code: project.project_code, name: project.name })]
+          VALUES ($1, $2, $3, 'admin', 'create', 'project', $4, $5::jsonb)`,
+        [
+          project.id,
+          revision.id,
+          user.id,
+          project.id,
+          JSON.stringify({ project_code: project.project_code, name: project.name })
+        ]
       );
       return { project, revision, client: clientResult.rows[0] };
     });
