@@ -2,6 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
+const {
+  buildProtocolLiteFallback,
+  buildProtocolLitePrompt,
+  buildReviewPacket,
+  normalizeProtocolLite,
+  toDossierEnrichment
+} = require('./protocol_lite');
 
 const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
 
@@ -41,39 +48,12 @@ async function loadPhoto(order, dryRun) {
   return { bytes: await streamToBuffer(result.Body), contentType };
 }
 
-function localEnrichment(order) {
-  const room = order.room_type.replace(/_/g, ' ');
-  return {
-    headline: `A photo-led spatial correction for your ${room}`,
-    cards: [
-      { label: 'Photo diagnosis', title: 'Primary friction', text: `The uploaded room will be audited against the ${order.pain} pressure selected in your quiz.` },
-      { label: 'Correction target', title: 'Clear the movement hierarchy', text: 'Protect the main circulation line before adding furniture, storage, or decorative objects.' },
-      { label: 'Persona response', title: `${order.persona} operating rule`, text: 'Keep one dominant spatial decision per activity and remove competing visual anchors.' },
-      { label: 'Transformation brief', title: 'Preserve the room, correct the layout', text: 'The proposed image retains the room shell while testing a more disciplined zoning and furnishing arrangement.' }
-    ],
-    seven_day_plan: [
-      'Photograph and measure the current circulation path.',
-      'Remove loose objects from the dominant visual field.',
-      'Consolidate storage into one controlled boundary.',
-      'Build one dedicated single-activity corner.',
-      'Correct furniture alignment and cable exposure.',
-      'Layer task and perimeter lighting.',
-      'Run the final fit-check before purchasing anything else.'
-    ],
-    observations: [
-      { title: 'Primary circulation', problem: 'The main route is visually compressed by movable furniture.', behavioral_impact: 'Movement feels negotiated instead of intuitive.', action_plan: 'Open one continuous walking lane before adding new pieces.' },
-      { title: 'Activity overlap', problem: 'Multiple activities compete for the same central surface.', behavioral_impact: 'Resetting the room between tasks adds daily friction.', action_plan: 'Assign one clear surface or zone to each repeated activity.' },
-      { title: 'Visual hierarchy', problem: 'Several objects compete to become the room focal point.', behavioral_impact: 'The eye has no stable place to rest.', action_plan: 'Choose one anchor and reduce competing objects around it.' },
-      { title: 'Storage boundary', problem: 'Frequently used objects do not share a controlled storage address.', behavioral_impact: 'Loose items repeatedly return to visible work surfaces.', action_plan: 'Consolidate daily-use storage along one room boundary.' },
-      { title: 'Lighting layers', problem: 'General lighting is carrying tasks that need local light.', behavioral_impact: 'The room feels flat and less adaptable after dark.', action_plan: 'Add task lighting at the primary activity and soften the perimeter.' }
-    ],
-    visual_prompt: `Photorealistic transformation of the supplied ${room}; preserve architecture and camera position; correct ${order.pain} friction for a ${order.persona} persona.`
-  };
+function protocolLiteEnrichment(order) {
+  return toDossierEnrichment(buildProtocolLiteFallback(order));
 }
 
 async function openAiAudit(order, dataUrl) {
-  const fallback = localEnrichment(order);
-  const prompt = `Analyze this real room photo as an architectural space-planning expert. The customer profile is persona=${order.persona}, variant=${order.variant || 'base'}, room=${order.room_type}, size=${order.room_size}, occupancy=${order.occupancy}, pain=${order.pain}, pets=${order.pets}. Return only valid JSON with: headline (string), cards (exactly 4 objects with label,title,text), seven_day_plan (exactly 7 concrete strings), visual_prompt (string), observations (exactly 5 objects with title,problem,behavioral_impact,action_plan). Be specific to visible objects. Do not infer structural alterations or hidden dimensions. The visual_prompt must preserve walls, windows, doors, camera angle and room identity while correcting layout.`;
+  const prompt = buildProtocolLitePrompt(order);
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
@@ -88,10 +68,7 @@ async function openAiAudit(order, dataUrl) {
   if (!response.ok) throw new Error(`OpenAI vision returned ${response.status}`);
   const payload = await response.json();
   const parsed = JSON.parse(payload.choices?.[0]?.message?.content || '{}');
-  if (!Array.isArray(parsed.cards) || parsed.cards.length < 4 || !Array.isArray(parsed.seven_day_plan) || parsed.seven_day_plan.length < 7 || !Array.isArray(parsed.observations) || parsed.observations.length !== 5) {
-    throw new Error('OpenAI vision response did not match the required dossier schema.');
-  }
-  return { ...fallback, ...parsed, cards: parsed.cards.slice(0, 4), seven_day_plan: parsed.seven_day_plan.slice(0, 7), observations: parsed.observations.slice(0, 5) };
+  return toDossierEnrichment(normalizeProtocolLite(parsed, order));
 }
 
 async function replicateTransform(dataUrl, prompt) {
@@ -155,8 +132,10 @@ async function runRoomTransformPipeline(order, workDir, dryRun) {
   fs.writeFileSync(originalPath, normalizedBytes);
   const dataUrl = `data:image/jpeg;base64,${normalizedBytes.toString('base64')}`;
 
-  const enrichment = dryRun ? localEnrichment(order) : await openAiAudit(order, dataUrl);
+  const enrichment = dryRun ? protocolLiteEnrichment(order) : await openAiAudit(order, dataUrl);
   const enrichmentPath = path.join(workDir, 'photo-analysis.json');
+  const protocolPath = path.join(workDir, 'protocol-lite.json');
+  const reviewPacketPath = path.join(workDir, 'protocol-review.json');
 
   let coverPath = originalPath;
   let predictionId = null;
@@ -180,7 +159,11 @@ async function runRoomTransformPipeline(order, workDir, dryRun) {
     enrichment.transform_validation = validation;
   }
   fs.writeFileSync(enrichmentPath, JSON.stringify(enrichment, null, 2));
-  return { enrichment, enrichmentPath, originalPath, coverPath, predictionId };
+  fs.writeFileSync(protocolPath, JSON.stringify(enrichment.protocol_lite, null, 2));
+  const reviewMode = process.env.PL_PROTOCOL_ADMIN_REVIEW_MODE === 'hold' ? 'hold' : 'shadow';
+  const reviewPacket = buildReviewPacket(enrichment.protocol_lite, order, reviewMode);
+  fs.writeFileSync(reviewPacketPath, JSON.stringify(reviewPacket, null, 2));
+  return { enrichment, enrichmentPath, protocolPath, reviewPacketPath, reviewPacket, originalPath, coverPath, predictionId };
 }
 
 module.exports = { runRoomTransformPipeline };

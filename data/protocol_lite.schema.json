@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://personalayouts.com/schemas/protocol-lite-1.0.json",
+  "title": "Persona Layouts Protocol Lite",
+  "type": "object",
+  "required": ["schema_version", "mode", "evidence_boundary", "working_spatial_signature", "core_diagnosis", "persona_context", "project_rules", "observations", "assumptions", "open_verifications", "seven_day_plan", "visual_prompt"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "mode": { "const": "protocol_lite" },
+    "evidence_boundary": {
+      "type": "object",
+      "required": ["sources", "geometry_status", "limitations"],
+      "properties": {
+        "sources": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "geometry_status": { "const": "unverified" },
+        "limitations": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "working_spatial_signature": { "type": "string", "minLength": 20 },
+    "core_diagnosis": { "$ref": "#/$defs/diagnosis" },
+    "persona_context": {
+      "type": "object",
+      "required": ["dominant", "variant", "supporting", "percentages_used"],
+      "properties": {
+        "dominant": { "enum": ["sovereign", "sage", "alchemist", "weaver"] },
+        "variant": { "type": ["string", "null"] },
+        "supporting": { "type": "array", "items": { "enum": ["sovereign", "sage", "alchemist", "weaver"] }, "maxItems": 2 },
+        "percentages_used": { "const": false }
+      }
+    },
+    "project_rules": { "type": "array", "minItems": 3, "maxItems": 5, "items": { "$ref": "#/$defs/rule" } },
+    "observations": { "type": "array", "minItems": 5, "maxItems": 5, "items": { "$ref": "#/$defs/observation" } },
+    "assumptions": { "type": "array", "items": { "$ref": "#/$defs/assumption" } },
+    "open_verifications": { "type": "array", "items": { "type": "string" } },
+    "seven_day_plan": { "type": "array", "minItems": 7, "maxItems": 7, "items": { "type": "string", "minLength": 1 } },
+    "visual_prompt": { "type": "string", "minLength": 20 }
+  },
+  "$defs": {
+    "confidence": { "enum": ["observed", "strong_inference", "needs_verification"] },
+    "diagnosis": {
+      "type": "object",
+      "required": ["statement", "evidence", "confidence"],
+      "properties": {
+        "statement": { "type": "string", "minLength": 10 },
+        "evidence": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "confidence": { "$ref": "#/$defs/confidence" }
+      }
+    },
+    "rule": {
+      "type": "object",
+      "required": ["id", "trigger", "abstract_prescription", "concrete_prescription", "success_test", "confidence"],
+      "properties": {
+        "id": { "type": "string" },
+        "trigger": { "type": "string" },
+        "abstract_prescription": { "type": "string" },
+        "concrete_prescription": { "type": "string" },
+        "success_test": { "type": "string" },
+        "confidence": { "$ref": "#/$defs/confidence" }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "required": ["id", "title", "visible_evidence", "friction", "behavioral_impact", "abstract_prescription", "concrete_prescription", "success_test", "confidence", "requires_measurement"],
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "visible_evidence": { "type": "string" },
+        "friction": { "type": "string" },
+        "behavioral_impact": { "type": "string" },
+        "abstract_prescription": { "type": "string" },
+        "concrete_prescription": { "type": "string" },
+        "success_test": { "type": "string" },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "requires_measurement": { "type": "boolean" }
+      }
+    },
+    "assumption": {
+      "type": "object",
+      "required": ["statement", "impact", "confidence"],
+      "properties": {
+        "statement": { "type": "string" },
+        "impact": { "type": "string" },
+        "confidence": { "const": "needs_verification" }
+      }
+    }
+  }
+}

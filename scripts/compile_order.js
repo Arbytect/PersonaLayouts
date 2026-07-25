@@ -394,6 +394,9 @@ async function main() {
     local_pdf: paths.pdfPath,
     local_cover_image: photoArtifacts?.coverPath || (fs.existsSync(paths.imagePath) ? paths.imagePath : null),
     local_photo_analysis: photoArtifacts?.enrichmentPath || null,
+    local_protocol_lite: photoArtifacts?.protocolPath || null,
+    local_protocol_review: photoArtifacts?.reviewPacketPath || null,
+    protocol_review_status: photoArtifacts?.reviewPacket?.status || null,
     replicate_prediction_id: photoArtifacts?.predictionId || null
   };
 
@@ -413,6 +416,8 @@ async function main() {
   const cachePdfKey = `${cachePrefix}/spatial-prescription.pdf`;
   const cacheCoverKey = `${cachePrefix}/cover-concept.png`;
   const analysisKey = `${orderPrefix}/photo-analysis.json`;
+  const protocolKey = `${orderPrefix}/protocol-lite.json`;
+  const reviewKey = `${orderPrefix}/protocol-review.json`;
   const transformKey = `${orderPrefix}/room-transform.jpg`;
 
   await putFile(client, bucket, pdfKey, paths.pdfPath, 'application/pdf');
@@ -431,7 +436,11 @@ async function main() {
 
   if (photoArtifacts) {
     await putFile(client, bucket, analysisKey, photoArtifacts.enrichmentPath, 'application/json');
+    await putFile(client, bucket, protocolKey, photoArtifacts.protocolPath, 'application/json');
+    await putFile(client, bucket, reviewKey, photoArtifacts.reviewPacketPath, 'application/json');
     metadata.photo_analysis_key = analysisKey;
+    metadata.protocol_lite_key = protocolKey;
+    metadata.protocol_review_key = reviewKey;
     if (photoArtifacts.coverPath !== photoArtifacts.originalPath) {
       await putFile(client, bucket, transformKey, photoArtifacts.coverPath, 'image/jpeg');
       metadata.room_transform_key = transformKey;
@@ -447,6 +456,23 @@ async function main() {
     ContentType: 'application/json'
   }));
 
+  if (photoArtifacts?.reviewPacket?.review_mode === 'hold') {
+    const reviewResult = {
+      status: 'needs_admin_review',
+      order_id: order.order_id,
+      email: order.email,
+      pdf_key: pdfKey,
+      protocol_lite_key: protocolKey,
+      protocol_review_key: reviewKey,
+      metadata_key: metadataKey,
+      config_hash: hash
+    };
+    const resultPath = path.join(RESULT_DIR, `${order.order_id}.delivery_result.json`);
+    fs.writeFileSync(resultPath, JSON.stringify(reviewResult, null, 2));
+    console.log(JSON.stringify(reviewResult, null, 2));
+    return;
+  }
+
   const downloadUrl = await signDownload(client, bucket, pdfKey, `spatial-prescription-${order.order_id}.pdf`);
   const result = {
     status: 'delivered',
@@ -457,6 +483,9 @@ async function main() {
     pdf_key: pdfKey,
     cover_key: metadata.cover_key || null,
     photo_analysis_key: metadata.photo_analysis_key || null,
+    protocol_lite_key: metadata.protocol_lite_key || null,
+    protocol_review_key: metadata.protocol_review_key || null,
+    protocol_review_status: metadata.protocol_review_status || null,
     room_transform_key: metadata.room_transform_key || null,
     metadata_key: metadataKey,
     cache_pdf_key: cachePdfKey,
