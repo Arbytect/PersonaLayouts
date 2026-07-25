@@ -1,0 +1,339 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://personalayouts.com/schemas/protocol-admin-v1.json",
+  "title": "Persona Layouts Protocol Admin Audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "mode",
+    "project",
+    "revision",
+    "report_configuration",
+    "source_files",
+    "evidence",
+    "rooms",
+    "frictions",
+    "persona_allocations",
+    "spatial_signature",
+    "identity_anchors",
+    "project_protocols",
+    "room_protocols",
+    "decisions",
+    "open_verifications",
+    "implementation_order"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "mode": { "const": "admin_full_protocol" },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "code", "name", "space_type", "output_language"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "code": { "type": "string", "minLength": 3, "maxLength": 40 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "space_type": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "output_language": { "enum": ["tr", "en"] }
+      }
+    },
+    "revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["number", "state"],
+      "properties": {
+        "number": { "type": "integer", "minimum": 1 },
+        "state": { "enum": ["draft", "approved"] },
+        "change_reason": { "type": ["string", "null"], "maxLength": 1000 }
+      }
+    },
+    "report_configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["include_open_verifications", "include_evidence_appendix"],
+      "properties": {
+        "include_open_verifications": { "type": "boolean" },
+        "include_evidence_appendix": { "type": "boolean" }
+      }
+    },
+    "source_files": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourceFile" }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/evidence" }
+    },
+    "rooms": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/room" }
+    },
+    "frictions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/friction" }
+    },
+    "persona_allocations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/personaAllocation" }
+    },
+    "spatial_signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement", "evidence_ids"],
+      "properties": {
+        "statement": { "$ref": "#/$defs/nonEmptyText" },
+        "evidence_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "identity_anchors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/identityAnchor" }
+    },
+    "project_protocols": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 5,
+      "items": { "$ref": "#/$defs/protocolRule" }
+    },
+    "room_protocols": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/roomProtocol" }
+    },
+    "decisions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/decision" }
+    },
+    "open_verifications": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/openVerification" }
+    },
+    "implementation_order": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "sequence", "title", "decision_ids"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "sequence": { "type": "integer", "minimum": 1 },
+          "title": { "$ref": "#/$defs/nonEmptyText" },
+          "decision_ids": { "$ref": "#/$defs/idList" }
+        }
+      }
+    },
+    "warning_overrides": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "reason"],
+        "properties": {
+          "code": { "type": "string", "minLength": 1, "maxLength": 100 },
+          "reason": { "type": "string", "minLength": 10, "maxLength": 1000 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+    },
+    "nonEmptyText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 5000
+    },
+    "idList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/id" },
+      "uniqueItems": true
+    },
+    "confidence": {
+      "enum": ["confirmed", "strong_inference", "assumption", "unknown"]
+    },
+    "verificationStatus": {
+      "enum": ["not_required", "pending", "field_verification_required", "verified", "failed"]
+    },
+    "sourceFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source_type", "filename", "revision", "sha256", "ai_review_status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "source_type": { "enum": ["measured_plan", "photo", "uploaded_document"] },
+        "filename": { "type": "string", "minLength": 1, "maxLength": 255 },
+        "revision": { "type": "integer", "minimum": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "ai_review_status": { "enum": ["pending", "processing", "completed", "failed", "not_requested"] }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source_type", "statement", "category", "confidence", "verification_status", "created_by_type"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "source_type": { "enum": ["client_statement", "measured_plan", "photo", "admin_entry", "uploaded_document"] },
+        "source_file_id": { "type": ["string", "null"] },
+        "source_page": { "type": ["integer", "null"], "minimum": 1 },
+        "source_image_index": { "type": ["integer", "null"], "minimum": 0 },
+        "statement": { "$ref": "#/$defs/nonEmptyText" },
+        "category": { "enum": ["dimension", "fixed_element", "behavior", "routine", "emotional_objective", "future_scenario", "contradiction", "preference", "constraint", "other"] },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" },
+        "created_by_type": { "enum": ["ai", "admin", "import"] }
+      }
+    },
+    "room": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "room_type", "geometry_status", "dimensions", "fixed_elements"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "room_type": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "geometry_status": { "enum": ["unverified", "partial", "measured"] },
+        "dimensions": { "type": "object" },
+        "fixed_elements": { "type": "array", "items": { "type": "object" } }
+      }
+    },
+    "friction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "statement", "behavioral_impact", "priority", "evidence_ids", "abstract_prescription", "concrete_prescription"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "room_id": { "type": ["string", "null"] },
+        "title": { "$ref": "#/$defs/nonEmptyText" },
+        "statement": { "$ref": "#/$defs/nonEmptyText" },
+        "behavioral_impact": { "$ref": "#/$defs/nonEmptyText" },
+        "priority": { "enum": ["low", "medium", "high", "critical"] },
+        "evidence_ids": { "$ref": "#/$defs/idList" },
+        "abstract_prescription": { "$ref": "#/$defs/nonEmptyText" },
+        "concrete_prescription": { "$ref": "#/$defs/nonEmptyText" }
+      }
+    },
+    "personaAllocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "scope", "persona", "percentage", "rationale", "evidence_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "scope": { "enum": ["project", "room"] },
+        "room_id": { "type": ["string", "null"] },
+        "persona": { "enum": ["sovereign", "sage", "alchemist", "weaver"] },
+        "variant": { "type": ["string", "null"], "maxLength": 80 },
+        "percentage": { "type": "number", "minimum": 0, "maximum": 100 },
+        "rationale": { "$ref": "#/$defs/nonEmptyText" },
+        "deviation_rationale": { "type": ["string", "null"], "maxLength": 3000 },
+        "evidence_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "identityAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "description", "evidence_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "label": { "$ref": "#/$defs/nonEmptyText" },
+        "description": { "$ref": "#/$defs/nonEmptyText" },
+        "evidence_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "protocolRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "trigger", "abstract_prescription", "concrete_prescription", "success_test", "confidence", "verification_status", "evidence_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "trigger": { "$ref": "#/$defs/nonEmptyText" },
+        "abstract_prescription": { "$ref": "#/$defs/nonEmptyText" },
+        "concrete_prescription": { "$ref": "#/$defs/nonEmptyText" },
+        "success_test": { "$ref": "#/$defs/nonEmptyText" },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" },
+        "evidence_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "roomProtocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "room_id", "target", "abstract_prescription", "concrete_prescription", "success_test", "confidence", "verification_status", "evidence_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "room_id": { "$ref": "#/$defs/id" },
+        "personal_moment": { "type": ["string", "null"], "maxLength": 3000 },
+        "target": { "$ref": "#/$defs/nonEmptyText" },
+        "abstract_prescription": { "$ref": "#/$defs/nonEmptyText" },
+        "concrete_prescription": { "$ref": "#/$defs/nonEmptyText" },
+        "success_test": { "$ref": "#/$defs/nonEmptyText" },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" },
+        "evidence_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "decision_type", "title", "abstract_need", "concrete_decision", "success_test", "confidence", "verification_status", "dimension_dependent", "required_measurements", "structural_or_service_change", "evidence_ids", "friction_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "room_id": { "type": ["string", "null"] },
+        "status": { "enum": ["requirement", "recommendation", "option", "rejected", "open"] },
+        "decision_type": { "enum": ["layout", "circulation", "storage", "lighting", "material", "furniture", "acoustic", "structural", "plumbing", "electrical", "other"] },
+        "title": { "$ref": "#/$defs/nonEmptyText" },
+        "abstract_need": { "$ref": "#/$defs/nonEmptyText" },
+        "concrete_decision": { "$ref": "#/$defs/nonEmptyText" },
+        "success_test": { "$ref": "#/$defs/nonEmptyText" },
+        "tradeoff": { "type": ["string", "null"], "maxLength": 3000 },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "verification_status": { "$ref": "#/$defs/verificationStatus" },
+        "dimension_dependent": { "type": "boolean" },
+        "required_measurements": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 300 },
+          "uniqueItems": true
+        },
+        "structural_or_service_change": { "type": "boolean" },
+        "cost": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["min", "max", "currency"],
+          "properties": {
+            "min": { "type": "number", "minimum": 0 },
+            "max": { "type": "number", "minimum": 0 },
+            "currency": { "type": "string", "minLength": 3, "maxLength": 3 }
+          }
+        },
+        "material_reference_file_ids": { "$ref": "#/$defs/idList" },
+        "evidence_ids": { "$ref": "#/$defs/idList" },
+        "friction_ids": { "$ref": "#/$defs/idList" }
+      }
+    },
+    "openVerification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "blocking", "status", "decision_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "room_id": { "type": ["string", "null"] },
+        "statement": { "$ref": "#/$defs/nonEmptyText" },
+        "blocking": { "type": "boolean" },
+        "status": { "enum": ["open", "verified", "failed", "waived"] },
+        "resolution": { "type": ["string", "null"], "maxLength": 3000 },
+        "decision_ids": { "$ref": "#/$defs/idList" }
+      }
+    }
+  }
+}
