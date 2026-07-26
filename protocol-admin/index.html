@@ -186,6 +186,11 @@
             <div id="protocol-quality-badge" class="quality-badge"></div>
           </header>
           <div id="protocol-quality-summary" class="quality-summary"></div>
+          <section id="protocol-warning-review" class="warning-review" hidden>
+            <h3>Uyarı incelemesi</h3>
+            <p>Her uyarıyı mimari gerekçeyle çöz veya taslağı düzelt. Gerekçesiz uyarı onaylanamaz.</p>
+            <div id="protocol-warning-list" class="draft-stack"></div>
+          </section>
 
           <section class="protocol-section">
             <div class="protocol-section-heading">
@@ -277,7 +282,11 @@
 
           <footer class="protocol-footer">
             <p id="protocol-save-status" class="action-message" role="status" hidden></p>
-            <button id="protocol-save-button" class="primary-button" type="button">Taslağı Kaydet</button>
+            <div class="protocol-footer-actions">
+              <a id="protocol-pdf-button" class="secondary-button" href="#" hidden>Onaylı PDF'i İndir</a>
+              <button id="protocol-save-button" class="secondary-button" type="button">Taslağı Kaydet</button>
+              <button id="protocol-approve-button" class="primary-button" type="button">Protokolü Onayla</button>
+            </div>
           </footer>
         </section>
       </section>

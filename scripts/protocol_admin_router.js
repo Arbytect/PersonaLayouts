@@ -15,6 +15,7 @@ const { generateProtocolDraft } = require('./protocol_admin_ai');
 const { validateProtocolAdminContract } = require('./protocol_admin_contract');
 const { databaseConfigured, query, runMigrations, withTransaction } = require('./protocol_admin_db');
 const { evaluateProtocolAdminQuality } = require('./protocol_admin_quality_gate');
+const { generateProtocolReportPdf } = require('./protocol_admin_report');
 
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const LOGIN_LIMIT = 5;
@@ -41,6 +42,15 @@ function sendFile(res, filePath, contentType) {
   if (!fs.existsSync(filePath)) return sendJson(res, 404, { error: 'Not found' });
   res.writeHead(200, securityHeaders(contentType));
   fs.createReadStream(filePath).pipe(res);
+}
+
+function sendBuffer(res, status, buffer, contentType, filename) {
+  res.writeHead(status, {
+    ...securityHeaders(contentType),
+    'Content-Disposition': `attachment; filename="${String(filename).replace(/[^a-zA-Z0-9._-]/g, '-')}"`,
+    'Content-Length': buffer.length
+  });
+  res.end(buffer);
 }
 
 function readJson(req, maxBytes = 256 * 1024) {
@@ -104,6 +114,14 @@ function cleanText(value, field, max, required = true) {
 
 function uuid(value) {
   return /^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(String(value || ''));
+}
+
+function canonicalJson(value) {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
+  if (value && typeof value === 'object') {
+    return `{${Object.keys(value).sort().map(key => `${JSON.stringify(key)}:${canonicalJson(value[key])}`).join(',')}}`;
+  }
+  return JSON.stringify(value);
 }
 
 async function requireUser(req, role) {
@@ -274,7 +292,18 @@ function createProtocolAdminRouter(root) {
         LIMIT 1`,
       [result.revision_id]
     );
-    return sendJson(res, 200, { project: result, protocol_draft: draftResult.rows[0] || null });
+    const approvalResult = await query(
+      `SELECT id, snapshot_sha256, quality_gate_result, approved_at
+         FROM approval_snapshots
+        WHERE revision_id = $1
+        LIMIT 1`,
+      [result.revision_id]
+    );
+    return sendJson(res, 200, {
+      project: result,
+      protocol_draft: draftResult.rows[0] || null,
+      approval: approvalResult.rows[0] || null
+    });
   }
 
   async function loadProject(projectId, userId) {
@@ -444,6 +473,162 @@ function createProtocolAdminRouter(root) {
     return sendJson(res, 200, { protocol_draft: result });
   }
 
+  async function approveProjectProtocol(req, res, projectId) {
+    requireSameOrigin(req);
+    const user = await requireUser(req, 'admin');
+    const project = await loadProject(projectId, user.id);
+    if (!project) return sendJson(res, 404, { error: 'Project not found.' });
+    if (project.revision_state === 'approved') {
+      return sendJson(res, 409, { error: 'This project revision is already approved.' });
+    }
+
+    const draftResult = await query(
+      `SELECT id, status, content
+         FROM protocol_drafts
+        WHERE project_id = $1 AND revision_id = $2
+        LIMIT 1`,
+      [project.id, project.revision_id]
+    );
+    const draft = draftResult.rows[0];
+    if (!draft || draft.status !== 'ready') {
+      return sendJson(res, 409, { error: 'A saved protocol draft is required before approval.' });
+    }
+
+    let content;
+    try {
+      content = validateProtocolAdminContract(draft.content);
+    } catch (error) {
+      throw Object.assign(new Error(error.message), { statusCode: 400 });
+    }
+    const qualityGate = evaluateProtocolAdminQuality(content);
+    if (!qualityGate.can_approve) {
+      return sendJson(res, 409, {
+        error: 'The protocol cannot be approved until every blocker and warning is resolved.',
+        quality_gate_result: qualityGate
+      });
+    }
+
+    const approvedContent = structuredClone(content);
+    approvedContent.revision.state = 'approved';
+    const snapshot = {
+      schema_version: '1.0',
+      audit: approvedContent,
+      report_context: {
+        client_name: project.client_name,
+        approved_by: user.display_name
+      }
+    };
+    const snapshotJson = JSON.stringify(snapshot);
+    const snapshotSha256 = crypto.createHash('sha256').update(canonicalJson(snapshot)).digest('hex');
+    const approval = await withTransaction(async client => {
+      const inserted = await client.query(
+        `INSERT INTO approval_snapshots
+          (project_id, revision_id, snapshot, snapshot_sha256, quality_gate_result, approved_by)
+         VALUES ($1, $2, $3::jsonb, $4, $5::jsonb, $6)
+         RETURNING id, snapshot_sha256, quality_gate_result, approved_at`,
+        [
+          project.id,
+          project.revision_id,
+          snapshotJson,
+          snapshotSha256,
+          JSON.stringify(qualityGate),
+          user.id
+        ]
+      );
+      await client.query(
+        `UPDATE project_revisions
+            SET state = 'approved', approved_at = now()
+          WHERE id = $1`,
+        [project.revision_id]
+      );
+      await client.query(
+        `UPDATE projects
+            SET status = 'approved'
+          WHERE id = $1`,
+        [project.id]
+      );
+      await client.query(
+        `INSERT INTO audit_log
+          (project_id, revision_id, actor_user_id, actor_type, action, entity_type, entity_id, new_value)
+         VALUES ($1, $2, $3, 'admin', 'approve', 'approval_snapshot', $4, $5::jsonb)`,
+        [
+          project.id,
+          project.revision_id,
+          user.id,
+          inserted.rows[0].id,
+          JSON.stringify({ snapshot_sha256: snapshotSha256, quality_status: qualityGate.status })
+        ]
+      );
+      return inserted.rows[0];
+    });
+    return sendJson(res, 201, { approval });
+  }
+
+  async function downloadApprovedProtocolPdf(req, res, projectId) {
+    const user = await requireUser(req);
+    const project = await loadProject(projectId, user.id);
+    if (!project) return sendJson(res, 404, { error: 'Project not found.' });
+    const approvalResult = await query(
+      `SELECT id, snapshot, snapshot_sha256, quality_gate_result, approved_at
+         FROM approval_snapshots
+        WHERE project_id = $1 AND revision_id = $2
+        LIMIT 1`,
+      [project.id, project.revision_id]
+    );
+    const approval = approvalResult.rows[0];
+    if (!approval) return sendJson(res, 409, { error: 'This project revision has not been approved.' });
+    const currentSnapshotSha256 = crypto.createHash('sha256').update(canonicalJson(approval.snapshot)).digest('hex');
+    if (!/^[a-f0-9]{64}$/i.test(approval.snapshot_sha256 || '') ||
+        !crypto.timingSafeEqual(Buffer.from(currentSnapshotSha256), Buffer.from(approval.snapshot_sha256))) {
+      throw Object.assign(new Error('Approved snapshot integrity check failed.'), { statusCode: 409 });
+    }
+
+    const report = await query(
+      `INSERT INTO generated_reports
+        (project_id, approval_snapshot_id, revision_id, report_type, status)
+       VALUES ($1, $2, $3, 'approved_pdf', 'processing')
+       RETURNING id`,
+      [project.id, approval.id, project.revision_id]
+    );
+    try {
+      const pdf = await generateProtocolReportPdf(approval);
+      const sha256 = crypto.createHash('sha256').update(pdf).digest('hex');
+      await query(
+        `UPDATE generated_reports
+            SET status = 'completed', sha256 = $2, completed_at = now()
+          WHERE id = $1`,
+        [report.rows[0].id, sha256]
+      );
+      await query(
+        `INSERT INTO audit_log
+          (project_id, revision_id, actor_user_id, actor_type, action, entity_type, entity_id, new_value)
+         VALUES ($1, $2, $3, 'admin', 'generate', 'generated_report', $4, $5::jsonb)`,
+        [
+          project.id,
+          project.revision_id,
+          user.id,
+          report.rows[0].id,
+          JSON.stringify({ report_type: 'approved_pdf', sha256 })
+        ]
+      );
+      return sendBuffer(
+        res,
+        200,
+        pdf,
+        'application/pdf',
+        `${project.project_code}-approved-protocol.pdf`
+      );
+    } catch (error) {
+      await query(
+        `UPDATE generated_reports
+            SET status = 'failed', error_message = $2
+          WHERE id = $1`,
+        [report.rows[0].id, String(error.message || 'PDF generation failed.').slice(0, 2000)]
+      );
+      throw error;
+    }
+  }
+
   async function handleApi(req, res, url) {
     if (req.method === 'GET' && url.pathname === '/api/protocol-admin/status') {
       return sendJson(res, 200, {
@@ -479,6 +664,16 @@ function createProtocolAdminRouter(root) {
     if (draftMatch && req.method === 'PUT') {
       if (!uuid(draftMatch[1])) return sendJson(res, 400, { error: 'Invalid project id.' });
       return updateProjectProtocol(req, res, draftMatch[1]);
+    }
+    const approvalMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/approve$/);
+    if (approvalMatch && req.method === 'POST') {
+      if (!uuid(approvalMatch[1])) return sendJson(res, 400, { error: 'Invalid project id.' });
+      return approveProjectProtocol(req, res, approvalMatch[1]);
+    }
+    const pdfMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/approved-pdf$/);
+    if (pdfMatch && req.method === 'GET') {
+      if (!uuid(pdfMatch[1])) return sendJson(res, 400, { error: 'Invalid project id.' });
+      return downloadApprovedProtocolPdf(req, res, pdfMatch[1]);
     }
     return sendJson(res, 404, { error: 'Not found' });
   }

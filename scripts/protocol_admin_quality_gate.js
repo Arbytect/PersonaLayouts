@@ -33,6 +33,7 @@ function evaluateProtocolAdminQuality(audit) {
   const roomIds = new Set(audit.rooms.map(item => item.id));
   const frictionIds = new Set(audit.frictions.map(item => item.id));
   const decisionIds = new Set(audit.decisions.map(item => item.id));
+  const decisions = new Map(audit.decisions.map(item => [item.id, item]));
   const sourceFiles = new Map(audit.source_files.map(item => [item.id, item]));
   const evidence = new Map(audit.evidence.map(item => [item.id, item]));
 
@@ -156,6 +157,25 @@ function evaluateProtocolAdminQuality(audit) {
     requireRefs(item.decision_ids, decisionIds, 'open_verification', item.id, 'decision');
     if (item.blocking && ['open', 'failed'].includes(item.status)) {
       blockers.push(issue('BLOCKING_VERIFICATION_OPEN', `Blocking verification ${item.id} is ${item.status}.`, 'open_verification', item.id));
+    }
+    if (item.status === 'verified' && String(item.resolution || '').trim().length < 5) {
+      blockers.push(issue('VERIFICATION_RESOLUTION_MISSING', `Verified item ${item.id} needs a resolution note.`, 'open_verification', item.id));
+    }
+    if (item.status === 'verified') {
+      item.decision_ids.forEach(decisionId => {
+        const decision = decisions.get(decisionId);
+        if (decision && decision.verification_status !== 'verified') {
+          blockers.push(issue(
+            'VERIFIED_ITEM_DECISION_NOT_VERIFIED',
+            `Verified item ${item.id} is linked to decision ${decisionId}, but that decision is not verified.`,
+            'open_verification',
+            item.id
+          ));
+        }
+      });
+    }
+    if (item.blocking && item.status === 'waived' && String(item.resolution || '').trim().length < 10) {
+      blockers.push(issue('VERIFICATION_WAIVER_REASON_MISSING', `Waived blocking item ${item.id} needs a documented reason.`, 'open_verification', item.id));
     }
   });
 

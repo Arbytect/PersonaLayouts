@@ -25,7 +25,10 @@ async function run() {
     'project-form',
     'protocol-generate-button',
     'protocol-draft-section',
-    'protocol-save-button'
+    'protocol-save-button',
+    'protocol-approve-button',
+    'protocol-pdf-button',
+    'protocol-warning-list'
   ];
   requiredIds.forEach(id => assert.strictEqual(document.querySelectorAll(`#${id}`).length, 1, `${id} must exist exactly once.`));
   assert.strictEqual(document.querySelectorAll('script:not([src])').length, 0, 'Inline scripts are forbidden by CSP.');
@@ -39,6 +42,10 @@ async function run() {
   assert(!router.includes("'project', $1::text"), 'Audit entity ID must not reuse the UUID query parameter as text.');
   assert(router.includes('/generate-protocol'));
   assert(router.includes('/protocol-draft'));
+  assert(router.includes('/approve'));
+  assert(router.includes('/approved-pdf'));
+  assert(router.includes('approval_snapshots'));
+  assert(router.includes('generated_reports'));
 
   const migration = fs.readFileSync(path.join(root, 'db', 'migrations', '001_protocol_admin_core.sql'), 'utf8');
   assert(migration.includes('CREATE TABLE project_intakes'));

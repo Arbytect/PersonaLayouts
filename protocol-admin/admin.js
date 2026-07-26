@@ -2,7 +2,8 @@ const state = {
   user: null,
   projects: [],
   currentProjectId: null,
-  currentDraft: null
+  currentDraft: null,
+  currentApproval: null
 };
 
 const elements = {
@@ -34,6 +35,8 @@ const elements = {
   protocolDraftSection: document.getElementById('protocol-draft-section'),
   protocolQualityBadge: document.getElementById('protocol-quality-badge'),
   protocolQualitySummary: document.getElementById('protocol-quality-summary'),
+  protocolWarningReview: document.getElementById('protocol-warning-review'),
+  protocolWarningList: document.getElementById('protocol-warning-list'),
   draftCoreProblem: document.getElementById('draft-core-problem'),
   draftWeNoticed: document.getElementById('draft-we-noticed'),
   draftEvidenceBoundary: document.getElementById('draft-evidence-boundary'),
@@ -45,7 +48,9 @@ const elements = {
   draftVerificationList: document.getElementById('draft-verification-list'),
   draftImplementationList: document.getElementById('draft-implementation-list'),
   protocolSave: document.getElementById('protocol-save-button'),
-  protocolSaveStatus: document.getElementById('protocol-save-status')
+  protocolSaveStatus: document.getElementById('protocol-save-status'),
+  protocolApprove: document.getElementById('protocol-approve-button'),
+  protocolPdf: document.getElementById('protocol-pdf-button')
 };
 
 async function api(path, options = {}) {
@@ -175,6 +180,24 @@ function draftField(labelText, value, path, rows = 3) {
   return label;
 }
 
+function draftSelect(labelText, value, path, options) {
+  const label = document.createElement('label');
+  label.className = 'draft-field';
+  const title = document.createElement('span');
+  title.textContent = labelText;
+  const select = document.createElement('select');
+  select.dataset.draftPath = path;
+  options.forEach(optionValue => {
+    const option = document.createElement('option');
+    option.value = optionValue;
+    option.textContent = humanize(optionValue);
+    option.selected = optionValue === value;
+    select.appendChild(option);
+  });
+  label.append(title, select);
+  return label;
+}
+
 function setPath(target, path, value) {
   const parts = path.split('.');
   let cursor = target;
@@ -210,6 +233,31 @@ function renderQuality(quality) {
   }
 }
 
+function renderWarningReview(content, quality) {
+  const warnings = quality && quality.warnings || [];
+  const existing = new Map((content.warning_overrides || []).map(item => [item.code, item.reason]));
+  elements.protocolWarningList.replaceChildren();
+  elements.protocolWarningReview.hidden = warnings.length === 0;
+  warnings.forEach(item => {
+    const card = document.createElement('article');
+    card.className = 'warning-card';
+    const heading = document.createElement('strong');
+    heading.textContent = item.message;
+    const code = document.createElement('span');
+    code.textContent = item.code;
+    const field = draftField(
+      'Mimari gerekçe',
+      existing.get(item.code) || '',
+      `warning_override.${item.code}`,
+      3
+    );
+    field.querySelector('textarea').dataset.warningCode = item.code;
+    delete field.querySelector('textarea').dataset.draftPath;
+    card.append(code, heading, field);
+    elements.protocolWarningList.appendChild(card);
+  });
+}
+
 function renderPersonaMix(allocations) {
   elements.draftPersonaMix.replaceChildren();
   (allocations || []).filter(item => item.scope === 'project').forEach(item => {
@@ -243,7 +291,27 @@ function renderEvidence(evidence) {
     tags.className = 'badge-row';
     tags.append(badge(item.confidence, item.confidence), badge(item.verification_status, item.verification_status));
     header.append(title, tags);
-    card.append(header, draftField('Kanıt ifadesi', item.statement, `evidence.${index}.statement`, 3));
+    const controls = document.createElement('div');
+    controls.className = 'draft-grid compact-controls';
+    controls.append(
+      draftSelect(
+        'Güven',
+        item.confidence,
+        `evidence.${index}.confidence`,
+        ['confirmed', 'strong_inference', 'assumption', 'unknown']
+      ),
+      draftSelect(
+        'Doğrulama',
+        item.verification_status,
+        `evidence.${index}.verification_status`,
+        ['not_required', 'pending', 'field_verification_required', 'verified', 'failed']
+      )
+    );
+    card.append(
+      header,
+      controls,
+      draftField('Kanıt ifadesi', item.statement, `evidence.${index}.statement`, 3)
+    );
     elements.draftEvidenceList.appendChild(card);
   });
 }
@@ -295,20 +363,49 @@ function renderDecisions(decisions) {
       draftField('Başarı testi', item.success_test, `decisions.${index}.success_test`)
     );
     if (item.tradeoff) grid.appendChild(draftField('Taviz / tradeoff', item.tradeoff, `decisions.${index}.tradeoff`));
-    card.append(header, grid);
+    const controls = document.createElement('div');
+    controls.className = 'draft-grid compact-controls';
+    controls.append(
+      draftSelect(
+        'Karar doğrulaması',
+        item.verification_status,
+        `decisions.${index}.verification_status`,
+        ['not_required', 'pending', 'field_verification_required', 'verified', 'failed']
+      )
+    );
+    card.append(header, controls, grid);
     elements.draftDecisionList.appendChild(card);
   });
 }
 
 function renderVerifications(items) {
   elements.draftVerificationList.replaceChildren();
-  (items || []).forEach(item => {
+  (items || []).forEach((item, index) => {
     const row = document.createElement('div');
     row.className = 'verification-row';
     row.append(badge(item.blocking ? 'blocking' : 'open', item.blocking ? 'assumption' : 'pending'));
+    const body = document.createElement('div');
+    body.className = 'verification-editor';
     const text = document.createElement('p');
     text.textContent = item.statement;
-    row.appendChild(text);
+    const fields = document.createElement('div');
+    fields.className = 'verification-fields';
+    fields.append(
+      draftSelect(
+        'Durum',
+        item.status,
+        `open_verifications.${index}.status`,
+        ['open', 'verified', 'failed', 'waived']
+      ),
+      draftField(
+        'Doğrulama / feragat notu',
+        item.resolution || '',
+        `open_verifications.${index}.resolution`,
+        2
+      )
+    );
+    body.append(text, fields);
+    row.appendChild(body);
     elements.draftVerificationList.appendChild(row);
   });
   if (!(items || []).length) {
@@ -327,10 +424,24 @@ function renderImplementation(items) {
   });
 }
 
-function renderProtocolDraft(draft) {
+function setProtocolLocked(locked) {
+  elements.protocolDraftSection.querySelectorAll('textarea, select').forEach(control => {
+    control.disabled = locked;
+  });
+  elements.protocolSave.hidden = locked;
+  elements.protocolApprove.hidden = locked;
+  elements.protocolPdf.hidden = !locked;
+  if (locked && state.currentProjectId) {
+    elements.protocolPdf.href = `/api/protocol-admin/projects/${encodeURIComponent(state.currentProjectId)}/approved-pdf`;
+  }
+}
+
+function renderProtocolDraft(draft, approval = state.currentApproval) {
   state.currentDraft = draft;
+  state.currentApproval = approval || null;
   setMessage(elements.protocolActionMessage, '');
   setMessage(elements.protocolActionError, '');
+  setMessage(elements.protocolSaveStatus, '');
   elements.protocolDraftSection.hidden = true;
   elements.protocolGenerate.hidden = false;
   elements.protocolGenerate.disabled = false;
@@ -361,6 +472,15 @@ function renderProtocolDraft(draft) {
   renderDecisions(content.decisions);
   renderVerifications(content.open_verifications);
   renderImplementation(content.implementation_order);
+  renderWarningReview(content, draft.quality_gate_result);
+  elements.protocolApprove.disabled = !draft.quality_gate_result || !draft.quality_gate_result.can_approve;
+  elements.protocolApprove.title = elements.protocolApprove.disabled
+    ? 'Önce tüm engelleri çöz ve uyarılara mimari gerekçe ekle.'
+    : '';
+  setProtocolLocked(Boolean(state.currentApproval));
+  if (state.currentApproval) {
+    setMessage(elements.protocolSaveStatus, `Onaylandı · ${state.currentApproval.snapshot_sha256.slice(0, 12)}…`);
+  }
 }
 
 async function openProject(projectId) {
@@ -379,7 +499,8 @@ async function openProject(projectId) {
     document.getElementById('detail-measurements').textContent = rawText(project.measurements);
     document.getElementById('detail-fixed').textContent = rawText(project.fixed_elements);
     state.currentProjectId = project.id;
-    renderProtocolDraft(payload.protocol_draft);
+    state.currentApproval = payload.approval || null;
+    renderProtocolDraft(payload.protocol_draft, payload.approval);
     showWorkspace('detail');
   } catch (error) {
     window.alert(error.message);
@@ -466,29 +587,72 @@ elements.protocolGenerate.addEventListener('click', async () => {
   }
 });
 
+function collectDraftContent() {
+  const content = structuredClone(state.currentDraft.content);
+  content.diagnosis.core_problem = elements.draftCoreProblem.value.trim();
+  content.diagnosis.we_noticed = elements.draftWeNoticed.value.trim();
+  content.diagnosis.evidence_boundary = elements.draftEvidenceBoundary.value.trim();
+  content.spatial_signature.statement = elements.draftSpatialSignature.value.trim();
+  elements.protocolDraftSection.querySelectorAll('[data-draft-path]').forEach(field => {
+    setPath(content, field.dataset.draftPath, field.value.trim());
+  });
+  content.warning_overrides = [...elements.protocolWarningList.querySelectorAll('[data-warning-code]')]
+    .map(field => ({ code: field.dataset.warningCode, reason: field.value.trim() }))
+    .filter(item => item.reason);
+  return content;
+}
+
+async function saveCurrentDraft() {
+  const content = collectDraftContent();
+  const payload = await api(`/api/protocol-admin/projects/${encodeURIComponent(state.currentProjectId)}/protocol-draft`, {
+    method: 'PUT',
+    body: JSON.stringify({ content })
+  });
+  renderProtocolDraft(payload.protocol_draft);
+  return payload.protocol_draft;
+}
+
 elements.protocolSave.addEventListener('click', async () => {
   if (!state.currentProjectId || !state.currentDraft || !state.currentDraft.content) return;
   setMessage(elements.protocolSaveStatus, '');
   elements.protocolSave.disabled = true;
   try {
-    const content = structuredClone(state.currentDraft.content);
-    content.diagnosis.core_problem = elements.draftCoreProblem.value.trim();
-    content.diagnosis.we_noticed = elements.draftWeNoticed.value.trim();
-    content.diagnosis.evidence_boundary = elements.draftEvidenceBoundary.value.trim();
-    content.spatial_signature.statement = elements.draftSpatialSignature.value.trim();
-    elements.protocolDraftSection.querySelectorAll('[data-draft-path]').forEach(field => {
-      setPath(content, field.dataset.draftPath, field.value.trim());
-    });
-    const payload = await api(`/api/protocol-admin/projects/${encodeURIComponent(state.currentProjectId)}/protocol-draft`, {
-      method: 'PUT',
-      body: JSON.stringify({ content })
-    });
-    renderProtocolDraft(payload.protocol_draft);
+    await saveCurrentDraft();
     setMessage(elements.protocolSaveStatus, 'Taslak ve kalite kontrol sonucu kaydedildi.');
   } catch (error) {
     setMessage(elements.protocolSaveStatus, error.message);
   } finally {
     elements.protocolSave.disabled = false;
+  }
+});
+
+elements.protocolApprove.addEventListener('click', async () => {
+  if (!state.currentProjectId || state.currentApproval) return;
+  if (!window.confirm('Bu revizyon değişmez biçimde onaylanacak. Devam edilsin mi?')) return;
+  setMessage(elements.protocolSaveStatus, 'Taslak kaydediliyor ve kalite kapısı yeniden çalıştırılıyor...');
+  elements.protocolSave.disabled = true;
+  elements.protocolApprove.disabled = true;
+  try {
+    const saved = await saveCurrentDraft();
+    if (!saved.quality_gate_result.can_approve) {
+      setMessage(elements.protocolSaveStatus, 'Onay durduruldu. Görünen engelleri ve uyarıları çöz.');
+      return;
+    }
+    const payload = await api(`/api/protocol-admin/projects/${encodeURIComponent(state.currentProjectId)}/approve`, {
+      method: 'POST',
+      body: '{}'
+    });
+    state.currentApproval = payload.approval;
+    await openProject(state.currentProjectId);
+  } catch (error) {
+    setMessage(elements.protocolSaveStatus, error.message);
+  } finally {
+    elements.protocolSave.disabled = false;
+    if (!state.currentApproval) {
+      elements.protocolApprove.disabled = !state.currentDraft ||
+        !state.currentDraft.quality_gate_result ||
+        !state.currentDraft.quality_gate_result.can_approve;
+    }
   }
 });
 
