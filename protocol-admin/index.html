@@ -4,7 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#20231f">
   <title>Persona Layouts Protocol Admin</title>
+  <link rel="manifest" href="/protocol-admin/manifest.webmanifest">
+  <link rel="icon" href="/protocol-admin/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/protocol-admin/icon-192.png">
   <link rel="stylesheet" href="/protocol-admin/admin.css">
 </head>
 <body>
@@ -126,12 +130,31 @@
 
           <fieldset>
             <legend>Geometri ve sabitler</legend>
-            <div class="form-grid two">
-              <label>Ölçüler
-                <textarea name="measurements" rows="8" maxlength="20000"></textarea>
+            <div class="form-grid four geometry-grid">
+              <label>Oda genişliği (cm)
+                <input name="room_width_cm" type="number" min="1" max="5000" step="0.1" inputmode="decimal">
+              </label>
+              <label>Oda uzunluğu (cm)
+                <input name="room_length_cm" type="number" min="1" max="5000" step="0.1" inputmode="decimal">
+              </label>
+              <label>Tavan yüksekliği (cm)
+                <input name="ceiling_height_cm" type="number" min="1" max="1000" step="0.1" inputmode="decimal">
+              </label>
+              <label>Ölçü kaynağı
+                <select name="measurement_source">
+                  <option value="unknown">Henüz doğrulanmadı</option>
+                  <option value="client_reported">Müşteri beyanı</option>
+                  <option value="plan_measured">Ölçülü plan</option>
+                  <option value="site_measured">Sahada ölçüldü</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-grid two geometry-notes">
+              <label>Ek ölçü notları
+                <textarea name="measurements" rows="7" maxlength="20000" placeholder="Duvar parçaları, nişler, kolonlar ve ölçüsü kritik açıklıklar"></textarea>
               </label>
               <label>Sabit elemanlar
-                <textarea name="fixed_elements" rows="8" maxlength="20000"></textarea>
+                <textarea name="fixed_elements" rows="7" maxlength="20000" placeholder="Kapı, pencere, radyatör, tesisat, priz ve taşınamayacak elemanlar"></textarea>
               </label>
             </div>
           </fieldset>
@@ -154,28 +177,46 @@
             <button id="protocol-generate-button" class="primary-button compact" type="button">Protokolü Oluştur</button>
           </div>
         </div>
-        <dl class="project-meta">
-          <div><dt>Müşteri</dt><dd id="detail-client"></dd></div>
-          <div><dt>Mekân</dt><dd id="detail-space"></dd></div>
-          <div><dt>Revizyon</dt><dd id="detail-revision"></dd></div>
-          <div><dt>Durum</dt><dd id="detail-status"></dd></div>
-        </dl>
-        <section class="detail-block">
-          <h3>Müşteri anlatımı</h3>
-          <p id="detail-narrative"></p>
+        <nav id="protocol-workflow-nav" class="workflow-nav" aria-label="Protokol aşamaları">
+          <button type="button" data-workflow-step="brief" class="active">
+            <span>1</span><strong>Brief</strong><small>Girdi ve geometri</small>
+          </button>
+          <button type="button" data-workflow-step="diagnosis" disabled>
+            <span>2</span><strong>Teşhis</strong><small>Persona ve kanıt</small>
+          </button>
+          <button type="button" data-workflow-step="decisions" disabled>
+            <span>3</span><strong>Kararlar</strong><small>Protokol ve tasarım</small>
+          </button>
+          <button type="button" data-workflow-step="review" disabled>
+            <span>4</span><strong>Kontrol</strong><small>Doğrulama ve PDF</small>
+          </button>
+        </nav>
+
+        <section id="protocol-brief-panel" class="workflow-panel" data-workflow-panel="brief">
+          <dl class="project-meta">
+            <div><dt>Müşteri</dt><dd id="detail-client"></dd></div>
+            <div><dt>Mekân</dt><dd id="detail-space"></dd></div>
+            <div><dt>Revizyon</dt><dd id="detail-revision"></dd></div>
+            <div><dt>Durum</dt><dd id="detail-status"></dd></div>
+          </dl>
+          <section class="detail-block">
+            <h3>Müşteri anlatımı</h3>
+            <p id="detail-narrative"></p>
+          </section>
+          <div class="detail-columns">
+            <section class="detail-block">
+              <h3>Ölçüler</h3>
+              <p id="detail-measurements"></p>
+            </section>
+            <section class="detail-block">
+              <h3>Sabit elemanlar</h3>
+              <p id="detail-fixed"></p>
+            </section>
+          </div>
+          <div id="brief-readiness" class="brief-readiness"></div>
+          <p id="protocol-action-message" class="action-message" role="status" hidden></p>
+          <p id="protocol-action-error" class="form-error" role="alert" hidden></p>
         </section>
-        <div class="detail-columns">
-          <section class="detail-block">
-            <h3>Ölçüler</h3>
-            <p id="detail-measurements"></p>
-          </section>
-          <section class="detail-block">
-            <h3>Sabit elemanlar</h3>
-            <p id="detail-fixed"></p>
-          </section>
-        </div>
-        <p id="protocol-action-message" class="action-message" role="status" hidden></p>
-        <p id="protocol-action-error" class="form-error" role="alert" hidden></p>
 
         <section id="protocol-draft-section" class="protocol-workspace" hidden>
           <header class="protocol-header">
@@ -185,14 +226,14 @@
             </div>
             <div id="protocol-quality-badge" class="quality-badge"></div>
           </header>
-          <div id="protocol-quality-summary" class="quality-summary"></div>
-          <section id="protocol-warning-review" class="warning-review" hidden>
+          <div id="protocol-quality-summary" class="quality-summary" data-workflow-panel="review"></div>
+          <section id="protocol-warning-review" class="warning-review" data-workflow-panel="review" hidden>
             <h3>Uyarı incelemesi</h3>
             <p>Her uyarıyı mimari gerekçeyle çöz veya taslağı düzelt. Gerekçesiz uyarı onaylanamaz.</p>
             <div id="protocol-warning-list" class="draft-stack"></div>
           </section>
 
-          <section class="protocol-section">
+          <section class="protocol-section" data-workflow-panel="diagnosis">
             <div class="protocol-section-heading">
               <span>01</span>
               <div>
@@ -213,7 +254,7 @@
             </label>
           </section>
 
-          <section class="protocol-section">
+          <section class="protocol-section" data-workflow-panel="diagnosis">
             <div class="protocol-section-heading">
               <span>02</span>
               <div>
@@ -227,7 +268,7 @@
             </label>
           </section>
 
-          <section class="protocol-section">
+          <section class="protocol-section" data-workflow-panel="diagnosis">
             <div class="protocol-section-heading">
               <span>03</span>
               <div>
@@ -238,7 +279,7 @@
             <div id="draft-evidence-list" class="draft-stack"></div>
           </section>
 
-          <section class="protocol-section">
+          <section class="protocol-section" data-workflow-panel="decisions">
             <div class="protocol-section-heading">
               <span>04</span>
               <div>
@@ -249,7 +290,7 @@
             <div id="draft-protocol-list" class="draft-stack"></div>
           </section>
 
-          <section class="protocol-section">
+          <section class="protocol-section" data-workflow-panel="decisions">
             <div class="protocol-section-heading">
               <span>05</span>
               <div>
@@ -260,7 +301,7 @@
             <div id="draft-decision-list" class="draft-stack"></div>
           </section>
 
-          <section class="protocol-section">
+          <section class="protocol-section" data-workflow-panel="review">
             <div class="protocol-section-heading">
               <span>06</span>
               <div>
@@ -283,6 +324,8 @@
           <footer class="protocol-footer">
             <p id="protocol-save-status" class="action-message" role="status" hidden></p>
             <div class="protocol-footer-actions">
+              <button id="protocol-step-prev" class="quiet-button" type="button">Geri</button>
+              <button id="protocol-step-next" class="secondary-button" type="button">Sonraki</button>
               <a id="protocol-pdf-button" class="secondary-button" href="#" hidden>Onaylı PDF'i İndir</a>
               <button id="protocol-save-button" class="secondary-button" type="button">Taslağı Kaydet</button>
               <button id="protocol-approve-button" class="primary-button" type="button">Protokolü Onayla</button>

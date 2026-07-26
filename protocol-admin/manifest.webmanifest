@@ -1,0 +1,24 @@
+{
+  "name": "Persona Layouts Protocol Admin",
+  "short_name": "Protocol Admin",
+  "description": "Evidence-bounded spatial protocol workspace for Persona Layouts.",
+  "start_url": "/protocol-admin/",
+  "scope": "/protocol-admin/",
+  "display": "standalone",
+  "background_color": "#f3f2ee",
+  "theme_color": "#20231f",
+  "icons": [
+    {
+      "src": "/protocol-admin/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/protocol-admin/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

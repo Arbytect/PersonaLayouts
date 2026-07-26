@@ -112,6 +112,15 @@ function cleanText(value, field, max, required = true) {
   return result;
 }
 
+function optionalDimension(value, field, max) {
+  if (value == null || String(value).trim() === '') return null;
+  const number = Number(value);
+  if (!Number.isFinite(number) || number <= 0 || number > max) {
+    throw Object.assign(new Error(`${field} is invalid.`), { statusCode: 400 });
+  }
+  return Math.round(number * 10) / 10;
+}
+
 function uuid(value) {
   return /^[a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(String(value || ''));
 }
@@ -222,6 +231,19 @@ function createProtocolAdminRouter(root) {
     const narrative = cleanText(body.client_narrative, 'Client narrative', 50000);
     const measurements = cleanText(body.measurements, 'Measurements', 20000, false);
     const fixedElements = cleanText(body.fixed_elements, 'Fixed elements', 20000, false);
+    const roomWidthCm = optionalDimension(body.room_width_cm, 'Room width', 5000);
+    const roomLengthCm = optionalDimension(body.room_length_cm, 'Room length', 5000);
+    const ceilingHeightCm = optionalDimension(body.ceiling_height_cm, 'Ceiling height', 1000);
+    const measurementSource = ['unknown', 'client_reported', 'plan_measured', 'site_measured'].includes(body.measurement_source)
+      ? body.measurement_source
+      : 'unknown';
+    const measurementPayload = {
+      raw_text: measurements,
+      room_width_cm: roomWidthCm,
+      room_length_cm: roomLengthCm,
+      ceiling_height_cm: ceilingHeightCm,
+      source_status: measurementSource
+    };
 
     const created = await withTransaction(async client => {
       const clientResult = await client.query(
@@ -253,7 +275,7 @@ function createProtocolAdminRouter(root) {
           project.id,
           revision.id,
           narrative,
-          JSON.stringify({ raw_text: measurements }),
+          JSON.stringify(measurementPayload),
           JSON.stringify(fixedElements ? [{ raw_text: fixedElements }] : []),
           user.id
         ]
@@ -329,7 +351,14 @@ function createProtocolAdminRouter(root) {
     if (!value) return '';
     if (typeof value === 'string') return value;
     if (Array.isArray(value)) return value.map(item => item && item.raw_text ? item.raw_text : '').filter(Boolean).join('\n');
-    return value.raw_text || '';
+    const structured = [
+      value.room_width_cm ? `Room width: ${value.room_width_cm} cm` : '',
+      value.room_length_cm ? `Room length: ${value.room_length_cm} cm` : '',
+      value.ceiling_height_cm ? `Ceiling height: ${value.ceiling_height_cm} cm` : '',
+      value.source_status ? `Measurement source: ${value.source_status}` : '',
+      value.raw_text || ''
+    ].filter(Boolean);
+    return structured.join('\n');
   }
 
   async function generateProjectProtocol(req, res, projectId) {
@@ -696,6 +725,10 @@ function createProtocolAdminRouter(root) {
       }
       if (url.pathname === '/protocol-admin/admin.css') sendFile(res, path.join(publicDirectory, 'admin.css'), 'text/css; charset=utf-8');
       else if (url.pathname === '/protocol-admin/admin.js') sendFile(res, path.join(publicDirectory, 'admin.js'), 'application/javascript; charset=utf-8');
+      else if (url.pathname === '/protocol-admin/sw.js') sendFile(res, path.join(publicDirectory, 'sw.js'), 'application/javascript; charset=utf-8');
+      else if (url.pathname === '/protocol-admin/manifest.webmanifest') sendFile(res, path.join(publicDirectory, 'manifest.webmanifest'), 'application/manifest+json; charset=utf-8');
+      else if (url.pathname === '/protocol-admin/icon-192.png') sendFile(res, path.join(publicDirectory, 'icon-192.png'), 'image/png');
+      else if (url.pathname === '/protocol-admin/icon-512.png') sendFile(res, path.join(publicDirectory, 'icon-512.png'), 'image/png');
       else sendFile(res, path.join(publicDirectory, 'index.html'), 'text/html; charset=utf-8');
       return true;
     } catch (error) {

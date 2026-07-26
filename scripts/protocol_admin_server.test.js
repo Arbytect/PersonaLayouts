@@ -28,12 +28,21 @@ async function run() {
     'protocol-save-button',
     'protocol-approve-button',
     'protocol-pdf-button',
-    'protocol-warning-list'
+    'protocol-warning-list',
+    'protocol-workflow-nav',
+    'protocol-brief-panel',
+    'protocol-step-prev',
+    'protocol-step-next',
+    'brief-readiness'
   ];
   requiredIds.forEach(id => assert.strictEqual(document.querySelectorAll(`#${id}`).length, 1, `${id} must exist exactly once.`));
   assert.strictEqual(document.querySelectorAll('script:not([src])').length, 0, 'Inline scripts are forbidden by CSP.');
   assert.strictEqual(document.querySelectorAll('[style]').length, 0, 'Inline styles are forbidden by CSP.');
   assert.strictEqual(document.querySelector('meta[name="robots"]').content, 'noindex,nofollow');
+  assert.strictEqual(document.querySelector('link[rel="manifest"]').getAttribute('href'), '/protocol-admin/manifest.webmanifest');
+  assert.strictEqual(document.querySelectorAll('[data-workflow-step]').length, 4);
+  assert.strictEqual(document.querySelectorAll('input[name="room_width_cm"]').length, 1);
+  assert.strictEqual(document.querySelectorAll('select[name="measurement_source"]').length, 1);
 
   const deliveryServer = fs.readFileSync(path.join(root, 'scripts', 'delivery_server.js'), 'utf8');
   assert(deliveryServer.indexOf('protocolAdmin.handle(req, res)') < deliveryServer.indexOf("req.url !== '/api/compile-order'"));
@@ -44,6 +53,8 @@ async function run() {
   assert(router.includes('/protocol-draft'));
   assert(router.includes('/approve'));
   assert(router.includes('/approved-pdf'));
+  assert(router.includes('/protocol-admin/manifest.webmanifest'));
+  assert(router.includes('/protocol-admin/sw.js'));
   assert(router.includes('approval_snapshots'));
   assert(router.includes('generated_reports'));
 

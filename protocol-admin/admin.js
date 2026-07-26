@@ -3,7 +3,8 @@ const state = {
   projects: [],
   currentProjectId: null,
   currentDraft: null,
-  currentApproval: null
+  currentApproval: null,
+  currentStep: 'brief'
 };
 
 const elements = {
@@ -33,6 +34,9 @@ const elements = {
   protocolActionMessage: document.getElementById('protocol-action-message'),
   protocolActionError: document.getElementById('protocol-action-error'),
   protocolDraftSection: document.getElementById('protocol-draft-section'),
+  protocolWorkflowNav: document.getElementById('protocol-workflow-nav'),
+  protocolBriefPanel: document.getElementById('protocol-brief-panel'),
+  briefReadiness: document.getElementById('brief-readiness'),
   protocolQualityBadge: document.getElementById('protocol-quality-badge'),
   protocolQualitySummary: document.getElementById('protocol-quality-summary'),
   protocolWarningReview: document.getElementById('protocol-warning-review'),
@@ -50,8 +54,12 @@ const elements = {
   protocolSave: document.getElementById('protocol-save-button'),
   protocolSaveStatus: document.getElementById('protocol-save-status'),
   protocolApprove: document.getElementById('protocol-approve-button'),
-  protocolPdf: document.getElementById('protocol-pdf-button')
+  protocolPdf: document.getElementById('protocol-pdf-button'),
+  protocolStepPrev: document.getElementById('protocol-step-prev'),
+  protocolStepNext: document.getElementById('protocol-step-next')
 };
+
+const WORKFLOW_STEPS = ['brief', 'diagnosis', 'decisions', 'review'];
 
 async function api(path, options = {}) {
   const response = await fetch(path, {
@@ -153,7 +161,65 @@ function rawText(value) {
   if (!value) return '-';
   if (typeof value === 'string') return value || '-';
   if (Array.isArray(value)) return value.map(item => item.raw_text || JSON.stringify(item)).join('\n') || '-';
-  return value.raw_text || JSON.stringify(value, null, 2);
+  const sourceLabels = {
+    unknown: 'Henüz doğrulanmadı',
+    client_reported: 'Müşteri beyanı',
+    plan_measured: 'Ölçülü plan',
+    site_measured: 'Sahada ölçüldü'
+  };
+  const lines = [
+    value.room_width_cm ? `Genişlik: ${value.room_width_cm} cm` : '',
+    value.room_length_cm ? `Uzunluk: ${value.room_length_cm} cm` : '',
+    value.ceiling_height_cm ? `Tavan: ${value.ceiling_height_cm} cm` : '',
+    value.source_status ? `Kaynak: ${sourceLabels[value.source_status] || humanize(value.source_status)}` : '',
+    value.raw_text || ''
+  ].filter(Boolean);
+  return lines.join('\n') || '-';
+}
+
+function renderBriefReadiness(project) {
+  const measurements = project.measurements && typeof project.measurements === 'object'
+    ? project.measurements
+    : {};
+  const geometryCount = [
+    measurements.room_width_cm,
+    measurements.room_length_cm,
+    measurements.ceiling_height_cm
+  ].filter(Boolean).length;
+  const source = measurements.source_status || 'unknown';
+  const items = [
+    {
+      label: 'Müşteri anlatımı',
+      value: project.client_narrative && project.client_narrative.length > 80 ? 'Yeterli başlangıç' : 'Detay gerekli',
+      tone: project.client_narrative && project.client_narrative.length > 80 ? 'ready' : 'attention'
+    },
+    {
+      label: 'Temel geometri',
+      value: `${geometryCount}/3 ölçü`,
+      tone: geometryCount === 3 ? 'ready' : 'attention'
+    },
+    {
+      label: 'Ölçü güveni',
+      value: source === 'site_measured' || source === 'plan_measured' ? 'Doğrulanabilir kaynak' : 'Saha kontrolü gerekli',
+      tone: source === 'site_measured' || source === 'plan_measured' ? 'ready' : 'attention'
+    },
+    {
+      label: 'Sabit elemanlar',
+      value: rawText(project.fixed_elements) !== '-' ? 'Kayıtlı' : 'Eksik',
+      tone: rawText(project.fixed_elements) !== '-' ? 'ready' : 'attention'
+    }
+  ];
+  elements.briefReadiness.replaceChildren();
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = `readiness-item ${item.tone}`;
+    const label = document.createElement('span');
+    label.textContent = item.label;
+    const value = document.createElement('strong');
+    value.textContent = item.value;
+    card.append(label, value);
+    elements.briefReadiness.appendChild(card);
+  });
 }
 
 function humanize(value) {
@@ -436,6 +502,34 @@ function setProtocolLocked(locked) {
   }
 }
 
+function showProtocolStep(step) {
+  const hasDraft = Boolean(state.currentDraft && state.currentDraft.status === 'ready' && state.currentDraft.content);
+  const target = WORKFLOW_STEPS.includes(step) && (step === 'brief' || hasDraft) ? step : 'brief';
+  state.currentStep = target;
+  elements.protocolBriefPanel.hidden = target !== 'brief';
+  elements.protocolDraftSection.hidden = target === 'brief' || !hasDraft;
+  elements.protocolWorkflowNav.querySelectorAll('[data-workflow-step]').forEach(button => {
+    const buttonStep = button.dataset.workflowStep;
+    button.disabled = buttonStep !== 'brief' && !hasDraft;
+    button.classList.toggle('active', buttonStep === target);
+    button.setAttribute('aria-current', buttonStep === target ? 'step' : 'false');
+  });
+  elements.protocolDraftSection.querySelectorAll('[data-workflow-panel]').forEach(panel => {
+    const matches = panel.dataset.workflowPanel === target;
+    const hasWarnings = panel !== elements.protocolWarningReview ||
+      Boolean(state.currentDraft && state.currentDraft.quality_gate_result &&
+        state.currentDraft.quality_gate_result.warnings &&
+        state.currentDraft.quality_gate_result.warnings.length);
+    panel.hidden = !matches || !hasWarnings;
+  });
+  const index = WORKFLOW_STEPS.indexOf(target);
+  elements.protocolStepPrev.hidden = index <= 0;
+  elements.protocolStepNext.hidden = index < 1 || index >= WORKFLOW_STEPS.length - 1;
+  elements.protocolApprove.hidden = target !== 'review' || Boolean(state.currentApproval);
+  elements.protocolPdf.hidden = target !== 'review' || !state.currentApproval;
+  elements.protocolSave.hidden = target === 'brief' || Boolean(state.currentApproval);
+}
+
 function renderProtocolDraft(draft, approval = state.currentApproval) {
   state.currentDraft = draft;
   state.currentApproval = approval || null;
@@ -446,20 +540,27 @@ function renderProtocolDraft(draft, approval = state.currentApproval) {
   elements.protocolGenerate.hidden = false;
   elements.protocolGenerate.disabled = false;
 
-  if (!draft) return;
+  if (!draft) {
+    showProtocolStep('brief');
+    return;
+  }
   if (draft.status === 'generating') {
     elements.protocolGenerate.disabled = true;
     setMessage(elements.protocolActionMessage, 'Protokol üretiliyor. Bu ekranı açık tut.');
+    showProtocolStep('brief');
     return;
   }
   if (draft.status === 'failed') {
     setMessage(elements.protocolActionError, 'Önceki üretim tamamlanamadı. Kanıtları kontrol edip tekrar deneyebilirsin.');
+    showProtocolStep('brief');
     return;
   }
-  if (draft.status !== 'ready' || !draft.content) return;
+  if (draft.status !== 'ready' || !draft.content) {
+    showProtocolStep('brief');
+    return;
+  }
 
   elements.protocolGenerate.hidden = true;
-  elements.protocolDraftSection.hidden = false;
   const content = draft.content;
   elements.draftCoreProblem.value = content.diagnosis && content.diagnosis.core_problem || '';
   elements.draftWeNoticed.value = content.diagnosis && content.diagnosis.we_noticed || '';
@@ -478,6 +579,7 @@ function renderProtocolDraft(draft, approval = state.currentApproval) {
     ? 'Önce tüm engelleri çöz ve uyarılara mimari gerekçe ekle.'
     : '';
   setProtocolLocked(Boolean(state.currentApproval));
+  showProtocolStep(state.currentStep);
   if (state.currentApproval) {
     setMessage(elements.protocolSaveStatus, `Onaylandı · ${state.currentApproval.snapshot_sha256.slice(0, 12)}…`);
   }
@@ -500,6 +602,8 @@ async function openProject(projectId) {
     document.getElementById('detail-fixed').textContent = rawText(project.fixed_elements);
     state.currentProjectId = project.id;
     state.currentApproval = payload.approval || null;
+    state.currentStep = 'brief';
+    renderBriefReadiness(project);
     renderProtocolDraft(payload.protocol_draft, payload.approval);
     showWorkspace('detail');
   } catch (error) {
@@ -548,6 +652,19 @@ elements.newProjectButton.addEventListener('click', () => {
 elements.cancelProjectButton.addEventListener('click', () => showWorkspace('list'));
 elements.backProjectsButton.addEventListener('click', () => showWorkspace('list'));
 elements.projectSearch.addEventListener('input', renderProjects);
+elements.protocolWorkflowNav.addEventListener('click', event => {
+  const button = event.target.closest('[data-workflow-step]');
+  if (!button || button.disabled) return;
+  showProtocolStep(button.dataset.workflowStep);
+});
+elements.protocolStepPrev.addEventListener('click', () => {
+  const index = WORKFLOW_STEPS.indexOf(state.currentStep);
+  if (index > 0) showProtocolStep(WORKFLOW_STEPS[index - 1]);
+});
+elements.protocolStepNext.addEventListener('click', () => {
+  const index = WORKFLOW_STEPS.indexOf(state.currentStep);
+  if (index >= 0 && index < WORKFLOW_STEPS.length - 1) showProtocolStep(WORKFLOW_STEPS[index + 1]);
+});
 
 elements.projectForm.addEventListener('submit', async event => {
   event.preventDefault();
@@ -579,6 +696,7 @@ elements.protocolGenerate.addEventListener('click', async () => {
       method: 'POST',
       body: '{}'
     });
+    state.currentStep = 'diagnosis';
     renderProtocolDraft(payload.protocol_draft);
   } catch (error) {
     setMessage(elements.protocolActionMessage, '');
@@ -681,6 +799,12 @@ async function initialize() {
     showLogin();
     setMessage(elements.setupMessage, 'Protocol Admin şu anda kullanılamıyor.');
   }
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/protocol-admin/sw.js', { scope: '/protocol-admin/' }).catch(() => {});
+  });
 }
 
 initialize();
