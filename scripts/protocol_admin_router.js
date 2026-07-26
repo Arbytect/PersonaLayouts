@@ -11,7 +11,10 @@ const {
   revokeRequestSession,
   verifyPassword
 } = require('./protocol_admin_auth');
+const { generateProtocolDraft } = require('./protocol_admin_ai');
+const { validateProtocolAdminContract } = require('./protocol_admin_contract');
 const { databaseConfigured, query, runMigrations, withTransaction } = require('./protocol_admin_db');
+const { evaluateProtocolAdminQuality } = require('./protocol_admin_quality_gate');
 
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const LOGIN_LIMIT = 5;
@@ -261,6 +264,20 @@ function createProtocolAdminRouter(root) {
 
   async function getProject(req, res, projectId) {
     const user = await requireUser(req);
+    const result = await loadProject(projectId, user.id);
+    if (!result) return sendJson(res, 404, { error: 'Project not found.' });
+    const draftResult = await query(
+      `SELECT id, status, model, prompt_version, content, quality_gate_result,
+              error_message, generated_at, updated_at
+         FROM protocol_drafts
+        WHERE revision_id = $1
+        LIMIT 1`,
+      [result.revision_id]
+    );
+    return sendJson(res, 200, { project: result, protocol_draft: draftResult.rows[0] || null });
+  }
+
+  async function loadProject(projectId, userId) {
     const result = await query(
       `SELECT p.id, p.project_code, p.name, p.space_type, p.output_language, p.status,
               p.current_revision_number, p.created_at, p.updated_at,
@@ -274,10 +291,157 @@ function createProtocolAdminRouter(root) {
          JOIN project_intakes i ON i.revision_id = r.id
         WHERE p.id = $1
         LIMIT 1`,
-      [projectId, user.id]
+      [projectId, userId]
     );
-    if (!result.rowCount) return sendJson(res, 404, { error: 'Project not found.' });
-    return sendJson(res, 200, { project: result.rows[0] });
+    return result.rows[0] || null;
+  }
+
+  function intakeText(value) {
+    if (!value) return '';
+    if (typeof value === 'string') return value;
+    if (Array.isArray(value)) return value.map(item => item && item.raw_text ? item.raw_text : '').filter(Boolean).join('\n');
+    return value.raw_text || '';
+  }
+
+  async function generateProjectProtocol(req, res, projectId) {
+    requireSameOrigin(req);
+    const user = await requireUser(req, 'admin');
+    const project = await loadProject(projectId, user.id);
+    if (!project) return sendJson(res, 404, { error: 'Project not found.' });
+
+    const existing = await query(
+      `SELECT id, status, updated_at
+         FROM protocol_drafts
+        WHERE revision_id = $1
+        LIMIT 1`,
+      [project.revision_id]
+    );
+    if (existing.rows[0] && existing.rows[0].status === 'generating' &&
+        Date.now() - new Date(existing.rows[0].updated_at).getTime() < 10 * 60 * 1000) {
+      return sendJson(res, 409, { error: 'Protocol generation is already running.' });
+    }
+    if (existing.rows[0] && existing.rows[0].status === 'ready') {
+      return sendJson(res, 409, { error: 'A protocol draft already exists for this revision.' });
+    }
+
+    const draftResult = await query(
+      `INSERT INTO protocol_drafts
+        (project_id, revision_id, status, generated_by, error_message, content, quality_gate_result)
+       VALUES ($1, $2, 'generating', $3, NULL, '{}'::jsonb, '{}'::jsonb)
+       ON CONFLICT (revision_id) DO UPDATE
+         SET status = 'generating', generated_by = EXCLUDED.generated_by,
+             error_message = NULL, updated_at = now()
+       RETURNING id`,
+      [project.id, project.revision_id, user.id]
+    );
+
+    try {
+      const generated = await generateProtocolDraft({
+        project_id: project.id,
+        project_code: project.project_code,
+        project_name: project.name,
+        space_type: project.space_type,
+        output_language: project.output_language,
+        revision_number: project.revision_number,
+        client_narrative: project.client_narrative,
+        measurements: intakeText(project.measurements),
+        fixed_elements: intakeText(project.fixed_elements)
+      });
+      const completed = await withTransaction(async client => {
+        const result = await client.query(
+          `UPDATE protocol_drafts
+              SET status = 'ready', model = $2, provider_response_id = $3,
+                  content = $4::jsonb, quality_gate_result = $5::jsonb,
+                  error_message = NULL, generated_at = now()
+            WHERE id = $1
+            RETURNING id, status, model, prompt_version, content, quality_gate_result,
+                      error_message, generated_at, updated_at`,
+          [
+            draftResult.rows[0].id,
+            generated.model,
+            generated.response_id,
+            JSON.stringify(generated.audit),
+            JSON.stringify(generated.quality_gate)
+          ]
+        );
+        await client.query(
+          `INSERT INTO audit_log
+            (project_id, revision_id, actor_user_id, actor_type, action, entity_type, entity_id, new_value)
+           VALUES ($1, $2, $3, 'ai', 'generate', 'protocol_draft', $4, $5::jsonb)`,
+          [
+            project.id,
+            project.revision_id,
+            user.id,
+            draftResult.rows[0].id,
+            JSON.stringify({
+              model: generated.model,
+              quality_status: generated.quality_gate.status,
+              blocker_count: generated.quality_gate.summary.blocker_count,
+              warning_count: generated.quality_gate.summary.warning_count
+            })
+          ]
+        );
+        return result.rows[0];
+      });
+      return sendJson(res, 201, { protocol_draft: completed });
+    } catch (error) {
+      await query(
+        `UPDATE protocol_drafts
+            SET status = 'failed', error_message = $2
+          WHERE id = $1`,
+        [draftResult.rows[0].id, String(error.message || 'Protocol generation failed.').slice(0, 2000)]
+      );
+      error.publicMessage = 'Protocol generation failed. Review the project evidence and try again.';
+      throw error;
+    }
+  }
+
+  async function updateProjectProtocol(req, res, projectId) {
+    requireSameOrigin(req);
+    const user = await requireUser(req, 'admin');
+    const project = await loadProject(projectId, user.id);
+    if (!project) return sendJson(res, 404, { error: 'Project not found.' });
+    const body = await readJson(req, 2 * 1024 * 1024);
+    let content;
+    try {
+      content = validateProtocolAdminContract(body.content);
+    } catch (error) {
+      throw Object.assign(new Error(error.message), { statusCode: 400 });
+    }
+    if (content.project.id !== project.id || content.revision.number !== project.revision_number) {
+      return sendJson(res, 409, { error: 'Protocol draft does not match the active project revision.' });
+    }
+    const qualityGate = evaluateProtocolAdminQuality(content);
+    const result = await withTransaction(async client => {
+      const updated = await client.query(
+        `UPDATE protocol_drafts
+            SET content = $3::jsonb, quality_gate_result = $4::jsonb,
+                status = 'ready', error_message = NULL
+          WHERE project_id = $1 AND revision_id = $2
+          RETURNING id, status, model, prompt_version, content, quality_gate_result,
+                    error_message, generated_at, updated_at`,
+        [project.id, project.revision_id, JSON.stringify(content), JSON.stringify(qualityGate)]
+      );
+      if (!updated.rowCount) throw Object.assign(new Error('Protocol draft not found.'), { statusCode: 404 });
+      await client.query(
+        `INSERT INTO audit_log
+          (project_id, revision_id, actor_user_id, actor_type, action, entity_type, entity_id, new_value)
+         VALUES ($1, $2, $3, 'admin', 'update', 'protocol_draft', $4, $5::jsonb)`,
+        [
+          project.id,
+          project.revision_id,
+          user.id,
+          updated.rows[0].id,
+          JSON.stringify({
+            quality_status: qualityGate.status,
+            blocker_count: qualityGate.summary.blocker_count,
+            warning_count: qualityGate.summary.warning_count
+          })
+        ]
+      );
+      return updated.rows[0];
+    });
+    return sendJson(res, 200, { protocol_draft: result });
   }
 
   async function handleApi(req, res, url) {
@@ -306,6 +470,16 @@ function createProtocolAdminRouter(root) {
       if (!uuid(projectMatch[1])) return sendJson(res, 400, { error: 'Invalid project id.' });
       return getProject(req, res, projectMatch[1]);
     }
+    const generateMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/generate-protocol$/);
+    if (generateMatch && req.method === 'POST') {
+      if (!uuid(generateMatch[1])) return sendJson(res, 400, { error: 'Invalid project id.' });
+      return generateProjectProtocol(req, res, generateMatch[1]);
+    }
+    const draftMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/protocol-draft$/);
+    if (draftMatch && req.method === 'PUT') {
+      if (!uuid(draftMatch[1])) return sendJson(res, 400, { error: 'Invalid project id.' });
+      return updateProjectProtocol(req, res, draftMatch[1]);
+    }
     return sendJson(res, 404, { error: 'Not found' });
   }
 
@@ -333,7 +507,7 @@ function createProtocolAdminRouter(root) {
       const requestId = crypto.randomUUID();
       console.error(`[protocol_admin] request ${requestId} failed:`, error);
       sendJson(res, error.statusCode || 500, {
-        error: error.statusCode && error.statusCode < 500 ? error.message : 'Internal error.',
+        error: error.publicMessage || (error.statusCode && error.statusCode < 500 ? error.message : 'Internal error.'),
         request_id: requestId
       });
       return true;

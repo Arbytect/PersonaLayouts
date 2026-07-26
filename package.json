@@ -16,7 +16,7 @@
     "pdf:batch": "node generate_48_pdfs.js",
     "order:compile": "node scripts/compile_order.js",
     "protocol:test": "node scripts/protocol_lite.test.js",
-    "admin:test": "node scripts/protocol_admin.test.js && node scripts/protocol_admin_server.test.js",
+    "admin:test": "node scripts/protocol_admin.test.js && node scripts/protocol_admin_ai.test.js && node scripts/protocol_admin_server.test.js",
     "admin:validate": "node scripts/validate_protocol_admin.js",
     "admin:migrate": "node scripts/migrate_protocol_admin.js",
     "delivery:server": "node scripts/delivery_server.js",

@@ -22,7 +22,10 @@ async function run() {
     'project-list-view',
     'new-project-view',
     'project-detail-view',
-    'project-form'
+    'project-form',
+    'protocol-generate-button',
+    'protocol-draft-section',
+    'protocol-save-button'
   ];
   requiredIds.forEach(id => assert.strictEqual(document.querySelectorAll(`#${id}`).length, 1, `${id} must exist exactly once.`));
   assert.strictEqual(document.querySelectorAll('script:not([src])').length, 0, 'Inline scripts are forbidden by CSP.');
@@ -34,11 +37,15 @@ async function run() {
 
   const router = fs.readFileSync(path.join(root, 'scripts', 'protocol_admin_router.js'), 'utf8');
   assert(!router.includes("'project', $1::text"), 'Audit entity ID must not reuse the UUID query parameter as text.');
+  assert(router.includes('/generate-protocol'));
+  assert(router.includes('/protocol-draft'));
 
   const migration = fs.readFileSync(path.join(root, 'db', 'migrations', '001_protocol_admin_core.sql'), 'utf8');
   assert(migration.includes('CREATE TABLE project_intakes'));
   assert(migration.includes('CREATE TABLE auth_sessions'));
   assert(migration.includes('approval_snapshots_immutable_update'));
+  const draftMigration = fs.readFileSync(path.join(root, 'db', 'migrations', '002_protocol_admin_drafts.sql'), 'utf8');
+  assert(draftMigration.includes('CREATE TABLE protocol_drafts'));
 
   console.log('Protocol Admin server and interface tests passed.');
 }

@@ -1,6 +1,8 @@
 const state = {
   user: null,
-  projects: []
+  projects: [],
+  currentProjectId: null,
+  currentDraft: null
 };
 
 const elements = {
@@ -25,7 +27,25 @@ const elements = {
   projectSearch: document.getElementById('project-search'),
   projectCount: document.getElementById('project-count'),
   projectTableBody: document.getElementById('project-table-body'),
-  emptyProjects: document.getElementById('empty-projects')
+  emptyProjects: document.getElementById('empty-projects'),
+  protocolGenerate: document.getElementById('protocol-generate-button'),
+  protocolActionMessage: document.getElementById('protocol-action-message'),
+  protocolActionError: document.getElementById('protocol-action-error'),
+  protocolDraftSection: document.getElementById('protocol-draft-section'),
+  protocolQualityBadge: document.getElementById('protocol-quality-badge'),
+  protocolQualitySummary: document.getElementById('protocol-quality-summary'),
+  draftCoreProblem: document.getElementById('draft-core-problem'),
+  draftWeNoticed: document.getElementById('draft-we-noticed'),
+  draftEvidenceBoundary: document.getElementById('draft-evidence-boundary'),
+  draftPersonaMix: document.getElementById('draft-persona-mix'),
+  draftSpatialSignature: document.getElementById('draft-spatial-signature'),
+  draftEvidenceList: document.getElementById('draft-evidence-list'),
+  draftProtocolList: document.getElementById('draft-protocol-list'),
+  draftDecisionList: document.getElementById('draft-decision-list'),
+  draftVerificationList: document.getElementById('draft-verification-list'),
+  draftImplementationList: document.getElementById('draft-implementation-list'),
+  protocolSave: document.getElementById('protocol-save-button'),
+  protocolSaveStatus: document.getElementById('protocol-save-status')
 };
 
 async function api(path, options = {}) {
@@ -131,6 +151,218 @@ function rawText(value) {
   return value.raw_text || JSON.stringify(value, null, 2);
 }
 
+function humanize(value) {
+  return String(value || '').replaceAll('_', ' ');
+}
+
+function badge(text, tone) {
+  const element = document.createElement('span');
+  element.className = `draft-badge ${tone || ''}`.trim();
+  element.textContent = humanize(text);
+  return element;
+}
+
+function draftField(labelText, value, path, rows = 3) {
+  const label = document.createElement('label');
+  label.className = 'draft-field';
+  const title = document.createElement('span');
+  title.textContent = labelText;
+  const textarea = document.createElement('textarea');
+  textarea.rows = rows;
+  textarea.value = value || '';
+  textarea.dataset.draftPath = path;
+  label.append(title, textarea);
+  return label;
+}
+
+function setPath(target, path, value) {
+  const parts = path.split('.');
+  let cursor = target;
+  parts.slice(0, -1).forEach(part => {
+    cursor = cursor[Number.isInteger(Number(part)) ? Number(part) : part];
+  });
+  cursor[parts.at(-1)] = value;
+}
+
+function renderQuality(quality) {
+  const result = quality || { status: 'blocked', summary: { blocker_count: 0, warning_count: 0 }, blockers: [], warnings: [] };
+  const labels = {
+    ready_for_approval: 'Onaya hazır',
+    warning_override_required: 'Uyarı incelemesi gerekli',
+    blocked: 'Doğrulama gerekli'
+  };
+  elements.protocolQualityBadge.className = `quality-badge ${result.status}`;
+  elements.protocolQualityBadge.textContent = labels[result.status] || humanize(result.status);
+  elements.protocolQualitySummary.replaceChildren();
+
+  const counts = document.createElement('p');
+  counts.textContent = `${result.summary.blocker_count || 0} engel · ${result.summary.warning_count || 0} uyarı`;
+  elements.protocolQualitySummary.appendChild(counts);
+  const issues = [...(result.blockers || []), ...(result.warnings || [])].slice(0, 8);
+  if (issues.length) {
+    const list = document.createElement('ul');
+    issues.forEach(item => {
+      const row = document.createElement('li');
+      row.textContent = item.message;
+      list.appendChild(row);
+    });
+    elements.protocolQualitySummary.appendChild(list);
+  }
+}
+
+function renderPersonaMix(allocations) {
+  elements.draftPersonaMix.replaceChildren();
+  (allocations || []).filter(item => item.scope === 'project').forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'persona-row';
+    const head = document.createElement('div');
+    const name = document.createElement('strong');
+    name.textContent = humanize(item.persona);
+    const value = document.createElement('span');
+    value.textContent = `%${Number(item.percentage).toFixed(0)}`;
+    head.append(name, value);
+    const progress = document.createElement('progress');
+    progress.max = 100;
+    progress.value = Number(item.percentage);
+    const rationale = document.createElement('p');
+    rationale.textContent = item.rationale;
+    row.append(head, progress, rationale);
+    elements.draftPersonaMix.appendChild(row);
+  });
+}
+
+function renderEvidence(evidence) {
+  elements.draftEvidenceList.replaceChildren();
+  (evidence || []).forEach((item, index) => {
+    const card = document.createElement('article');
+    card.className = 'draft-card';
+    const header = document.createElement('header');
+    const title = document.createElement('strong');
+    title.textContent = `E${index + 1} · ${humanize(item.category)}`;
+    const tags = document.createElement('div');
+    tags.className = 'badge-row';
+    tags.append(badge(item.confidence, item.confidence), badge(item.verification_status, item.verification_status));
+    header.append(title, tags);
+    card.append(header, draftField('Kanıt ifadesi', item.statement, `evidence.${index}.statement`, 3));
+    elements.draftEvidenceList.appendChild(card);
+  });
+}
+
+function renderProtocols(protocols) {
+  elements.draftProtocolList.replaceChildren();
+  (protocols || []).forEach((item, index) => {
+    const card = document.createElement('article');
+    card.className = 'draft-card';
+    const header = document.createElement('header');
+    const title = document.createElement('strong');
+    title.textContent = `Kural ${index + 1}`;
+    const tags = document.createElement('div');
+    tags.className = 'badge-row';
+    tags.append(badge(item.confidence, item.confidence), badge(item.verification_status, item.verification_status));
+    header.append(title, tags);
+    const grid = document.createElement('div');
+    grid.className = 'draft-grid';
+    grid.append(
+      draftField('Tetikleyici', item.trigger, `project_protocols.${index}.trigger`),
+      draftField('Soyut reçete', item.abstract_prescription, `project_protocols.${index}.abstract_prescription`),
+      draftField('Somut reçete', item.concrete_prescription, `project_protocols.${index}.concrete_prescription`),
+      draftField('Başarı testi', item.success_test, `project_protocols.${index}.success_test`)
+    );
+    card.append(header, grid);
+    elements.draftProtocolList.appendChild(card);
+  });
+}
+
+function renderDecisions(decisions) {
+  elements.draftDecisionList.replaceChildren();
+  (decisions || []).forEach((item, index) => {
+    const card = document.createElement('article');
+    card.className = 'draft-card';
+    const header = document.createElement('header');
+    const title = document.createElement('strong');
+    title.textContent = `${index + 1}. ${item.title}`;
+    const tags = document.createElement('div');
+    tags.className = 'badge-row';
+    tags.append(badge(item.status), badge(item.decision_type), badge(item.confidence, item.confidence));
+    if (item.dimension_dependent) tags.append(badge('ölçüye bağlı', 'field_verification_required'));
+    header.append(title, tags);
+    const grid = document.createElement('div');
+    grid.className = 'draft-grid';
+    grid.append(
+      draftField('Karar başlığı', item.title, `decisions.${index}.title`, 2),
+      draftField('Soyut ihtiyaç', item.abstract_need, `decisions.${index}.abstract_need`),
+      draftField('Somut karar', item.concrete_decision, `decisions.${index}.concrete_decision`, 4),
+      draftField('Başarı testi', item.success_test, `decisions.${index}.success_test`)
+    );
+    if (item.tradeoff) grid.appendChild(draftField('Taviz / tradeoff', item.tradeoff, `decisions.${index}.tradeoff`));
+    card.append(header, grid);
+    elements.draftDecisionList.appendChild(card);
+  });
+}
+
+function renderVerifications(items) {
+  elements.draftVerificationList.replaceChildren();
+  (items || []).forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'verification-row';
+    row.append(badge(item.blocking ? 'blocking' : 'open', item.blocking ? 'assumption' : 'pending'));
+    const text = document.createElement('p');
+    text.textContent = item.statement;
+    row.appendChild(text);
+    elements.draftVerificationList.appendChild(row);
+  });
+  if (!(items || []).length) {
+    const empty = document.createElement('p');
+    empty.textContent = 'Açık doğrulama bulunmuyor.';
+    elements.draftVerificationList.appendChild(empty);
+  }
+}
+
+function renderImplementation(items) {
+  elements.draftImplementationList.replaceChildren();
+  (items || []).sort((a, b) => a.sequence - b.sequence).forEach(item => {
+    const row = document.createElement('li');
+    row.textContent = item.title;
+    elements.draftImplementationList.appendChild(row);
+  });
+}
+
+function renderProtocolDraft(draft) {
+  state.currentDraft = draft;
+  setMessage(elements.protocolActionMessage, '');
+  setMessage(elements.protocolActionError, '');
+  elements.protocolDraftSection.hidden = true;
+  elements.protocolGenerate.hidden = false;
+  elements.protocolGenerate.disabled = false;
+
+  if (!draft) return;
+  if (draft.status === 'generating') {
+    elements.protocolGenerate.disabled = true;
+    setMessage(elements.protocolActionMessage, 'Protokol üretiliyor. Bu ekranı açık tut.');
+    return;
+  }
+  if (draft.status === 'failed') {
+    setMessage(elements.protocolActionError, 'Önceki üretim tamamlanamadı. Kanıtları kontrol edip tekrar deneyebilirsin.');
+    return;
+  }
+  if (draft.status !== 'ready' || !draft.content) return;
+
+  elements.protocolGenerate.hidden = true;
+  elements.protocolDraftSection.hidden = false;
+  const content = draft.content;
+  elements.draftCoreProblem.value = content.diagnosis && content.diagnosis.core_problem || '';
+  elements.draftWeNoticed.value = content.diagnosis && content.diagnosis.we_noticed || '';
+  elements.draftEvidenceBoundary.value = content.diagnosis && content.diagnosis.evidence_boundary || '';
+  elements.draftSpatialSignature.value = content.spatial_signature && content.spatial_signature.statement || '';
+  renderQuality(draft.quality_gate_result);
+  renderPersonaMix(content.persona_allocations);
+  renderEvidence(content.evidence);
+  renderProtocols(content.project_protocols);
+  renderDecisions(content.decisions);
+  renderVerifications(content.open_verifications);
+  renderImplementation(content.implementation_order);
+}
+
 async function openProject(projectId) {
   try {
     const payload = await api(`/api/protocol-admin/projects/${encodeURIComponent(projectId)}`);
@@ -146,6 +378,8 @@ async function openProject(projectId) {
     document.getElementById('detail-narrative').textContent = project.client_narrative;
     document.getElementById('detail-measurements').textContent = rawText(project.measurements);
     document.getElementById('detail-fixed').textContent = rawText(project.fixed_elements);
+    state.currentProjectId = project.id;
+    renderProtocolDraft(payload.protocol_draft);
     showWorkspace('detail');
   } catch (error) {
     window.alert(error.message);
@@ -211,6 +445,50 @@ elements.projectForm.addEventListener('submit', async event => {
     setMessage(elements.projectFormError, error.message);
   } finally {
     elements.createProjectSubmit.disabled = false;
+  }
+});
+
+elements.protocolGenerate.addEventListener('click', async () => {
+  if (!state.currentProjectId) return;
+  setMessage(elements.protocolActionError, '');
+  setMessage(elements.protocolActionMessage, 'Kanıtlar ayrıştırılıyor ve protokol taslağı hazırlanıyor...');
+  elements.protocolGenerate.disabled = true;
+  try {
+    const payload = await api(`/api/protocol-admin/projects/${encodeURIComponent(state.currentProjectId)}/generate-protocol`, {
+      method: 'POST',
+      body: '{}'
+    });
+    renderProtocolDraft(payload.protocol_draft);
+  } catch (error) {
+    setMessage(elements.protocolActionMessage, '');
+    setMessage(elements.protocolActionError, error.message);
+    elements.protocolGenerate.disabled = false;
+  }
+});
+
+elements.protocolSave.addEventListener('click', async () => {
+  if (!state.currentProjectId || !state.currentDraft || !state.currentDraft.content) return;
+  setMessage(elements.protocolSaveStatus, '');
+  elements.protocolSave.disabled = true;
+  try {
+    const content = structuredClone(state.currentDraft.content);
+    content.diagnosis.core_problem = elements.draftCoreProblem.value.trim();
+    content.diagnosis.we_noticed = elements.draftWeNoticed.value.trim();
+    content.diagnosis.evidence_boundary = elements.draftEvidenceBoundary.value.trim();
+    content.spatial_signature.statement = elements.draftSpatialSignature.value.trim();
+    elements.protocolDraftSection.querySelectorAll('[data-draft-path]').forEach(field => {
+      setPath(content, field.dataset.draftPath, field.value.trim());
+    });
+    const payload = await api(`/api/protocol-admin/projects/${encodeURIComponent(state.currentProjectId)}/protocol-draft`, {
+      method: 'PUT',
+      body: JSON.stringify({ content })
+    });
+    renderProtocolDraft(payload.protocol_draft);
+    setMessage(elements.protocolSaveStatus, 'Taslak ve kalite kontrol sonucu kaydedildi.');
+  } catch (error) {
+    setMessage(elements.protocolSaveStatus, error.message);
+  } finally {
+    elements.protocolSave.disabled = false;
   }
 });
 

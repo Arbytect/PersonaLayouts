@@ -149,7 +149,10 @@
             <p id="detail-code" class="section-kicker"></p>
             <h2 id="detail-name"></h2>
           </div>
-          <button id="back-projects-button" class="quiet-button" type="button">Projelere dön</button>
+          <div class="editor-actions">
+            <button id="back-projects-button" class="quiet-button" type="button">Projelere dön</button>
+            <button id="protocol-generate-button" class="primary-button compact" type="button">Protokolü Oluştur</button>
+          </div>
         </div>
         <dl class="project-meta">
           <div><dt>Müşteri</dt><dd id="detail-client"></dd></div>
@@ -171,6 +174,112 @@
             <p id="detail-fixed"></p>
           </section>
         </div>
+        <p id="protocol-action-message" class="action-message" role="status" hidden></p>
+        <p id="protocol-action-error" class="form-error" role="alert" hidden></p>
+
+        <section id="protocol-draft-section" class="protocol-workspace" hidden>
+          <header class="protocol-header">
+            <div>
+              <p class="section-kicker">AI DRAFT · ADMIN REVIEW REQUIRED</p>
+              <h2>Persona Layouts Protokol Taslağı</h2>
+            </div>
+            <div id="protocol-quality-badge" class="quality-badge"></div>
+          </header>
+          <div id="protocol-quality-summary" class="quality-summary"></div>
+
+          <section class="protocol-section">
+            <div class="protocol-section-heading">
+              <span>01</span>
+              <div>
+                <h3>Teşhis ve kanıt sınırı</h3>
+                <p>AI taslağını müşteriye göstermeden önce mimari olarak düzelt.</p>
+              </div>
+            </div>
+            <div class="form-grid two protocol-fields">
+              <label>Çekirdek mekânsal problem
+                <textarea id="draft-core-problem" rows="6"></textarea>
+              </label>
+              <label>We noticed...
+                <textarea id="draft-we-noticed" rows="6"></textarea>
+              </label>
+            </div>
+            <label class="full-field">Kanıt sınırı
+              <textarea id="draft-evidence-boundary" rows="4"></textarea>
+            </label>
+          </section>
+
+          <section class="protocol-section">
+            <div class="protocol-section-heading">
+              <span>02</span>
+              <div>
+                <h3>Persona dağılımı ve Spatial Signature</h3>
+                <p>Yüzdeler kanıta bağlıdır ve toplamı 100 olmalıdır.</p>
+              </div>
+            </div>
+            <div id="draft-persona-mix" class="persona-mix"></div>
+            <label class="full-field">Spatial Signature
+              <textarea id="draft-spatial-signature" rows="4"></textarea>
+            </label>
+          </section>
+
+          <section class="protocol-section">
+            <div class="protocol-section-heading">
+              <span>03</span>
+              <div>
+                <h3>Kanıt kayıtları</h3>
+                <p>Doğrulanmış bilgi, çıkarım ve varsayım birbirinden ayrı tutulur.</p>
+              </div>
+            </div>
+            <div id="draft-evidence-list" class="draft-stack"></div>
+          </section>
+
+          <section class="protocol-section">
+            <div class="protocol-section-heading">
+              <span>04</span>
+              <div>
+                <h3>Proje protokolü</h3>
+                <p>Her kural: tetikleyici → soyut ihtiyaç → somut karar → başarı testi.</p>
+              </div>
+            </div>
+            <div id="draft-protocol-list" class="draft-stack"></div>
+          </section>
+
+          <section class="protocol-section">
+            <div class="protocol-section-heading">
+              <span>05</span>
+              <div>
+                <h3>Tasarım kararları</h3>
+                <p>Ölçüye bağlı kararlar saha doğrulaması tamamlanana kadar kesinleşmez.</p>
+              </div>
+            </div>
+            <div id="draft-decision-list" class="draft-stack"></div>
+          </section>
+
+          <section class="protocol-section">
+            <div class="protocol-section-heading">
+              <span>06</span>
+              <div>
+                <h3>Açık doğrulamalar ve uygulama sırası</h3>
+                <p>Eksik bilgi tasarım kesinliği gibi sunulmaz.</p>
+              </div>
+            </div>
+            <div class="detail-columns">
+              <div>
+                <h4>Açık doğrulamalar</h4>
+                <div id="draft-verification-list" class="compact-list"></div>
+              </div>
+              <div>
+                <h4>Uygulama sırası</h4>
+                <ol id="draft-implementation-list" class="implementation-list"></ol>
+              </div>
+            </div>
+          </section>
+
+          <footer class="protocol-footer">
+            <p id="protocol-save-status" class="action-message" role="status" hidden></p>
+            <button id="protocol-save-button" class="primary-button" type="button">Taslağı Kaydet</button>
+          </footer>
+        </section>
       </section>
     </main>
   </div>
