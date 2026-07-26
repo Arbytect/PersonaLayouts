@@ -180,5 +180,7 @@ assert.strictEqual(generated.audit.decisions[0].required_measurements.length, 1)
 assert.strictEqual(generated.audit.project.output_language, 'tr');
 assert(['ready_for_approval', 'warning_override_required', 'blocked'].includes(generated.quality_gate.status));
 assert.deepStrictEqual(parseModelJson('```json\n{"ok":true}\n```'), { ok: true });
+const fallbackGenerated = materializeProtocolDraft({ ...raw, project_protocols: raw.project_protocols.slice(0, 1) }, context);
+assert.strictEqual(fallbackGenerated.audit.project_protocols.length, 3);
 
 console.log('Protocol Admin AI materialization tests passed.');

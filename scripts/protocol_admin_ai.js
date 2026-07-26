@@ -152,7 +152,6 @@ function materializeProtocolDraft(raw, context) {
   }));
 
   const rawProtocols = items(raw.project_protocols, 5);
-  if (rawProtocols.length < 3) throw new Error('The generated protocol must contain at least three project rules.');
   const projectProtocols = rawProtocols.map((item, index) => ({
     id: `protocol-${index + 1}`,
     trigger: requiredText(item.trigger, `project_protocols[${index}].trigger`, 2000),
@@ -163,6 +162,65 @@ function materializeProtocolDraft(raw, context) {
     verification_status: enumOr(item.verification_status, VERIFICATION, 'not_required'),
     evidence_ids: referenceIds(item.evidence_refs, 'evidence', evidence.length, ['evidence-1'])
   }));
+  const protocolFallbacks = [
+    ...frictions.map(item => ({
+      trigger: item.statement,
+      abstract_prescription: item.abstract_prescription,
+      concrete_prescription: item.concrete_prescription,
+      success_test: context.output_language === 'tr'
+        ? `Uygulama sonrasında şu davranışsal etki azalmalıdır: ${item.behavioral_impact}`
+        : `After implementation, this behavioral impact should be reduced: ${item.behavioral_impact}`,
+      confidence: 'strong_inference',
+      verification_status: 'pending',
+      evidence_ids: item.evidence_ids
+    })),
+    {
+      trigger: requiredText(raw.core_diagnosis && raw.core_diagnosis.evidence_boundary, 'core_diagnosis.evidence_boundary', 4000),
+      abstract_prescription: context.output_language === 'tr'
+        ? 'Doğrulanmamış geometriyi kesin tasarım kararı gibi sunma.'
+        : 'Do not present unverified geometry as a final design decision.',
+      concrete_prescription: context.output_language === 'tr'
+        ? 'Ölçüye bağlı tüm yerleşim ve imalat kararlarını saha doğrulaması tamamlanana kadar koşullu tut.'
+        : 'Keep every dimension-dependent layout and fabrication decision conditional until field verification is complete.',
+      success_test: context.output_language === 'tr'
+        ? 'Her ölçüye bağlı karar gerekli net ölçüyü ve doğrulama durumunu açıkça gösterir.'
+        : 'Every dimension-dependent decision names the required measurement and its verification status.',
+      confidence: 'confirmed',
+      verification_status: 'field_verification_required',
+      evidence_ids: evidence.filter(item => ['dimension', 'fixed_element'].includes(item.category)).map(item => item.id).slice(0, 4)
+    },
+    {
+      trigger: requiredText(raw.spatial_signature && raw.spatial_signature.statement, 'spatial_signature.statement', 4000),
+      abstract_prescription: context.output_language === 'tr'
+        ? 'Proje kararlarını tek ve ayırt edilebilir bir mekânsal ilke altında tut.'
+        : 'Keep project decisions under one distinct spatial principle.',
+      concrete_prescription: context.output_language === 'tr'
+        ? 'Yerleşim, depolama ve aydınlatma kararlarını Spatial Signature ile çelişmeyecek biçimde birlikte değerlendir.'
+        : 'Review layout, storage, and lighting decisions together so they remain consistent with the Spatial Signature.',
+      success_test: context.output_language === 'tr'
+        ? 'Her ana karar Spatial Signature ve en az bir kanıt kaydıyla ilişkilendirilebilir.'
+        : 'Every major decision can be traced to the Spatial Signature and at least one evidence record.',
+      confidence: 'strong_inference',
+      verification_status: 'not_required',
+      evidence_ids: referenceIds(raw.spatial_signature && raw.spatial_signature.evidence_refs, 'evidence', evidence.length, ['evidence-1'])
+    }
+  ];
+  let fallbackIndex = 0;
+  while (projectProtocols.length < 3 && fallbackIndex < protocolFallbacks.length) {
+    const fallback = protocolFallbacks[fallbackIndex++];
+    const duplicate = projectProtocols.some(item =>
+      item.trigger === fallback.trigger && item.concrete_prescription === fallback.concrete_prescription
+    );
+    if (duplicate) continue;
+    projectProtocols.push({
+      id: `protocol-${projectProtocols.length + 1}`,
+      ...fallback,
+      evidence_ids: fallback.evidence_ids.length ? fallback.evidence_ids : ['evidence-1']
+    });
+  }
+  if (projectProtocols.length < 3) {
+    throw new Error('The protocol could not derive three evidence-backed project rules.');
+  }
 
   const roomProtocols = items(raw.room_protocols, 24).map((item, index) => ({
     id: `room-protocol-${index + 1}`,
