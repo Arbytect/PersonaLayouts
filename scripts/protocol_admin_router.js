@@ -155,7 +155,33 @@ async function nextProjectCode(client) {
 
 function createProtocolAdminRouter(root) {
   const publicDirectory = path.join(root, 'protocol-admin');
+  const spatialAtlasMasterFile = path.join(root, 'data', 'spatial_design_library_master.json');
   const state = { ready: false, configured: databaseConfigured(), setupRequired: false, error: null };
+
+  async function getSpatialAtlas(req, res) {
+    await requireUser(req, 'admin');
+    if (!fs.existsSync(spatialAtlasMasterFile)) {
+      return sendJson(res, 503, { error: 'Spatial Atlas master data is not available.' });
+    }
+    let atlas;
+    try {
+      atlas = JSON.parse(fs.readFileSync(spatialAtlasMasterFile, 'utf8'));
+    } catch {
+      return sendJson(res, 500, { error: 'Spatial Atlas master data is invalid.' });
+    }
+    if (!Array.isArray(atlas.lenses) || !Array.isArray(atlas.sources) || !Array.isArray(atlas.rooms)) {
+      return sendJson(res, 500, { error: 'Spatial Atlas master contract is incomplete.' });
+    }
+    const stats = fs.statSync(spatialAtlasMasterFile);
+    return sendJson(res, 200, {
+      atlas,
+      meta: {
+        version: atlas.version || null,
+        updated_at: atlas.updated_at || null,
+        file_modified_at: stats.mtime.toISOString()
+      }
+    });
+  }
 
   async function initialize() {
     state.configured = databaseConfigured();
@@ -677,6 +703,9 @@ function createProtocolAdminRouter(root) {
       const user = await authenticateRequest(req);
       return sendJson(res, 200, { authenticated: Boolean(user), user: user || null });
     }
+    if (req.method === 'GET' && url.pathname === '/api/protocol-admin/spatial-atlas') {
+      return getSpatialAtlas(req, res);
+    }
     if (url.pathname === '/api/protocol-admin/projects' && req.method === 'GET') return listProjects(req, res);
     if (url.pathname === '/api/protocol-admin/projects' && req.method === 'POST') return createProject(req, res);
     const projectMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)$/);
@@ -723,7 +752,9 @@ function createProtocolAdminRouter(root) {
         sendJson(res, 405, { error: 'Method not allowed' });
         return true;
       }
-      if (url.pathname === '/protocol-admin/admin.css') sendFile(res, path.join(publicDirectory, 'admin.css'), 'text/css; charset=utf-8');
+      const atlasImageMatch = url.pathname.match(/^\/protocol-admin\/atlas-images\/([a-z0-9-]+\.webp)$/);
+      if (atlasImageMatch) sendFile(res, path.join(publicDirectory, 'atlas-images', atlasImageMatch[1]), 'image/webp');
+      else if (url.pathname === '/protocol-admin/admin.css') sendFile(res, path.join(publicDirectory, 'admin.css'), 'text/css; charset=utf-8');
       else if (url.pathname === '/protocol-admin/admin.js') sendFile(res, path.join(publicDirectory, 'admin.js'), 'application/javascript; charset=utf-8');
       else if (url.pathname === '/protocol-admin/sw.js') sendFile(res, path.join(publicDirectory, 'sw.js'), 'application/javascript; charset=utf-8');
       else if (url.pathname === '/protocol-admin/manifest.webmanifest') sendFile(res, path.join(publicDirectory, 'manifest.webmanifest'), 'application/manifest+json; charset=utf-8');

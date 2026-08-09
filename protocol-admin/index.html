@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <meta name="theme-color" content="#20231f">
-  <title>Persona Layouts Protocol Admin</title>
+  <title>PersonaLayouts Admin</title>
   <link rel="manifest" href="/protocol-admin/manifest.webmanifest">
   <link rel="icon" href="/protocol-admin/icon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="/protocol-admin/icon-192.png">
-  <link rel="stylesheet" href="/protocol-admin/admin.css">
+  <link rel="stylesheet" href="/protocol-admin/admin.css?v=atlas-20260810-2">
 </head>
 <body>
   <main id="login-view" class="login-view" hidden>
     <section class="login-panel" aria-labelledby="login-title">
       <div class="brand-mark">PL</div>
       <p class="product-label">PERSONA LAYOUTS</p>
-      <h1 id="login-title">Protocol Admin</h1>
+      <h1 id="login-title">Admin Workspace</h1>
+      <p class="login-intro">Protocol projects and Spatial Atlas intelligence in one protected workspace.</p>
       <form id="login-form" class="login-form">
         <label for="login-email">E-posta</label>
         <input id="login-email" name="email" type="email" autocomplete="username" required>
@@ -34,12 +35,13 @@
       <div class="sidebar-brand">
         <span class="brand-mark small">PL</span>
         <div>
-          <strong>Protocol Admin</strong>
+          <strong>PersonaLayouts Admin</strong>
           <span>Persona Layouts</span>
         </div>
       </div>
       <nav aria-label="Ana navigasyon">
-        <button class="nav-button active" type="button" data-view="projects">Projeler</button>
+        <button class="nav-button active" type="button" data-module="projects">Projeler</button>
+        <button class="nav-button" type="button" data-module="atlas">Spatial Atlas</button>
       </nav>
       <div class="sidebar-user">
         <div>
@@ -53,8 +55,8 @@
     <main class="workspace">
       <header class="workspace-header">
         <div>
-          <p class="section-kicker">AUDIT WORKSPACE</p>
-          <h1>Projeler</h1>
+          <p id="workspace-kicker" class="section-kicker">AUDIT WORKSPACE</p>
+          <h1 id="workspace-title">Projeler</h1>
         </div>
         <button id="new-project-button" class="primary-button compact" type="button">
           <span aria-hidden="true">+</span> Yeni proje
@@ -333,14 +335,55 @@
           </footer>
         </section>
       </section>
+
+      <section id="atlas-view" class="content-section atlas-view" hidden>
+        <div class="atlas-intro">
+          <div>
+            <p class="section-kicker">DESIGN INTELLIGENCE · MASTER VIEW</p>
+            <h2>Spatial Design Atlas</h2>
+            <p>Yaklaşımın felsefi nedenini, altı oda protokolünü, referanslarını, ayrım çizgilerini ve kanıt sınırını tek karar sisteminde incele.</p>
+          </div>
+          <a class="secondary-button" href="https://personalayouts.com/spatial-atlas" target="_blank" rel="noopener">Public Preview</a>
+        </div>
+        <p id="atlas-error" class="form-error" role="alert" hidden></p>
+        <div id="atlas-stats" class="atlas-stats" aria-label="Atlas özeti"></div>
+        <div class="atlas-toolbar">
+          <label class="search-field" for="atlas-search">
+            <span>Yaklaşım veya kategori ara</span>
+            <input id="atlas-search" type="search" placeholder="Minimalism, performance, Sage…">
+          </label>
+          <div id="atlas-filters" class="atlas-filters" aria-label="Atlas filtresi"></div>
+        </div>
+        <section class="atlas-comparison" aria-labelledby="atlas-comparison-title">
+          <div>
+            <p class="section-kicker">AYNI İHTİYAÇ · FARKLI MEKÂNSAL CEVAP</p>
+            <h3 id="atlas-comparison-title">Yaklaşım ayrımlarını karşılaştır</h3>
+          </div>
+          <label for="atlas-comparison-select">
+            <span>Karşılaştırma seti</span>
+            <select id="atlas-comparison-select"></select>
+          </label>
+          <div id="atlas-comparison-panel" class="atlas-comparison-panel"></div>
+        </section>
+        <div class="atlas-workspace">
+          <div id="atlas-list" class="atlas-list" aria-label="Atlas yaklaşımları"></div>
+          <aside id="atlas-detail" class="atlas-detail" aria-live="polite">
+            <div class="empty-state">Bir yaklaşım seçin.</div>
+          </aside>
+        </div>
+        <section class="atlas-boundary">
+          <strong>Yayın sınırı</strong>
+          <p id="atlas-boundary-text"></p>
+        </section>
+      </section>
     </main>
   </div>
 
   <div id="loading-screen" class="loading-screen">
     <div class="brand-mark">PL</div>
-    <span>Protocol Admin</span>
+    <span>PersonaLayouts Admin</span>
   </div>
 
-  <script src="/protocol-admin/admin.js"></script>
+  <script src="/protocol-admin/admin.js?v=atlas-20260810-2"></script>
 </body>
 </html>

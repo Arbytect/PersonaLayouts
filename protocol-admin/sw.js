@@ -1,4 +1,4 @@
-const CACHE_NAME = 'protocol-admin-shell-v1';
+const CACHE_NAME = 'protocol-admin-shell-v4';
 const SHELL_ASSETS = [
   '/protocol-admin/admin.css',
   '/protocol-admin/admin.js',
