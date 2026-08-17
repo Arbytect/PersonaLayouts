@@ -1,7 +1,7 @@
 {
-  "name": "Persona Layouts Protocol Admin",
-  "short_name": "Protocol Admin",
-  "description": "Evidence-bounded spatial protocol workspace for Persona Layouts.",
+  "name": "Persona Layouts Protokol Yönetimi",
+  "short_name": "PL Yönetim",
+  "description": "Persona Layouts için kanıt sınırları tanımlı mekânsal protokol ve Atlas yönetim alanı.",
   "start_url": "/protocol-admin/",
   "scope": "/protocol-admin/",
   "display": "standalone",

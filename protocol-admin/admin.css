@@ -271,6 +271,23 @@ legend { padding: 0 8px; color: var(--forest); font-family: Georgia, serif; font
 .workflow-nav button:disabled { cursor: not-allowed; opacity: 0.44; }
 .workflow-panel { min-width: 0; }
 .brief-readiness { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
+.project-atlas-section { margin-top: 22px; border: 1px solid var(--rule); border-top: 3px solid var(--ochre); padding: 20px; background: #f7f4ec; }
+.project-atlas-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 22px; }
+.project-atlas-heading h3 { margin: 3px 0 6px; font-family: Georgia, serif; font-size: 22px; font-weight: 500; }
+.project-atlas-heading p:not(.section-kicker) { max-width: 760px; margin: 0; color: var(--mid); font-size: 11px; line-height: 1.55; }
+.project-atlas-recommendations { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 18px 0; }
+.project-atlas-card { display: grid; grid-template-columns: 92px minmax(0, 1fr); overflow: hidden; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); }
+.project-atlas-card img { width: 92px; height: 100%; min-height: 126px; object-fit: cover; }
+.project-atlas-card-body { min-width: 0; padding: 12px; }
+.project-atlas-role { display: block; color: var(--ochre); font-size: 8px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.project-atlas-card h4 { margin: 6px 0; font-family: Georgia, serif; font-size: 16px; font-weight: 500; }
+.project-atlas-card p { margin: 0; color: var(--mid); font-size: 9px; line-height: 1.45; }
+.project-atlas-card small { display: block; margin-top: 8px; color: var(--forest); font-size: 8px; font-weight: 800; }
+.project-atlas-form { margin-bottom: 14px; }
+.project-atlas-form label, .project-atlas-section > .full-field { display: grid; gap: 6px; color: var(--mid); font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.project-atlas-form select, .project-atlas-section textarea { color: var(--ink); font-size: 12px; font-weight: 400; text-transform: none; }
+.project-atlas-actions { display: flex; align-items: center; justify-content: flex-end; gap: 9px; margin-top: 14px; }
+.project-atlas-actions .action-message { margin: 0 auto 0 0; }
 .readiness-item { border: 1px solid var(--rule); padding: 12px; background: var(--surface); }
 .readiness-item::before { content: ""; display: block; width: 18px; height: 3px; margin-bottom: 9px; background: var(--ochre); }
 .readiness-item.ready::before { background: var(--forest); }
@@ -466,6 +483,7 @@ legend { padding: 0 8px; color: var(--forest); font-family: Georgia, serif; font
   .sidebar-user .quiet-button { width: auto; margin: 0; }
   .workspace { padding: 24px 16px 48px; }
   .form-grid.two, .form-grid.three, .form-grid.four, .detail-columns, .project-meta, .persona-mix, .draft-grid { grid-template-columns: 1fr; }
+  .project-atlas-recommendations { grid-template-columns: 1fr; }
   .geometry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .brief-readiness { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .atlas-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -474,12 +492,12 @@ legend { padding: 0 8px; color: var(--forest); font-family: Georgia, serif; font
   .atlas-detail { position: relative; top: 0; max-height: none; }
   .project-meta div { border-right: 0; border-bottom: 1px solid var(--rule); }
   .project-meta div:last-child { border-bottom: 0; }
-  .workspace-header, .editor-heading { align-items: flex-start; }
+  .workspace-header, .editor-heading, .project-atlas-heading { align-items: flex-start; }
 }
 
 @media (max-width: 560px) {
   .login-panel { padding: 28px 22px; }
-  .workspace-header, .editor-heading, .list-toolbar, .form-actions, .protocol-header, .protocol-footer { align-items: stretch; flex-direction: column; }
+  .workspace-header, .editor-heading, .list-toolbar, .form-actions, .protocol-header, .protocol-footer, .project-atlas-heading, .project-atlas-actions { align-items: stretch; flex-direction: column; }
   .verification-fields { grid-template-columns: 1fr; }
   .protocol-footer-actions { display: grid; grid-template-columns: 1fr; }
   .workflow-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }

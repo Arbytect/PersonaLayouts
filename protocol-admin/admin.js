@@ -2,8 +2,11 @@ const state = {
   user: null,
   projects: [],
   currentProjectId: null,
+  currentProject: null,
   currentDraft: null,
   currentApproval: null,
+  currentAtlasSelection: null,
+  atlasRecommendations: [],
   currentStep: 'brief',
   module: 'projects',
   atlas: null,
@@ -46,6 +49,15 @@ const elements = {
   protocolWorkflowNav: document.getElementById('protocol-workflow-nav'),
   protocolBriefPanel: document.getElementById('protocol-brief-panel'),
   briefReadiness: document.getElementById('brief-readiness'),
+  atlasRecommend: document.getElementById('atlas-recommend-button'),
+  atlasRecommendations: document.getElementById('project-atlas-recommendations'),
+  atlasPrimarySelect: document.getElementById('atlas-primary-select'),
+  atlasSupportingSelect: document.getElementById('atlas-supporting-select'),
+  atlasAlternativeSelect: document.getElementById('atlas-alternative-select'),
+  atlasSelectionRationale: document.getElementById('atlas-selection-rationale'),
+  atlasSelectionMessage: document.getElementById('atlas-selection-message'),
+  atlasSaveSelection: document.getElementById('atlas-save-selection-button'),
+  atlasOpenSelection: document.getElementById('atlas-open-selection-button'),
   protocolQualityBadge: document.getElementById('protocol-quality-badge'),
   protocolQualitySummary: document.getElementById('protocol-quality-summary'),
   protocolWarningReview: document.getElementById('protocol-warning-review'),
@@ -111,7 +123,7 @@ function showApp() {
   elements.loginView.hidden = true;
   elements.appView.hidden = false;
   elements.userName.textContent = state.user.display_name;
-  elements.userRole.textContent = state.user.role;
+  elements.userRole.textContent = state.user.role === 'admin' ? 'Yönetici' : 'Görüntüleyici';
 }
 
 function showWorkspace(view) {
@@ -121,7 +133,7 @@ function showWorkspace(view) {
   elements.projectDetailView.hidden = view !== 'detail';
   elements.atlasView.hidden = true;
   elements.newProjectButton.hidden = view !== 'list';
-  elements.workspaceKicker.textContent = 'AUDIT WORKSPACE';
+  elements.workspaceKicker.textContent = 'PROJE YÖNETİM ALANI';
   elements.workspaceTitle.textContent = 'Projeler';
   elements.moduleButtons.forEach(button => button.classList.toggle('active', button.dataset.module === 'projects'));
 }
@@ -136,6 +148,25 @@ function escapeText(value) {
 }
 
 const ATLAS_PERSONAS = ['sovereign', 'sage', 'alchemist', 'weaver'];
+const PERSONA_LABELS = {
+  sovereign: 'Egemen',
+  sage: 'Bilge',
+  alchemist: 'Simyacı',
+  weaver: 'Dokuyucu'
+};
+const TERM_LABELS = {
+  high: 'yüksek', medium: 'orta', low: 'düşük', strong: 'güçlü',
+  confirmed: 'doğrulandı', strong_inference: 'güçlü çıkarım', assumption: 'varsayım', unknown: 'bilinmiyor',
+  not_required: 'gerekli değil', pending: 'bekliyor', field_verification_required: 'saha doğrulaması gerekli',
+  verified: 'doğrulandı', failed: 'başarısız', open: 'açık', waived: 'gerekçeyle kaldırıldı',
+  blocking: 'engelleyici', historical_lineage: 'tarihsel köken', design_context: 'tasarım bağlamı',
+  performance_framework: 'performans çerçevesi', cultural_practice: 'kültürel uygulama',
+  editorial_translation: 'editoryal çeviri', supported: 'destekli',
+  editoryal_ceviri: 'editoryal çeviri', dogrulama_gerekli: 'doğrulama gerekli',
+  tasarim_baglami: 'tasarım bağlamı', editoryal_cikarim: 'editoryal çıkarım', risk_siniri: 'risk sınırı',
+  apartment: 'Daire', residence: 'Konut', office: 'Ofis', commercial: 'Ticari mekân',
+  full_audit: 'tam inceleme', ai: 'yapay zekâ', admin: 'yönetici', onayli: 'onaylı'
+};
 
 function createElement(tag, className, text) {
   const element = document.createElement(tag);
@@ -152,7 +183,7 @@ function atlasImageUrl(value) {
 
 function atlasCategoryLabel(value) {
   if (value === 'all') return 'Tümü';
-  if (ATLAS_PERSONAS.includes(value)) return value[0].toUpperCase() + value.slice(1);
+  if (ATLAS_PERSONAS.includes(value)) return PERSONA_LABELS[value];
   const category = state.atlas && state.atlas.taxonomy.find(item => item.id === value);
   return category ? category.label : humanize(value);
 }
@@ -222,7 +253,7 @@ function renderAtlasList() {
     image.loading = 'lazy';
     const body = createElement('div', 'atlas-card-body');
     const meta = createElement('div', 'atlas-card-meta');
-    meta.append(createElement('span', '', `${lens.number} · ${atlasCategoryLabel(lens.category)}`), createElement('span', '', lens.admin.status));
+    meta.append(createElement('span', '', `${lens.number} · ${atlasCategoryLabel(lens.category)}`), createElement('span', '', humanize(lens.admin.status)));
     body.append(meta, createElement('h3', '', lens.name), createElement('p', '', lens.admin.frictions.join(' · ')));
     card.append(image, body);
     return card;
@@ -317,7 +348,7 @@ function renderAtlasOverview(lens) {
 
   const tokens = createElement('div', 'atlas-tokens');
   Object.entries(lens.admin.persona_support || {}).forEach(([persona, level]) => {
-    tokens.append(createElement('span', `atlas-token ${level}`, `${persona} · ${level}`));
+    tokens.append(createElement('span', `atlas-token ${level}`, `${PERSONA_LABELS[persona] || humanize(persona)} · ${humanize(level)}`));
   });
   appendAtlasSection(panel, 'Persona desteği · teşhis değildir', [tokens]);
 
@@ -436,7 +467,7 @@ function renderAtlasClaims(lens, sourceMap) {
     return row;
   }).filter(Boolean);
   appendAtlasSection(panel, 'Kaynak bağlantıları', sourceRows.length ? sourceRows : [createElement('div', 'atlas-source', 'Kaynak kaydı bekliyor.')]);
-  appendAtlasSection(panel, 'Public alandan karantinada', [createAtlasList(state.atlas.research_governance.public_claim_quarantine)]);
+  appendAtlasSection(panel, 'Canlı yayından ayrılmış içerik', [createAtlasList(state.atlas.research_governance.public_claim_quarantine)]);
   return panel;
 }
 
@@ -474,7 +505,7 @@ function renderAtlasDetail() {
   const image = createElement('img');
   image.src = atlasImageUrl(lens.image);
   image.alt = lens.name;
-  hero.append(image, createElement('span', 'atlas-detail-badge', `${humanize(lens.evidence_type)} · ${lens.confidence}`));
+  hero.append(image, createElement('span', 'atlas-detail-badge', `${humanize(lens.evidence_type)} · ${humanize(lens.confidence)}`));
 
   const body = createElement('div', 'atlas-detail-body');
   body.append(createElement('span', 'section-kicker', `${lens.number} · ${atlasCategoryLabel(lens.category)}`));
@@ -520,8 +551,8 @@ async function showAtlas() {
   elements.projectDetailView.hidden = true;
   elements.atlasView.hidden = false;
   elements.newProjectButton.hidden = true;
-  elements.workspaceKicker.textContent = 'DESIGN INTELLIGENCE';
-  elements.workspaceTitle.textContent = 'Spatial Atlas';
+  elements.workspaceKicker.textContent = 'TASARIM BİLGİ SİSTEMİ';
+  elements.workspaceTitle.textContent = 'Mekânsal Tasarım Atlası';
   elements.moduleButtons.forEach(button => button.classList.toggle('active', button.dataset.module === 'atlas'));
   if (!state.atlas) await loadAtlas();
 }
@@ -541,7 +572,7 @@ function renderProjects() {
       project.project_code,
       project.name,
       project.client_name || '-',
-      project.space_type,
+      humanize(project.space_type),
       `R${project.current_revision_number}`,
       statusLabel(project.status)
     ].forEach((value, index) => {
@@ -637,8 +668,145 @@ function renderBriefReadiness(project) {
   });
 }
 
+const ATLAS_SIGNAL_MAP = {
+  'bauhaus-modernist': ['netlik', 'düzen', 'eksen', 'işlev', 'karmaşa'],
+  minimalism: ['sade', 'fazlalık', 'dağınık', 'temiz', 'az eşya', 'odak'],
+  'japanese-minimalism': ['sakin', 'ritüel', 'boşluk', 'eşik', 'sessiz'],
+  biophilic: ['doğa', 'bitki', 'gün ışığı', 'manzara', 'iyileşme'],
+  ergonomic: ['ergonomi', 'ağrı', 'çalışma', 'erişim', 'verim', 'konfor'],
+  scandinavian: ['sıcak', 'aile', 'rahat', 'aydınlık', 'hygge', 'samimi'],
+  'organic-architecture': ['organik', 'akış', 'bütünlük', 'doğa', 'yer'],
+  parametric: ['modüler', 'değişken', 'sistem', 'üretim', 'uyarlanabilir'],
+  'feng-shui': ['giriş', 'denge', 'yönelim', 'destek', 'akış'],
+  'wabi-sabi': ['kusur', 'yaşlanma', 'patina', 'doğal', 'sakin'],
+  'sustainable-circular': ['sürdürülebilir', 'onarım', 'döngüsel', 'atık', 'dayanıklı'],
+  'controlled-maximalism': ['renk', 'koleksiyon', 'ifade', 'katman', 'cesur'],
+  japandi: ['sade', 'sıcak', 'doğal', 'düzen', 'huzur'],
+  'mid-century-modern': ['sosyallik', 'hafif', 'açık plan', 'modern', 'televizyon'],
+  'art-deco': ['lüks', 'simetri', 'geometrik', 'dramatik', 'gösterişli'],
+  brutalism: ['ham', 'beton', 'ağır', 'dürüst', 'anıtsal'],
+  postmodernism: ['oyun', 'mizah', 'renk', 'kimlik', 'beklenmedik'],
+  'industrial-adaptive-reuse': ['endüstriyel', 'yeniden kullanım', 'eski yapı', 'tuğla', 'tesisat'],
+  'universal-inclusive': ['erişilebilir', 'engelli', 'çocuk', 'yaşlı', 'kapsayıcı', 'güvenli'],
+  'sensory-regulated': ['duyusal', 'otizm', 'ses', 'parlama', 'uyaran', 'geri çekilme']
+};
+
+function normalizeSearchText(value) {
+  return String(value || '').toLocaleLowerCase('tr-TR').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function projectPersonaLevels() {
+  const levels = {};
+  const allocations = state.currentDraft && state.currentDraft.content && state.currentDraft.content.persona_allocations || [];
+  allocations.filter(item => item.scope === 'project').forEach(item => {
+    levels[item.persona] = Number(item.percentage) || 0;
+  });
+  return levels;
+}
+
+function recommendAtlasLenses(project) {
+  if (!state.atlas) return [];
+  const projectText = normalizeSearchText([
+    project.client_narrative,
+    rawText(project.fixed_elements),
+    rawText(project.measurements),
+    humanize(project.space_type),
+    state.currentDraft && state.currentDraft.content && state.currentDraft.content.diagnosis && state.currentDraft.content.diagnosis.core_problem
+  ].filter(Boolean).join(' '));
+  const projectWords = new Set(projectText.split(/[^a-z0-9çğıöşü]+/i).filter(word => word.length >= 5));
+  const personaLevels = projectPersonaLevels();
+  return state.atlas.lenses.map(lens => {
+    let score = 0;
+    const reasons = [];
+    const signals = ATLAS_SIGNAL_MAP[lens.slug] || [];
+    const matchedSignals = signals.filter(signal => projectText.includes(normalizeSearchText(signal)));
+    if (matchedSignals.length) {
+      score += matchedSignals.length * 5;
+      reasons.push(`Anlatımdaki “${matchedSignals.slice(0, 2).join('” ve “')}” sinyalleriyle örtüşüyor.`);
+    }
+    const lensText = normalizeSearchText([
+      lens.name,
+      lens.subtitle,
+      lens.public.summary,
+      lens.public.best_for,
+      ...(lens.admin.frictions || []),
+      ...(lens.admin.requirements || [])
+    ].join(' '));
+    const overlaps = [...projectWords].filter(word => lensText.includes(word)).slice(0, 3);
+    if (overlaps.length) {
+      score += overlaps.length * 2;
+      reasons.push(`Proje diliyle ortak karar alanları: ${overlaps.join(', ')}.`);
+    }
+    Object.entries(personaLevels).forEach(([persona, percentage]) => {
+      const support = lens.admin.persona_support && lens.admin.persona_support[persona];
+      if (!support || percentage < 15) return;
+      const points = support === 'strong' ? 7 : support === 'medium' ? 3 : 0;
+      score += points * (percentage / 100);
+      if (points && percentage >= 25) reasons.push(`${PERSONA_LABELS[persona] || persona} dağılımını ${humanize(support)} düzeyde destekliyor.`);
+    });
+    if (lens.slug === 'ergonomic' && ['office', 'commercial'].includes(project.space_type)) score += 3;
+    if (lens.slug === 'universal-inclusive' && projectText.includes('eris')) score += 4;
+    return { lens, score: Math.round(score * 10) / 10, reasons: reasons.slice(0, 2) };
+  }).sort((a, b) => b.score - a.score || Number(a.lens.number) - Number(b.lens.number)).slice(0, 3);
+}
+
+function fillAtlasSelectionOptions(selection) {
+  const controls = [elements.atlasPrimarySelect, elements.atlasSupportingSelect, elements.atlasAlternativeSelect];
+  controls.forEach(control => {
+    const current = control.value;
+    control.replaceChildren(createElement('option', '', 'Seçilmedi'));
+    control.firstElementChild.value = '';
+    state.atlas.lenses.forEach(lens => {
+      const option = createElement('option', '', `${lens.number} · ${lens.name}`);
+      option.value = lens.slug;
+      control.append(option);
+    });
+    control.value = current;
+  });
+  elements.atlasPrimarySelect.value = selection && selection.primary_lens_slug || '';
+  elements.atlasSupportingSelect.value = selection && selection.supporting_lens_slug || '';
+  elements.atlasAlternativeSelect.value = selection && selection.alternative_lens_slug || '';
+  elements.atlasSelectionRationale.value = selection && selection.rationale || '';
+}
+
+function renderProjectAtlasRecommendations(useAsSelection = false) {
+  state.atlasRecommendations = recommendAtlasLenses(state.currentProject);
+  const roleLabels = ['Birincil öneri', 'Destekleyici öneri', 'Alternatif öneri'];
+  elements.atlasRecommendations.replaceChildren(...state.atlasRecommendations.map((item, index) => {
+    const card = createElement('article', 'project-atlas-card');
+    const image = createElement('img');
+    image.src = atlasImageUrl(item.lens.image);
+    image.alt = `${item.lens.name} yaklaşımı`;
+    const body = createElement('div', 'project-atlas-card-body');
+    body.append(
+      createElement('span', 'project-atlas-role', roleLabels[index]),
+      createElement('h4', '', item.lens.name),
+      createElement('p', '', item.reasons[0] || item.lens.public.best_for),
+      createElement('small', '', `Eşleşme puanı: ${item.score}`)
+    );
+    card.append(image, body);
+    return card;
+  }));
+  if (useAsSelection && state.atlasRecommendations.length) {
+    elements.atlasPrimarySelect.value = state.atlasRecommendations[0] && state.atlasRecommendations[0].lens.slug || '';
+    elements.atlasSupportingSelect.value = state.atlasRecommendations[1] && state.atlasRecommendations[1].lens.slug || '';
+    elements.atlasAlternativeSelect.value = state.atlasRecommendations[2] && state.atlasRecommendations[2].lens.slug || '';
+    const names = state.atlasRecommendations.map(item => item.lens.name);
+    elements.atlasSelectionRationale.value = `Birincil yaklaşım olarak ${names[0]} önerildi. ${names[1] || 'İkinci yaklaşım'} destekleyici, ${names[2] || 'üçüncü yaklaşım'} ise alternatif karar çerçevesi olarak değerlendirilecek. Nihai seçim ölçü, dolaşım, kullanıcı rutini ve proje kanıtlarıyla doğrulanmalıdır.`;
+  }
+}
+
+async function prepareProjectAtlas(selection) {
+  if (!state.atlas) await loadAtlas();
+  state.currentAtlasSelection = selection || null;
+  fillAtlasSelectionOptions(selection);
+  renderProjectAtlasRecommendations(!selection);
+  setMessage(elements.atlasSelectionMessage, selection ? 'Bu revizyon için kayıtlı Atlas seçimi yüklendi.' : 'Üç başlangıç önerisi hazırlandı; kaydetmeden önce düzenleyebilirsin.');
+}
+
 function humanize(value) {
-  return String(value || '').replaceAll('_', ' ');
+  const key = String(value || '');
+  return PERSONA_LABELS[key] || TERM_LABELS[key] || key.replaceAll('_', ' ');
 }
 
 function badge(text, tone) {
@@ -843,7 +1011,7 @@ function renderDecisions(decisions) {
       draftField('Somut karar', item.concrete_decision, `decisions.${index}.concrete_decision`, 4),
       draftField('Başarı testi', item.success_test, `decisions.${index}.success_test`)
     );
-    if (item.tradeoff) grid.appendChild(draftField('Taviz / tradeoff', item.tradeoff, `decisions.${index}.tradeoff`));
+    if (item.tradeoff) grid.appendChild(draftField('Taviz', item.tradeoff, `decisions.${index}.tradeoff`));
     const controls = document.createElement('div');
     controls.className = 'draft-grid compact-controls';
     controls.append(
@@ -1009,17 +1177,19 @@ async function openProject(projectId) {
     document.getElementById('detail-client').textContent = project.client_email
       ? `${project.client_name} · ${project.client_email}`
       : project.client_name;
-    document.getElementById('detail-space').textContent = project.space_type;
+    document.getElementById('detail-space').textContent = humanize(project.space_type);
     document.getElementById('detail-revision').textContent = `R${project.revision_number}`;
     document.getElementById('detail-status').textContent = statusLabel(project.status);
     document.getElementById('detail-narrative').textContent = project.client_narrative;
     document.getElementById('detail-measurements').textContent = rawText(project.measurements);
     document.getElementById('detail-fixed').textContent = rawText(project.fixed_elements);
     state.currentProjectId = project.id;
+    state.currentProject = project;
     state.currentApproval = payload.approval || null;
     state.currentStep = 'brief';
     renderBriefReadiness(project);
     renderProtocolDraft(payload.protocol_draft, payload.approval);
+    await prepareProjectAtlas(payload.atlas_selection);
     showWorkspace('detail');
   } catch (error) {
     window.alert(error.message);
@@ -1122,6 +1292,58 @@ elements.protocolStepPrev.addEventListener('click', () => {
 elements.protocolStepNext.addEventListener('click', () => {
   const index = WORKFLOW_STEPS.indexOf(state.currentStep);
   if (index >= 0 && index < WORKFLOW_STEPS.length - 1) showProtocolStep(WORKFLOW_STEPS[index + 1]);
+});
+
+elements.atlasRecommend.addEventListener('click', () => {
+  if (!state.currentProject || !state.atlas) return;
+  renderProjectAtlasRecommendations(true);
+  setMessage(elements.atlasSelectionMessage, 'Öneriler güncellendi. Seçimleri ve gerekçeyi kontrol edip kaydedebilirsin.');
+});
+
+elements.atlasSaveSelection.addEventListener('click', async () => {
+  if (!state.currentProjectId) return;
+  const selected = [
+    elements.atlasPrimarySelect.value,
+    elements.atlasSupportingSelect.value,
+    elements.atlasAlternativeSelect.value
+  ].filter(Boolean);
+  if (!elements.atlasPrimarySelect.value) {
+    setMessage(elements.atlasSelectionMessage, 'Kaydetmek için bir birincil yaklaşım seçmelisin.');
+    return;
+  }
+  if (new Set(selected).size !== selected.length) {
+    setMessage(elements.atlasSelectionMessage, 'Üç seçim birbirinden farklı olmalı.');
+    return;
+  }
+  elements.atlasSaveSelection.disabled = true;
+  setMessage(elements.atlasSelectionMessage, 'Atlas seçimi kaydediliyor…');
+  try {
+    const payload = await api(`/api/protocol-admin/projects/${encodeURIComponent(state.currentProjectId)}/atlas-selection`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        primary_lens_slug: elements.atlasPrimarySelect.value,
+        supporting_lens_slug: elements.atlasSupportingSelect.value,
+        alternative_lens_slug: elements.atlasAlternativeSelect.value,
+        rationale: elements.atlasSelectionRationale.value.trim()
+      })
+    });
+    state.currentAtlasSelection = payload.atlas_selection;
+    setMessage(elements.atlasSelectionMessage, 'Atlas seçimi bu proje revizyonuna kaydedildi.');
+  } catch (error) {
+    setMessage(elements.atlasSelectionMessage, error.message);
+  } finally {
+    elements.atlasSaveSelection.disabled = false;
+  }
+});
+
+elements.atlasOpenSelection.addEventListener('click', async () => {
+  const slug = elements.atlasPrimarySelect.value || elements.atlasSupportingSelect.value || elements.atlasAlternativeSelect.value;
+  await showAtlas();
+  if (!slug) return;
+  state.atlasSelected = slug;
+  state.atlasTab = 'overview';
+  renderAtlasList();
+  renderAtlasDetail();
 });
 
 elements.projectForm.addEventListener('submit', async event => {
@@ -1239,7 +1461,7 @@ async function initialize() {
       showLogin();
       const message = !status.configured
         ? 'Veritabanı bağlantısı henüz yapılandırılmadı.'
-        : 'İlk admin hesabı henüz yapılandırılmadı.';
+        : 'İlk yönetici hesabı henüz yapılandırılmadı.';
       setMessage(elements.setupMessage, message);
       elements.loginForm.querySelectorAll('input, button').forEach(control => { control.disabled = true; });
       return;
@@ -1255,13 +1477,13 @@ async function initialize() {
     await loadProjects();
   } catch (error) {
     showLogin();
-    setMessage(elements.setupMessage, 'Protocol Admin şu anda kullanılamıyor.');
+    setMessage(elements.setupMessage, 'Protokol yönetim sistemi şu anda kullanılamıyor.');
   }
 }
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/protocol-admin/sw.js?v=atlas-20260810-2', {
+    navigator.serviceWorker.register('/protocol-admin/sw.js?v=atlas-tr-20260817-1', {
       scope: '/protocol-admin/',
       updateViaCache: 'none'
     }).then(registration => registration.update()).catch(() => {});

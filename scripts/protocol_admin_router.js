@@ -39,7 +39,7 @@ function sendJson(res, status, payload, extraHeaders = {}) {
 }
 
 function sendFile(res, filePath, contentType) {
-  if (!fs.existsSync(filePath)) return sendJson(res, 404, { error: 'Not found' });
+  if (!fs.existsSync(filePath)) return sendJson(res, 404, { error: 'Dosya bulunamadı.' });
   res.writeHead(200, securityHeaders(contentType));
   fs.createReadStream(filePath).pipe(res);
 }
@@ -63,11 +63,11 @@ function readJson(req, maxBytes = 256 * 1024) {
       if (Buffer.byteLength(body) > maxBytes) tooLarge = true;
     });
     req.on('end', () => {
-      if (tooLarge) return reject(Object.assign(new Error('Payload too large.'), { statusCode: 413 }));
+      if (tooLarge) return reject(Object.assign(new Error('Gönderilen veri çok büyük.'), { statusCode: 413 }));
       try {
         resolve(JSON.parse(body || '{}'));
       } catch {
-        reject(Object.assign(new Error('Invalid JSON.'), { statusCode: 400 }));
+        reject(Object.assign(new Error('Gönderilen veri biçimi geçersiz.'), { statusCode: 400 }));
       }
     });
     req.on('error', reject);
@@ -101,14 +101,14 @@ function requireSameOrigin(req) {
   const origin = String(req.headers.origin || '').replace(/\/+$/, '');
   if (!origin && process.env.NODE_ENV !== 'production') return;
   if (!origin || origin !== expectedOrigin(req)) {
-    throw Object.assign(new Error('Invalid request origin.'), { statusCode: 403 });
+    throw Object.assign(new Error('İstek kaynağı geçersiz.'), { statusCode: 403 });
   }
 }
 
 function cleanText(value, field, max, required = true) {
   const result = String(value || '').trim();
-  if (required && !result) throw Object.assign(new Error(`${field} is required.`), { statusCode: 400 });
-  if (result.length > max) throw Object.assign(new Error(`${field} is too long.`), { statusCode: 400 });
+  if (required && !result) throw Object.assign(new Error(`${field} zorunludur.`), { statusCode: 400 });
+  if (result.length > max) throw Object.assign(new Error(`${field} izin verilen uzunluğu aşıyor.`), { statusCode: 400 });
   return result;
 }
 
@@ -116,7 +116,7 @@ function optionalDimension(value, field, max) {
   if (value == null || String(value).trim() === '') return null;
   const number = Number(value);
   if (!Number.isFinite(number) || number <= 0 || number > max) {
-    throw Object.assign(new Error(`${field} is invalid.`), { statusCode: 400 });
+    throw Object.assign(new Error(`${field} geçersiz.`), { statusCode: 400 });
   }
   return Math.round(number * 10) / 10;
 }
@@ -135,8 +135,8 @@ function canonicalJson(value) {
 
 async function requireUser(req, role) {
   const user = await authenticateRequest(req);
-  if (!user) throw Object.assign(new Error('Authentication required.'), { statusCode: 401 });
-  if (role && user.role !== role) throw Object.assign(new Error('Insufficient permission.'), { statusCode: 403 });
+  if (!user) throw Object.assign(new Error('Oturum açmanız gerekiyor.'), { statusCode: 401 });
+  if (role && user.role !== role) throw Object.assign(new Error('Bu işlem için yetkiniz yok.'), { statusCode: 403 });
   return user;
 }
 
@@ -158,20 +158,25 @@ function createProtocolAdminRouter(root) {
   const spatialAtlasMasterFile = path.join(root, 'data', 'spatial_design_library_master.json');
   const state = { ready: false, configured: databaseConfigured(), setupRequired: false, error: null };
 
-  async function getSpatialAtlas(req, res) {
-    await requireUser(req, 'admin');
+  function readSpatialAtlas() {
     if (!fs.existsSync(spatialAtlasMasterFile)) {
-      return sendJson(res, 503, { error: 'Spatial Atlas master data is not available.' });
+      throw Object.assign(new Error('Mekânsal Tasarım Atlası ana verisi bulunamadı.'), { statusCode: 503 });
     }
     let atlas;
     try {
       atlas = JSON.parse(fs.readFileSync(spatialAtlasMasterFile, 'utf8'));
     } catch {
-      return sendJson(res, 500, { error: 'Spatial Atlas master data is invalid.' });
+      throw Object.assign(new Error('Mekânsal Tasarım Atlası ana verisi geçersiz.'), { statusCode: 500 });
     }
     if (!Array.isArray(atlas.lenses) || !Array.isArray(atlas.sources) || !Array.isArray(atlas.rooms)) {
-      return sendJson(res, 500, { error: 'Spatial Atlas master contract is incomplete.' });
+      throw Object.assign(new Error('Mekânsal Tasarım Atlası veri sözleşmesi eksik.'), { statusCode: 500 });
     }
+    return atlas;
+  }
+
+  async function getSpatialAtlas(req, res) {
+    await requireUser(req, 'admin');
+    const atlas = readSpatialAtlas();
     const stats = fs.statSync(spatialAtlasMasterFile);
     return sendJson(res, 200, {
       atlas,
@@ -204,7 +209,7 @@ function createProtocolAdminRouter(root) {
 
   async function login(req, res) {
     requireSameOrigin(req);
-    if (!checkLoginRate(req)) return sendJson(res, 429, { error: 'Too many login attempts. Try again later.' });
+    if (!checkLoginRate(req)) return sendJson(res, 429, { error: 'Çok fazla giriş denemesi yapıldı. Daha sonra tekrar deneyin.' });
     const body = await readJson(req, 16 * 1024);
     const email = normalizeEmail(body.email);
     const password = String(body.password || '');
@@ -219,7 +224,7 @@ function createProtocolAdminRouter(root) {
     const passwordMatches = user
       ? await verifyPassword(password, user.password_hash)
       : await verifyPassword(password, await hashPassword('invalid-password-value'));
-    if (!user || !passwordMatches) return sendJson(res, 401, { error: 'Invalid email or password.' });
+    if (!user || !passwordMatches) return sendJson(res, 401, { error: 'E-posta veya parola hatalı.' });
     clearLoginRate(req);
     const session = await createSession(user.id, req);
     return sendJson(res, 200, {
@@ -248,18 +253,18 @@ function createProtocolAdminRouter(root) {
     requireSameOrigin(req);
     const user = await requireUser(req, 'admin');
     const body = await readJson(req);
-    const projectName = cleanText(body.project_name, 'Project name', 160);
-    const spaceType = cleanText(body.space_type, 'Space type', 80);
+    const projectName = cleanText(body.project_name, 'Proje adı', 160);
+    const spaceType = cleanText(body.space_type, 'Mekân türü', 80);
     const outputLanguage = ['tr', 'en'].includes(body.output_language) ? body.output_language : 'tr';
-    const clientName = cleanText(body.client_name, 'Client name', 160);
+    const clientName = cleanText(body.client_name, 'Müşteri adı', 160);
     const clientEmail = normalizeEmail(body.client_email);
-    if (clientEmail && !clientEmail.includes('@')) throw Object.assign(new Error('Client email is invalid.'), { statusCode: 400 });
-    const narrative = cleanText(body.client_narrative, 'Client narrative', 50000);
-    const measurements = cleanText(body.measurements, 'Measurements', 20000, false);
-    const fixedElements = cleanText(body.fixed_elements, 'Fixed elements', 20000, false);
-    const roomWidthCm = optionalDimension(body.room_width_cm, 'Room width', 5000);
-    const roomLengthCm = optionalDimension(body.room_length_cm, 'Room length', 5000);
-    const ceilingHeightCm = optionalDimension(body.ceiling_height_cm, 'Ceiling height', 1000);
+    if (clientEmail && !clientEmail.includes('@')) throw Object.assign(new Error('Müşteri e-postası geçersiz.'), { statusCode: 400 });
+    const narrative = cleanText(body.client_narrative, 'Müşteri anlatımı', 50000);
+    const measurements = cleanText(body.measurements, 'Ölçüler', 20000, false);
+    const fixedElements = cleanText(body.fixed_elements, 'Sabit elemanlar', 20000, false);
+    const roomWidthCm = optionalDimension(body.room_width_cm, 'Oda genişliği', 5000);
+    const roomLengthCm = optionalDimension(body.room_length_cm, 'Oda uzunluğu', 5000);
+    const ceilingHeightCm = optionalDimension(body.ceiling_height_cm, 'Tavan yüksekliği', 1000);
     const measurementSource = ['unknown', 'client_reported', 'plan_measured', 'site_measured'].includes(body.measurement_source)
       ? body.measurement_source
       : 'unknown';
@@ -331,7 +336,7 @@ function createProtocolAdminRouter(root) {
   async function getProject(req, res, projectId) {
     const user = await requireUser(req);
     const result = await loadProject(projectId, user.id);
-    if (!result) return sendJson(res, 404, { error: 'Project not found.' });
+    if (!result) return sendJson(res, 404, { error: 'Proje bulunamadı.' });
     const draftResult = await query(
       `SELECT id, status, model, prompt_version, content, quality_gate_result,
               error_message, generated_at, updated_at
@@ -347,11 +352,73 @@ function createProtocolAdminRouter(root) {
         LIMIT 1`,
       [result.revision_id]
     );
+    const atlasSelectionResult = await query(
+      `SELECT primary_lens_slug, supporting_lens_slug, alternative_lens_slug,
+              rationale, updated_at
+         FROM project_atlas_selections
+        WHERE revision_id = $1
+        LIMIT 1`,
+      [result.revision_id]
+    );
     return sendJson(res, 200, {
       project: result,
       protocol_draft: draftResult.rows[0] || null,
-      approval: approvalResult.rows[0] || null
+      approval: approvalResult.rows[0] || null,
+      atlas_selection: atlasSelectionResult.rows[0] || null
     });
+  }
+
+  async function updateProjectAtlasSelection(req, res, projectId) {
+    requireSameOrigin(req);
+    const user = await requireUser(req, 'admin');
+    const project = await loadProject(projectId, user.id);
+    if (!project) return sendJson(res, 404, { error: 'Proje bulunamadı.' });
+    const body = await readJson(req, 32 * 1024);
+    const atlas = readSpatialAtlas();
+    const validSlugs = new Set(atlas.lenses.map(lens => lens.slug));
+    const primary = cleanText(body.primary_lens_slug, 'Birincil yaklaşım', 120);
+    const supporting = cleanText(body.supporting_lens_slug, 'Destekleyici yaklaşım', 120, false) || null;
+    const alternative = cleanText(body.alternative_lens_slug, 'Alternatif yaklaşım', 120, false) || null;
+    const rationale = cleanText(body.rationale, 'Mimari gerekçe', 4000, false);
+    const chosen = [primary, supporting, alternative].filter(Boolean);
+    if (chosen.some(slug => !validSlugs.has(slug))) {
+      return sendJson(res, 400, { error: 'Seçilen Atlas yaklaşımı ana veri içinde bulunmuyor.' });
+    }
+    if (new Set(chosen).size !== chosen.length) {
+      return sendJson(res, 400, { error: 'Birincil, destekleyici ve alternatif yaklaşımlar birbirinden farklı olmalı.' });
+    }
+    const selection = await withTransaction(async client => {
+      const result = await client.query(
+        `INSERT INTO project_atlas_selections
+          (project_id, revision_id, primary_lens_slug, supporting_lens_slug,
+           alternative_lens_slug, rationale, updated_by)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)
+         ON CONFLICT (revision_id) DO UPDATE
+           SET primary_lens_slug = EXCLUDED.primary_lens_slug,
+               supporting_lens_slug = EXCLUDED.supporting_lens_slug,
+               alternative_lens_slug = EXCLUDED.alternative_lens_slug,
+               rationale = EXCLUDED.rationale,
+               updated_by = EXCLUDED.updated_by,
+               updated_at = now()
+         RETURNING primary_lens_slug, supporting_lens_slug, alternative_lens_slug,
+                   rationale, updated_at`,
+        [project.id, project.revision_id, primary, supporting, alternative, rationale, user.id]
+      );
+      await client.query(
+        `INSERT INTO audit_log
+          (project_id, revision_id, actor_user_id, actor_type, action, entity_type, entity_id, new_value)
+         VALUES ($1, $2, $3, 'admin', 'update', 'atlas_selection', $4, $5::jsonb)`,
+        [
+          project.id,
+          project.revision_id,
+          user.id,
+          project.revision_id,
+          JSON.stringify({ primary, supporting, alternative, rationale })
+        ]
+      );
+      return result.rows[0];
+    });
+    return sendJson(res, 200, { atlas_selection: selection });
   }
 
   async function loadProject(projectId, userId) {
@@ -378,10 +445,10 @@ function createProtocolAdminRouter(root) {
     if (typeof value === 'string') return value;
     if (Array.isArray(value)) return value.map(item => item && item.raw_text ? item.raw_text : '').filter(Boolean).join('\n');
     const structured = [
-      value.room_width_cm ? `Room width: ${value.room_width_cm} cm` : '',
-      value.room_length_cm ? `Room length: ${value.room_length_cm} cm` : '',
-      value.ceiling_height_cm ? `Ceiling height: ${value.ceiling_height_cm} cm` : '',
-      value.source_status ? `Measurement source: ${value.source_status}` : '',
+      value.room_width_cm ? `Oda genişliği: ${value.room_width_cm} cm` : '',
+      value.room_length_cm ? `Oda uzunluğu: ${value.room_length_cm} cm` : '',
+      value.ceiling_height_cm ? `Tavan yüksekliği: ${value.ceiling_height_cm} cm` : '',
+      value.source_status ? `Ölçü kaynağı: ${value.source_status}` : '',
       value.raw_text || ''
     ].filter(Boolean);
     return structured.join('\n');
@@ -391,7 +458,7 @@ function createProtocolAdminRouter(root) {
     requireSameOrigin(req);
     const user = await requireUser(req, 'admin');
     const project = await loadProject(projectId, user.id);
-    if (!project) return sendJson(res, 404, { error: 'Project not found.' });
+    if (!project) return sendJson(res, 404, { error: 'Proje bulunamadı.' });
 
     const existing = await query(
       `SELECT id, status, updated_at
@@ -402,10 +469,10 @@ function createProtocolAdminRouter(root) {
     );
     if (existing.rows[0] && existing.rows[0].status === 'generating' &&
         Date.now() - new Date(existing.rows[0].updated_at).getTime() < 10 * 60 * 1000) {
-      return sendJson(res, 409, { error: 'Protocol generation is already running.' });
+      return sendJson(res, 409, { error: 'Protokol üretimi zaten devam ediyor.' });
     }
     if (existing.rows[0] && existing.rows[0].status === 'ready') {
-      return sendJson(res, 409, { error: 'A protocol draft already exists for this revision.' });
+      return sendJson(res, 409, { error: 'Bu revizyon için zaten bir protokol taslağı var.' });
     }
 
     const draftResult = await query(
@@ -473,9 +540,9 @@ function createProtocolAdminRouter(root) {
         `UPDATE protocol_drafts
             SET status = 'failed', error_message = $2
           WHERE id = $1`,
-        [draftResult.rows[0].id, String(error.message || 'Protocol generation failed.').slice(0, 2000)]
+        [draftResult.rows[0].id, String(error.message || 'Protokol üretilemedi.').slice(0, 2000)]
       );
-      error.publicMessage = 'Protocol generation failed. Review the project evidence and try again.';
+      error.publicMessage = 'Protokol üretilemedi. Proje kanıtlarını gözden geçirip yeniden deneyin.';
       throw error;
     }
   }
@@ -484,7 +551,7 @@ function createProtocolAdminRouter(root) {
     requireSameOrigin(req);
     const user = await requireUser(req, 'admin');
     const project = await loadProject(projectId, user.id);
-    if (!project) return sendJson(res, 404, { error: 'Project not found.' });
+    if (!project) return sendJson(res, 404, { error: 'Proje bulunamadı.' });
     const body = await readJson(req, 2 * 1024 * 1024);
     let content;
     try {
@@ -493,7 +560,7 @@ function createProtocolAdminRouter(root) {
       throw Object.assign(new Error(error.message), { statusCode: 400 });
     }
     if (content.project.id !== project.id || content.revision.number !== project.revision_number) {
-      return sendJson(res, 409, { error: 'Protocol draft does not match the active project revision.' });
+      return sendJson(res, 409, { error: 'Protokol taslağı etkin proje revizyonuyla eşleşmiyor.' });
     }
     const qualityGate = evaluateProtocolAdminQuality(content);
     const result = await withTransaction(async client => {
@@ -506,7 +573,7 @@ function createProtocolAdminRouter(root) {
                     error_message, generated_at, updated_at`,
         [project.id, project.revision_id, JSON.stringify(content), JSON.stringify(qualityGate)]
       );
-      if (!updated.rowCount) throw Object.assign(new Error('Protocol draft not found.'), { statusCode: 404 });
+      if (!updated.rowCount) throw Object.assign(new Error('Protokol taslağı bulunamadı.'), { statusCode: 404 });
       await client.query(
         `INSERT INTO audit_log
           (project_id, revision_id, actor_user_id, actor_type, action, entity_type, entity_id, new_value)
@@ -532,9 +599,9 @@ function createProtocolAdminRouter(root) {
     requireSameOrigin(req);
     const user = await requireUser(req, 'admin');
     const project = await loadProject(projectId, user.id);
-    if (!project) return sendJson(res, 404, { error: 'Project not found.' });
+    if (!project) return sendJson(res, 404, { error: 'Proje bulunamadı.' });
     if (project.revision_state === 'approved') {
-      return sendJson(res, 409, { error: 'This project revision is already approved.' });
+      return sendJson(res, 409, { error: 'Bu proje revizyonu zaten onaylandı.' });
     }
 
     const draftResult = await query(
@@ -546,7 +613,7 @@ function createProtocolAdminRouter(root) {
     );
     const draft = draftResult.rows[0];
     if (!draft || draft.status !== 'ready') {
-      return sendJson(res, 409, { error: 'A saved protocol draft is required before approval.' });
+      return sendJson(res, 409, { error: 'Onaydan önce kaydedilmiş bir protokol taslağı gerekiyor.' });
     }
 
     let content;
@@ -558,7 +625,7 @@ function createProtocolAdminRouter(root) {
     const qualityGate = evaluateProtocolAdminQuality(content);
     if (!qualityGate.can_approve) {
       return sendJson(res, 409, {
-        error: 'The protocol cannot be approved until every blocker and warning is resolved.',
+        error: 'Tüm engeller ve uyarılar çözülmeden protokol onaylanamaz.',
         quality_gate_result: qualityGate
       });
     }
@@ -622,7 +689,7 @@ function createProtocolAdminRouter(root) {
   async function downloadApprovedProtocolPdf(req, res, projectId) {
     const user = await requireUser(req);
     const project = await loadProject(projectId, user.id);
-    if (!project) return sendJson(res, 404, { error: 'Project not found.' });
+    if (!project) return sendJson(res, 404, { error: 'Proje bulunamadı.' });
     const approvalResult = await query(
       `SELECT id, snapshot, snapshot_sha256, quality_gate_result, approved_at
          FROM approval_snapshots
@@ -631,11 +698,11 @@ function createProtocolAdminRouter(root) {
       [project.id, project.revision_id]
     );
     const approval = approvalResult.rows[0];
-    if (!approval) return sendJson(res, 409, { error: 'This project revision has not been approved.' });
+    if (!approval) return sendJson(res, 409, { error: 'Bu proje revizyonu henüz onaylanmadı.' });
     const currentSnapshotSha256 = crypto.createHash('sha256').update(canonicalJson(approval.snapshot)).digest('hex');
     if (!/^[a-f0-9]{64}$/i.test(approval.snapshot_sha256 || '') ||
         !crypto.timingSafeEqual(Buffer.from(currentSnapshotSha256), Buffer.from(approval.snapshot_sha256))) {
-      throw Object.assign(new Error('Approved snapshot integrity check failed.'), { statusCode: 409 });
+      throw Object.assign(new Error('Onaylı kayıt bütünlük kontrolünden geçemedi.'), { statusCode: 409 });
     }
 
     const report = await query(
@@ -692,7 +759,7 @@ function createProtocolAdminRouter(root) {
         setup_required: state.setupRequired
       });
     }
-    if (!state.ready) return sendJson(res, 503, { error: 'Protocol Admin is not configured.' });
+    if (!state.ready) return sendJson(res, 503, { error: 'Protokol yönetim sistemi henüz yapılandırılmadı.' });
     if (req.method === 'POST' && url.pathname === '/api/protocol-admin/login') return login(req, res);
     if (req.method === 'POST' && url.pathname === '/api/protocol-admin/logout') {
       requireSameOrigin(req);
@@ -710,30 +777,35 @@ function createProtocolAdminRouter(root) {
     if (url.pathname === '/api/protocol-admin/projects' && req.method === 'POST') return createProject(req, res);
     const projectMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)$/);
     if (projectMatch && req.method === 'GET') {
-      if (!uuid(projectMatch[1])) return sendJson(res, 400, { error: 'Invalid project id.' });
+      if (!uuid(projectMatch[1])) return sendJson(res, 400, { error: 'Geçersiz proje kimliği.' });
       return getProject(req, res, projectMatch[1]);
     }
     const generateMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/generate-protocol$/);
     if (generateMatch && req.method === 'POST') {
-      if (!uuid(generateMatch[1])) return sendJson(res, 400, { error: 'Invalid project id.' });
+      if (!uuid(generateMatch[1])) return sendJson(res, 400, { error: 'Geçersiz proje kimliği.' });
       return generateProjectProtocol(req, res, generateMatch[1]);
     }
     const draftMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/protocol-draft$/);
     if (draftMatch && req.method === 'PUT') {
-      if (!uuid(draftMatch[1])) return sendJson(res, 400, { error: 'Invalid project id.' });
+      if (!uuid(draftMatch[1])) return sendJson(res, 400, { error: 'Geçersiz proje kimliği.' });
       return updateProjectProtocol(req, res, draftMatch[1]);
+    }
+    const atlasSelectionMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/atlas-selection$/);
+    if (atlasSelectionMatch && req.method === 'PUT') {
+      if (!uuid(atlasSelectionMatch[1])) return sendJson(res, 400, { error: 'Geçersiz proje kimliği.' });
+      return updateProjectAtlasSelection(req, res, atlasSelectionMatch[1]);
     }
     const approvalMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/approve$/);
     if (approvalMatch && req.method === 'POST') {
-      if (!uuid(approvalMatch[1])) return sendJson(res, 400, { error: 'Invalid project id.' });
+      if (!uuid(approvalMatch[1])) return sendJson(res, 400, { error: 'Geçersiz proje kimliği.' });
       return approveProjectProtocol(req, res, approvalMatch[1]);
     }
     const pdfMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/approved-pdf$/);
     if (pdfMatch && req.method === 'GET') {
-      if (!uuid(pdfMatch[1])) return sendJson(res, 400, { error: 'Invalid project id.' });
+      if (!uuid(pdfMatch[1])) return sendJson(res, 400, { error: 'Geçersiz proje kimliği.' });
       return downloadApprovedProtocolPdf(req, res, pdfMatch[1]);
     }
-    return sendJson(res, 404, { error: 'Not found' });
+    return sendJson(res, 404, { error: 'İstek adresi bulunamadı.' });
   }
 
   async function handle(req, res) {
@@ -749,7 +821,7 @@ function createProtocolAdminRouter(root) {
         return true;
       }
       if (req.method !== 'GET' && req.method !== 'HEAD') {
-        sendJson(res, 405, { error: 'Method not allowed' });
+        sendJson(res, 405, { error: 'Bu istek yöntemine izin verilmiyor.' });
         return true;
       }
       const atlasImageMatch = url.pathname.match(/^\/protocol-admin\/atlas-images\/([a-z0-9-]+\.webp)$/);
@@ -766,7 +838,7 @@ function createProtocolAdminRouter(root) {
       const requestId = crypto.randomUUID();
       console.error(`[protocol_admin] request ${requestId} failed:`, error);
       sendJson(res, error.statusCode || 500, {
-        error: error.publicMessage || (error.statusCode && error.statusCode < 500 ? error.message : 'Internal error.'),
+        error: error.publicMessage || (error.statusCode && error.statusCode < 500 ? error.message : 'Beklenmeyen bir sunucu hatası oluştu.'),
         request_id: requestId
       });
       return true;

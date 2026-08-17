@@ -117,7 +117,7 @@ function renderProtocolReportHtml(approval) {
 <html lang="${language}">
 <head>
   <meta charset="utf-8">
-  <title>${text(audit.project.name)} - Persona Layouts Protocol</title>
+  <title>${text(audit.project.name)} - Persona Layouts Protokolü</title>
   <style>
     :root { --ink:#1d211e; --forest:#174f42; --ochre:#b18435; --paper:#f4f2ec; --rule:#d7d5cd; --muted:#676c68; }
     * { box-sizing:border-box; }
@@ -194,7 +194,7 @@ function renderProtocolReportHtml(approval) {
   <section class="section">
     <div class="section-head"><b>01</b><h2>Teşhis</h2></div>
     <p class="lead">${text(audit.diagnosis.core_problem)}</p>
-    <div class="notice"><strong>We noticed...</strong><br>${text(audit.diagnosis.we_noticed)}</div>
+    <div class="notice"><strong>Gözlemimiz...</strong><br>${text(audit.diagnosis.we_noticed)}</div>
     <h3>Kanıt sınırı</h3>
     <p>${text(audit.diagnosis.evidence_boundary)}</p>
   </section>
@@ -233,7 +233,7 @@ function renderProtocolReportHtml(approval) {
   </section>` : ''}
 
   <footer>
-    Bu rapor Persona Layouts Protocol Admin tarafından oluşturulmuş ve mimari inceleme sonrasında onaylanmıştır.
+    Bu rapor Persona Layouts Protokol Yönetimi tarafından oluşturulmuş ve mimari inceleme sonrasında onaylanmıştır.
     Onay sonrası içerik değiştirilemez; yeni kararlar yeni bir revizyon gerektirir.
   </footer>
 </body>
