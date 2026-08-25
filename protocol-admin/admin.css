@@ -271,6 +271,27 @@ legend { padding: 0 8px; color: var(--forest); font-family: Georgia, serif; font
 .workflow-nav button:disabled { cursor: not-allowed; opacity: 0.44; }
 .workflow-panel { min-width: 0; }
 .brief-readiness { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
+.project-files-section { margin-top: 22px; border: 1px solid var(--rule); border-top: 3px solid var(--forest); padding: 20px; background: var(--surface); }
+.project-files-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 22px; }
+.project-files-heading h3 { margin: 3px 0 6px; font-family: Georgia, serif; font-size: 22px; font-weight: 500; }
+.project-files-heading p:not(.section-kicker) { max-width: 760px; margin: 0; color: var(--mid); font-size: 11px; line-height: 1.55; }
+.project-file-upload { display: grid; grid-template-columns: minmax(190px, .8fr) minmax(260px, 1.5fr) auto; align-items: end; gap: 12px; margin-top: 18px; }
+.project-file-upload label { display: grid; gap: 6px; color: var(--mid); font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.project-file-picker input { min-height: 42px; padding: 8px; background: var(--surface-muted); color: var(--ink); font-size: 11px; font-weight: 400; text-transform: none; }
+.project-file-picker input::file-selector-button { min-height: 26px; margin-right: 10px; border: 1px solid var(--rule); border-radius: 3px; padding: 0 9px; background: white; color: var(--forest-dark); font-weight: 700; }
+.project-file-note { margin: 8px 0 0; color: var(--mid); font-size: 9px; }
+.project-file-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 15px; }
+.project-file-card { overflow: hidden; border: 1px solid var(--rule); border-radius: 4px; background: #fbfbf8; }
+.project-file-preview { display: grid; width: 100%; aspect-ratio: 16 / 9; place-items: center; overflow: hidden; background: #e9e8e2; color: var(--forest); font-family: Georgia, serif; font-size: 22px; }
+.project-file-preview img { width: 100%; height: 100%; object-fit: cover; }
+.project-file-card-body { padding: 11px; }
+.project-file-card-body strong { display: block; overflow: hidden; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.project-file-card-body small { display: block; margin-top: 4px; color: var(--mid); font-size: 8px; line-height: 1.45; }
+.project-file-actions { display: flex; gap: 6px; margin-top: 10px; }
+.project-file-actions a, .project-file-actions button { flex: 1; min-height: 30px; border: 1px solid var(--rule); border-radius: 3px; padding: 0 7px; background: white; color: var(--forest-dark); font-size: 9px; font-weight: 700; text-align: center; text-decoration: none; }
+.project-file-actions a { display: grid; place-items: center; }
+.project-file-actions button:hover, .project-file-actions a:hover { border-color: var(--forest); }
+.project-file-empty { grid-column: 1 / -1; border: 1px dashed var(--rule); padding: 18px; color: var(--mid); font-size: 11px; text-align: center; }
 .project-atlas-section { margin-top: 22px; border: 1px solid var(--rule); border-top: 3px solid var(--ochre); padding: 20px; background: #f7f4ec; }
 .project-atlas-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 22px; }
 .project-atlas-heading h3 { margin: 3px 0 6px; font-family: Georgia, serif; font-size: 22px; font-weight: 500; }
@@ -484,6 +505,9 @@ legend { padding: 0 8px; color: var(--forest); font-family: Georgia, serif; font
   .workspace { padding: 24px 16px 48px; }
   .form-grid.two, .form-grid.three, .form-grid.four, .detail-columns, .project-meta, .persona-mix, .draft-grid { grid-template-columns: 1fr; }
   .project-atlas-recommendations { grid-template-columns: 1fr; }
+  .project-file-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .project-file-upload { grid-template-columns: 1fr 1fr; }
+  .project-file-upload .primary-button { grid-column: 1 / -1; }
   .geometry-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .brief-readiness { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .atlas-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -492,12 +516,14 @@ legend { padding: 0 8px; color: var(--forest); font-family: Georgia, serif; font
   .atlas-detail { position: relative; top: 0; max-height: none; }
   .project-meta div { border-right: 0; border-bottom: 1px solid var(--rule); }
   .project-meta div:last-child { border-bottom: 0; }
-  .workspace-header, .editor-heading, .project-atlas-heading { align-items: flex-start; }
+  .workspace-header, .editor-heading, .project-atlas-heading, .project-files-heading { align-items: flex-start; }
 }
 
 @media (max-width: 560px) {
   .login-panel { padding: 28px 22px; }
-  .workspace-header, .editor-heading, .list-toolbar, .form-actions, .protocol-header, .protocol-footer, .project-atlas-heading, .project-atlas-actions { align-items: stretch; flex-direction: column; }
+  .workspace-header, .editor-heading, .list-toolbar, .form-actions, .protocol-header, .protocol-footer, .project-atlas-heading, .project-atlas-actions, .project-files-heading { align-items: stretch; flex-direction: column; }
+  .project-file-upload, .project-file-list { grid-template-columns: 1fr; }
+  .project-file-upload .primary-button { grid-column: auto; }
   .verification-fields { grid-template-columns: 1fr; }
   .protocol-footer-actions { display: grid; grid-template-columns: 1fr; }
   .workflow-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }

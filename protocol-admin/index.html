@@ -9,7 +9,7 @@
   <link rel="manifest" href="/protocol-admin/manifest.webmanifest">
   <link rel="icon" href="/protocol-admin/icon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="/protocol-admin/icon-192.png">
-  <link rel="stylesheet" href="/protocol-admin/admin.css?v=atlas-tr-20260817-1">
+  <link rel="stylesheet" href="/protocol-admin/admin.css?v=atlas-files-20260817-2">
 </head>
 <body>
   <main id="login-view" class="login-view" hidden>
@@ -216,12 +216,38 @@
             </section>
           </div>
           <div id="brief-readiness" class="brief-readiness"></div>
+          <section id="project-files-section" class="project-files-section" aria-labelledby="project-files-title">
+            <div class="project-files-heading">
+              <div>
+                <p class="section-kicker">PROJE KANITLARI</p>
+                <h3 id="project-files-title">Belge, plan ve fotoğraflar</h3>
+                <p>Dosyalar özel depoda saklanır ve yalnızca yönetim hesabından açılır. Yüklenen içerik otomatik olarak doğrulanmış kanıt sayılmaz.</p>
+              </div>
+              <span id="project-file-count" class="record-count">0 dosya</span>
+            </div>
+            <div class="project-file-upload">
+              <label>Belge türü
+                <select id="project-file-type">
+                  <option value="photo">Mekân fotoğrafı</option>
+                  <option value="measured_plan">Ölçülü plan veya çizim</option>
+                  <option value="uploaded_document">Diğer proje belgesi</option>
+                </select>
+              </label>
+              <label class="project-file-picker">Dosya seç
+                <input id="project-file-input" type="file" multiple accept="image/jpeg,image/png,image/webp,image/heic,.heic,application/pdf,.pdf">
+              </label>
+              <button id="project-file-upload-button" class="primary-button compact" type="button">Dosyaları yükle</button>
+            </div>
+            <p class="project-file-note">PDF, JPG, PNG, WEBP veya HEIC · dosya başına en fazla 20 MB · bir revizyonda en fazla 30 etkin dosya</p>
+            <p id="project-file-message" class="action-message" role="status" hidden></p>
+            <div id="project-file-list" class="project-file-list" aria-live="polite"></div>
+          </section>
           <section id="project-atlas-section" class="project-atlas-section" aria-labelledby="project-atlas-title">
             <div class="project-atlas-heading">
               <div>
                 <p class="section-kicker">ATLAS EŞLEŞMESİ</p>
                 <h3 id="project-atlas-title">Projeye uygun mekânsal yaklaşımlar</h3>
-                <p>Müşteri anlatımı, mekân türü ve protokol kanıtları üzerinden üç aday üretir. Bu öneri tanı değildir; nihai seçim sana aittir.</p>
+                <p>Müşteri anlatımı, mekân türü ve protokol kanıtları üzerinden üç aday üretir. Bu öneri tanı değildir; nihai seçim sana aittir ve onaylı müşteri PDF’ine işlenir.</p>
               </div>
               <button id="atlas-recommend-button" class="secondary-button compact" type="button">Önerileri yenile</button>
             </div>
@@ -414,6 +440,6 @@
     <span>PersonaLayouts Yönetim</span>
   </div>
 
-  <script src="/protocol-admin/admin.js?v=atlas-tr-20260817-1"></script>
+  <script src="/protocol-admin/admin.js?v=atlas-files-20260817-2"></script>
 </body>
 </html>

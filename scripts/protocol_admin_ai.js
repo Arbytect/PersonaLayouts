@@ -310,7 +310,7 @@ function materializeProtocolDraft(raw, context) {
       include_open_verifications: true,
       include_evidence_appendix: true
     },
-    source_files: [],
+    source_files: Array.isArray(context.source_files) ? context.source_files : [],
     evidence,
     rooms,
     diagnosis: {

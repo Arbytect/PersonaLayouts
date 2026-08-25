@@ -8,6 +8,22 @@ const approval = {
   approved_at: '2026-07-26T12:00:00.000Z',
   snapshot: {
     report_context: { client_name: 'Test <Client>' },
+    atlas_direction: {
+      primary: {
+        slug: 'japanese-minimalism',
+        name: 'Japon Minimalizmi',
+        subtitle: 'Eşik, boşluk ve dikkat',
+        summary: 'Azaltılmış ama ritüelleri destekleyen mekânsal düzen.',
+        spatial_why: 'Boşluk kullanımı ve geçişleri görünür kılar.',
+        watch_for: 'Sadelik günlük erişimi zorlaştırmamalıdır.',
+        palette: ['#1D211E', '#D7D0C5']
+      },
+      supporting: null,
+      alternative: null,
+      rationale: 'Müşterinin sakinleşme ritüeli ve düşük uyaran ihtiyacı birincil yönü destekliyor.',
+      evidence_boundary: 'Ölçüye bağlı kararlar doğrulanmalıdır.',
+      persona_boundary: 'Yaklaşım persona tanısı değildir.'
+    },
     audit: {
       project: {
         code: 'PL-2026-999',
@@ -59,6 +75,14 @@ const approval = {
         confidence: 'confirmed',
         verification_status: 'verified'
       }],
+      source_files: [{
+        id: 'source-1',
+        source_type: 'measured_plan',
+        filename: 'plan.pdf',
+        revision: 1,
+        sha256: 'b'.repeat(64),
+        ai_review_status: 'not_requested'
+      }],
       report_configuration: { include_evidence_appendix: true }
     }
   }
@@ -69,6 +93,9 @@ assert(html.includes('PL-2026-999'));
 assert(html.includes('Onay mührü'));
 assert(html.includes('&lt;Client&gt;'));
 assert(html.includes('Kanıt eki'));
+assert(html.includes('Mekânsal tasarım yaklaşımı'));
+assert(html.includes('Japon Minimalizmi'));
+assert(html.includes('plan.pdf'));
 assert(!html.includes('<script>'));
 assert(html.length > 5000);
 

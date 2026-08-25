@@ -3,8 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
 const { hashPassword, verifyPassword } = require('./protocol_admin_auth');
+const { detectedFileType, safeOriginalFilename } = require('./protocol_admin_router');
 
 async function run() {
+  assert.strictEqual(detectedFileType(Buffer.from('%PDF-1.7')).contentType, 'application/pdf');
+  assert.strictEqual(detectedFileType(Buffer.from([0xff, 0xd8, 0xff, 0xe0])).contentType, 'image/jpeg');
+  assert.throws(() => detectedFileType(Buffer.from('not-a-file')), /Yalnızca PDF/);
+  assert.strictEqual(safeOriginalFilename(encodeURIComponent('../../plan.pdf')), 'plan.pdf');
   const encoded = await hashPassword('correct-horse-battery-staple');
   assert(encoded.startsWith('scrypt$'));
   assert.strictEqual(await verifyPassword('correct-horse-battery-staple', encoded), true);
@@ -34,6 +39,10 @@ async function run() {
     'protocol-step-prev',
     'protocol-step-next',
     'brief-readiness',
+    'project-file-type',
+    'project-file-input',
+    'project-file-upload-button',
+    'project-file-list',
     'atlas-recommend-button',
     'project-atlas-recommendations',
     'atlas-primary-select',
@@ -82,6 +91,10 @@ async function run() {
   assert(router.includes('generated_reports'));
   assert(router.includes('/api/protocol-admin/spatial-atlas'));
   assert(router.includes('/atlas-selection'));
+  assert(router.includes('/files'));
+  assert(router.includes('PutObjectCommand'));
+  assert(router.includes('MAX_SOURCE_FILE_BYTES'));
+  assert(router.includes('detectedFileType'));
   assert(router.includes("await requireUser(req, 'admin')"));
   assert(router.includes('/protocol-admin\\/atlas-images'));
 
@@ -91,6 +104,8 @@ async function run() {
   assert(adminJs.includes('renderAtlasPhilosophy'));
   assert(adminJs.includes('renderAtlasRooms'));
   assert(adminJs.includes('renderAtlasHybrids'));
+  assert(adminJs.includes('uploadSelectedProjectFiles'));
+  assert(adminJs.includes('renderProjectFiles'));
   assert(adminJs.includes("updateViaCache: 'none'"));
   const atlas = JSON.parse(fs.readFileSync(path.join(root, 'data', 'spatial_design_library_master.json'), 'utf8'));
   assert.strictEqual(atlas.version, '4.0.0-tr');

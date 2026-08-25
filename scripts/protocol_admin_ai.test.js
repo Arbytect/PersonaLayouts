@@ -10,7 +10,15 @@ const context = {
   revision_number: 1,
   client_narrative: 'Düzenli bir yatak odası ve iki kişilik kullanım hedefleniyor.',
   measurements: '400 x 400 cm',
-  fixed_elements: 'Kapı ve pencere'
+  fixed_elements: 'Kapı ve pencere',
+  source_files: [{
+    id: '22222222-2222-4222-8222-222222222222',
+    source_type: 'measured_plan',
+    filename: 'olculu-plan.pdf',
+    revision: 1,
+    sha256: 'b'.repeat(64),
+    ai_review_status: 'not_requested'
+  }]
 };
 
 const raw = {
@@ -178,6 +186,8 @@ assert.strictEqual(generated.audit.persona_allocations.reduce((sum, item) => sum
 assert.strictEqual(generated.audit.decisions[0].verification_status, 'field_verification_required');
 assert.strictEqual(generated.audit.decisions[0].required_measurements.length, 1);
 assert.strictEqual(generated.audit.project.output_language, 'tr');
+assert.strictEqual(generated.audit.source_files.length, 1);
+assert.strictEqual(generated.audit.source_files[0].filename, 'olculu-plan.pdf');
 assert(['ready_for_approval', 'warning_override_required', 'blocked'].includes(generated.quality_gate.status));
 assert.deepStrictEqual(parseModelJson('```json\n{"ok":true}\n```'), { ok: true });
 const fallbackGenerated = materializeProtocolDraft({ ...raw, project_protocols: raw.project_protocols.slice(0, 1) }, context);

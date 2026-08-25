@@ -89,11 +89,67 @@ function renderEvidence(items) {
     </tr>`).join('');
 }
 
+function sourceTypeLabel(value) {
+  const labels = {
+    photo: 'Mekân fotoğrafı',
+    measured_plan: 'Ölçülü plan veya çizim',
+    uploaded_document: 'Proje belgesi'
+  };
+  return text(labels[value] || value);
+}
+
+function renderSourceFiles(items) {
+  if (!(items || []).length) return '<p class="empty">Bu revizyonda yüklenmiş proje dosyası bulunmuyor.</p>';
+  return `<table class="source-table">
+    <thead><tr><th>Dosya</th><th>Tür</th><th>Sürüm</th><th>SHA-256</th><th>İnceleme</th></tr></thead>
+    <tbody>${items.map(item => `
+      <tr>
+        <td>${text(item.filename)}</td>
+        <td>${sourceTypeLabel(item.source_type)}</td>
+        <td>${text(item.revision)}</td>
+        <td class="hash">${text(String(item.sha256 || '').slice(0, 16))}…</td>
+        <td>${label(item.ai_review_status)}</td>
+      </tr>`).join('')}</tbody>
+  </table>`;
+}
+
+function safePaletteColor(value) {
+  return /^#[a-f0-9]{6}$/i.test(String(value || '')) ? value : '#d7d5cd';
+}
+
+function renderAtlasLens(role, lens, primary = false) {
+  if (!lens) return '';
+  return `<article class="atlas-lens ${primary ? 'primary' : ''} avoid-break">
+    <span>${text(role)}</span>
+    <h3>${text(lens.name)}</h3>
+    <p class="atlas-subtitle">${text(lens.subtitle)}</p>
+    <p>${text(lens.summary)}</p>
+    ${lens.spatial_why ? `<p><small>Mekânsal neden</small>${text(lens.spatial_why)}</p>` : ''}
+    ${lens.watch_for ? `<p><small>Dikkat sınırı</small>${text(lens.watch_for)}</p>` : ''}
+    <div class="atlas-palette">${(lens.palette || []).map(color => `<i style="background:${safePaletteColor(color)}"></i>`).join('')}</div>
+  </article>`;
+}
+
+function renderAtlasDirection(direction) {
+  if (!direction || !direction.primary) {
+    return '<p class="empty">Bu revizyon için bir Atlas yaklaşımı kaydedilmedi.</p>';
+  }
+  return `
+    <p class="lead atlas-lead">${text(direction.rationale, direction.primary.summary)}</p>
+    <div class="atlas-direction-grid">
+      ${renderAtlasLens('Birincil yaklaşım', direction.primary, true)}
+      ${renderAtlasLens('Destekleyici yaklaşım', direction.supporting)}
+      ${renderAtlasLens('Alternatif yaklaşım', direction.alternative)}
+    </div>
+    <div class="atlas-boundary"><strong>Karar sınırı</strong><p>${text(direction.evidence_boundary)} ${text(direction.persona_boundary)}</p></div>`;
+}
+
 function renderProtocolReportHtml(approval) {
   const audit = approval.snapshot && approval.snapshot.audit
     ? approval.snapshot.audit
     : approval.snapshot;
   const context = approval.snapshot && approval.snapshot.report_context || {};
+  const atlasDirection = approval.snapshot && approval.snapshot.atlas_direction || null;
   const language = audit.project.output_language || 'tr';
   const approvedAt = new Date(approval.approved_at || Date.now());
   const date = new Intl.DateTimeFormat(language === 'en' ? 'en-GB' : 'tr-TR', {
@@ -112,6 +168,7 @@ function renderProtocolReportHtml(approval) {
     .sort((a, b) => a.sequence - b.sequence)
     .map(item => `<li><b>${sectionNumber(item.sequence)}</b><span>${text(item.title)}</span></li>`)
     .join('');
+  const sourceFiles = audit.source_files || [];
 
   return `<!doctype html>
 <html lang="${language}">
@@ -161,6 +218,19 @@ function renderProtocolReportHtml(approval) {
     .decision-main { margin:3mm 0; font-size:11pt; }
     .decision-grid { display:grid; grid-template-columns:1fr 1fr; gap:4mm; }
     .decision-grid p { margin:0; border:1px solid var(--rule); padding:3mm; font-size:8.5pt; }
+    .atlas-lead { max-width:165mm; }
+    .atlas-direction-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; }
+    .atlas-lens { position:relative; border:1px solid var(--rule); border-top:3px solid #a7aaa6; padding:4mm; }
+    .atlas-lens.primary { border-top-color:var(--ochre); background:#f8f4ea; }
+    .atlas-lens>span { display:block; margin-bottom:2mm; color:var(--ochre); font-size:7pt; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+    .atlas-lens h3 { margin-bottom:1mm; }
+    .atlas-lens p { color:#4f5551; font-size:8.2pt; }
+    .atlas-lens p small { display:block; margin-bottom:1mm; color:var(--muted); font-size:6.8pt; font-weight:700; letter-spacing:.05em; text-transform:uppercase; }
+    .atlas-subtitle { font-style:italic; }
+    .atlas-palette { display:flex; gap:1mm; margin-top:4mm; }
+    .atlas-palette i { display:block; width:9mm; height:3mm; }
+    .atlas-boundary { margin-top:6mm; border-left:3px solid var(--ochre); padding:3mm 4mm; background:var(--paper); }
+    .atlas-boundary p { margin:1mm 0 0; color:var(--muted); font-size:7.5pt; }
     .verification { display:grid; grid-template-columns:25mm 1fr; gap:4mm; border-bottom:1px solid var(--rule); padding:4mm 0; }
     .verification span { align-self:start; border:1px solid var(--rule); padding:1mm 2mm; color:#7d382f; font-size:7pt; font-weight:700; text-align:center; text-transform:uppercase; }
     .verification span.verified { color:var(--forest); border-color:#9ebcb2; }
@@ -170,6 +240,8 @@ function renderProtocolReportHtml(approval) {
     .implementation li { display:grid; grid-template-columns:15mm 1fr; border-bottom:1px solid var(--rule); padding:4mm 0; }
     .implementation b { color:var(--ochre); font:14pt Georgia,serif; }
     table { width:100%; border-collapse:collapse; font-size:7.5pt; }
+    .source-table { margin-bottom:9mm; }
+    .hash { font-family:monospace; font-size:6.8pt; }
     th { color:var(--muted); text-align:left; text-transform:uppercase; }
     th,td { border-bottom:1px solid var(--rule); padding:2.4mm 1.5mm; vertical-align:top; }
     .avoid-break { break-inside:avoid; }
@@ -207,17 +279,22 @@ function renderProtocolReportHtml(approval) {
   </section>
 
   <section class="section">
-    <div class="section-head"><b>03</b><h2>Proje protokolü</h2></div>
+    <div class="section-head"><b>03</b><h2>Mekânsal tasarım yaklaşımı</h2></div>
+    ${renderAtlasDirection(atlasDirection)}
+  </section>
+
+  <section class="section">
+    <div class="section-head"><b>04</b><h2>Proje protokolü</h2></div>
     ${renderProtocolRules(audit.project_protocols)}
   </section>
 
   <section class="section">
-    <div class="section-head"><b>04</b><h2>Tasarım kararları</h2></div>
+    <div class="section-head"><b>05</b><h2>Tasarım kararları</h2></div>
     ${renderDecisions(audit.decisions)}
   </section>
 
   <section class="section">
-    <div class="section-head"><b>05</b><h2>Doğrulama kaydı</h2></div>
+    <div class="section-head"><b>06</b><h2>Doğrulama kaydı</h2></div>
     ${renderVerifications(audit.open_verifications)}
     <h2 style="margin-top:10mm">Uygulama sırası</h2>
     <ol class="implementation">${implementation}</ol>
@@ -225,7 +302,10 @@ function renderProtocolReportHtml(approval) {
 
   ${audit.report_configuration.include_evidence_appendix ? `
   <section class="section">
-    <div class="section-head"><b>06</b><h2>Kanıt eki</h2></div>
+    <div class="section-head"><b>07</b><h2>Kanıt eki</h2></div>
+    <h3>Proje dosyaları</h3>
+    ${renderSourceFiles(sourceFiles)}
+    <h3>Karar kanıtları</h3>
     <table>
       <thead><tr><th>ID</th><th>Kategori</th><th>Kanıt</th><th>Güven</th><th>Doğrulama</th></tr></thead>
       <tbody>${renderEvidence(audit.evidence)}</tbody>

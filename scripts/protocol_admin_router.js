@@ -2,6 +2,12 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const {
+  DeleteObjectCommand,
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client
+} = require('@aws-sdk/client-s3');
+const {
   authenticateRequest,
   createSession,
   ensureBootstrapAdmin,
@@ -20,6 +26,87 @@ const { generateProtocolReportPdf } = require('./protocol_admin_report');
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const LOGIN_LIMIT = 5;
 const loginAttempts = new Map();
+const MAX_SOURCE_FILE_BYTES = 20 * 1024 * 1024;
+const MAX_SOURCE_FILES_PER_REVISION = 30;
+const SOURCE_FILE_TYPES = new Set(['measured_plan', 'photo', 'uploaded_document']);
+let sourceFileR2Client = null;
+
+function r2Configured() {
+  return ['PL_R2_ACCOUNT_ID', 'PL_R2_ACCESS_KEY_ID', 'PL_R2_SECRET_ACCESS_KEY', 'PL_R2_BUCKET_NAME']
+    .every(name => Boolean(process.env[name]));
+}
+
+function getSourceFileR2Client() {
+  if (!r2Configured()) throw Object.assign(new Error('Özel dosya deposu henüz yapılandırılmadı.'), { statusCode: 503 });
+  if (!sourceFileR2Client) {
+    sourceFileR2Client = new S3Client({
+      region: 'auto',
+      endpoint: `https://${process.env.PL_R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+      credentials: {
+        accessKeyId: process.env.PL_R2_ACCESS_KEY_ID,
+        secretAccessKey: process.env.PL_R2_SECRET_ACCESS_KEY
+      },
+      forcePathStyle: true
+    });
+  }
+  return sourceFileR2Client;
+}
+
+function readBinary(req, maxBytes = MAX_SOURCE_FILE_BYTES) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    let size = 0;
+    let settled = false;
+    req.on('data', chunk => {
+      if (settled) return;
+      size += chunk.length;
+      if (size > maxBytes) {
+        settled = true;
+        reject(Object.assign(new Error('Dosya 20 MB sınırını aşıyor.'), { statusCode: 413 }));
+        req.resume();
+        return;
+      }
+      chunks.push(chunk);
+    });
+    req.on('end', () => {
+      if (settled) return;
+      settled = true;
+      if (!size) return reject(Object.assign(new Error('Boş dosya yüklenemez.'), { statusCode: 400 }));
+      resolve(Buffer.concat(chunks, size));
+    });
+    req.on('error', error => {
+      if (settled) return;
+      settled = true;
+      reject(error);
+    });
+  });
+}
+
+function safeOriginalFilename(value) {
+  let decoded = String(value || '');
+  try { decoded = decodeURIComponent(decoded); } catch {}
+  const filename = path.basename(decoded).replace(/[\u0000-\u001f\u007f]/g, '').trim().slice(0, 180);
+  if (!filename) throw Object.assign(new Error('Dosya adı eksik.'), { statusCode: 400 });
+  return filename;
+}
+
+function detectedFileType(buffer) {
+  if (buffer.length >= 5 && buffer.subarray(0, 5).toString('ascii') === '%PDF-') return { contentType: 'application/pdf', extension: '.pdf' };
+  if (buffer.length >= 3 && buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) return { contentType: 'image/jpeg', extension: '.jpg' };
+  if (buffer.length >= 8 && buffer.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) return { contentType: 'image/png', extension: '.png' };
+  if (buffer.length >= 12 && buffer.subarray(0, 4).toString('ascii') === 'RIFF' && buffer.subarray(8, 12).toString('ascii') === 'WEBP') return { contentType: 'image/webp', extension: '.webp' };
+  if (buffer.length >= 12 && buffer.subarray(4, 8).toString('ascii') === 'ftyp') {
+    const brand = buffer.subarray(8, 12).toString('ascii');
+    if (['heic', 'heix', 'hevc', 'hevx', 'mif1', 'msf1'].includes(brand)) return { contentType: 'image/heic', extension: '.heic' };
+  }
+  throw Object.assign(new Error('Yalnızca PDF, JPG, PNG, WEBP veya HEIC dosyaları yüklenebilir.'), { statusCode: 415 });
+}
+
+function safeDownloadName(value) {
+  const original = safeOriginalFilename(value);
+  const ascii = original.normalize('NFKD').replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/^-+|-+$/g, '') || 'proje-dosyasi';
+  return `inline; filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(original)}`;
+}
 
 function securityHeaders(contentType) {
   return {
@@ -172,6 +259,77 @@ function createProtocolAdminRouter(root) {
       throw Object.assign(new Error('Mekânsal Tasarım Atlası veri sözleşmesi eksik.'), { statusCode: 500 });
     }
     return atlas;
+  }
+
+  async function loadSourceFiles(projectId, revisionId, includeArchived = false) {
+    const result = await query(
+      `SELECT id, project_id, revision_id, source_type, original_filename, object_key,
+              content_type, byte_size, sha256, file_revision, ai_review_status,
+              archived_at, created_at
+         FROM source_files
+        WHERE project_id = $1 AND revision_id = $2
+          AND ($3::boolean OR archived_at IS NULL)
+        ORDER BY created_at DESC`,
+      [projectId, revisionId, includeArchived]
+    );
+    return result.rows;
+  }
+
+  function sourceFileContract(file) {
+    return {
+      id: file.id,
+      source_type: file.source_type,
+      filename: file.original_filename,
+      revision: Number(file.file_revision),
+      sha256: file.sha256,
+      ai_review_status: file.ai_review_status
+    };
+  }
+
+  function sourceFileView(file) {
+    return {
+      id: file.id,
+      source_type: file.source_type,
+      original_filename: file.original_filename,
+      content_type: file.content_type,
+      byte_size: Number(file.byte_size),
+      sha256: file.sha256,
+      file_revision: Number(file.file_revision),
+      ai_review_status: file.ai_review_status,
+      archived_at: file.archived_at,
+      created_at: file.created_at,
+      content_url: `/api/protocol-admin/projects/${encodeURIComponent(file.project_id)}/files/${encodeURIComponent(file.id)}`
+    };
+  }
+
+  function atlasDirection(selection) {
+    if (!selection) return null;
+    const atlas = readSpatialAtlas();
+    const lensBySlug = new Map(atlas.lenses.map(lens => [lens.slug, lens]));
+    const summarize = slug => {
+      if (!slug) return null;
+      const lens = lensBySlug.get(slug);
+      if (!lens) return null;
+      return {
+        slug: lens.slug,
+        name: lens.name,
+        subtitle: lens.subtitle,
+        summary: lens.public && lens.public.summary,
+        spatial_why: lens.public && lens.public.philosophy && lens.public.philosophy.spatial_why,
+        best_for: lens.public && lens.public.best_for,
+        watch_for: lens.public && lens.public.watch_for,
+        palette: Array.isArray(lens.palette) ? lens.palette.slice(0, 4) : []
+      };
+    };
+    return {
+      primary: summarize(selection.primary_lens_slug),
+      supporting: summarize(selection.supporting_lens_slug),
+      alternative: summarize(selection.alternative_lens_slug),
+      rationale: selection.rationale || '',
+      evidence_boundary: atlas.publication && atlas.publication.evidence_boundary,
+      persona_boundary: atlas.publication && atlas.publication.persona_boundary,
+      atlas_version: atlas.version || null
+    };
   }
 
   async function getSpatialAtlas(req, res) {
@@ -360,11 +518,13 @@ function createProtocolAdminRouter(root) {
         LIMIT 1`,
       [result.revision_id]
     );
+    const sourceFiles = await loadSourceFiles(result.id, result.revision_id);
     return sendJson(res, 200, {
       project: result,
       protocol_draft: draftResult.rows[0] || null,
       approval: approvalResult.rows[0] || null,
-      atlas_selection: atlasSelectionResult.rows[0] || null
+      atlas_selection: atlasSelectionResult.rows[0] || null,
+      source_files: sourceFiles.map(sourceFileView)
     });
   }
 
@@ -373,6 +533,9 @@ function createProtocolAdminRouter(root) {
     const user = await requireUser(req, 'admin');
     const project = await loadProject(projectId, user.id);
     if (!project) return sendJson(res, 404, { error: 'Proje bulunamadı.' });
+    if (project.revision_state === 'approved') {
+      return sendJson(res, 409, { error: 'Onaylı revizyonun Atlas seçimi değiştirilemez; yeni revizyon oluşturulmalıdır.' });
+    }
     const body = await readJson(req, 32 * 1024);
     const atlas = readSpatialAtlas();
     const validSlugs = new Set(atlas.lenses.map(lens => lens.slug));
@@ -419,6 +582,157 @@ function createProtocolAdminRouter(root) {
       return result.rows[0];
     });
     return sendJson(res, 200, { atlas_selection: selection });
+  }
+
+  async function uploadProjectSourceFile(req, res, projectId) {
+    requireSameOrigin(req);
+    const user = await requireUser(req, 'admin');
+    const project = await loadProject(projectId, user.id);
+    if (!project) return sendJson(res, 404, { error: 'Proje bulunamadı.' });
+    if (project.revision_state === 'approved') {
+      return sendJson(res, 409, { error: 'Onaylı revizyona dosya eklenemez; yeni revizyon oluşturulmalıdır.' });
+    }
+    const sourceType = String(req.headers['x-source-type'] || '').trim();
+    if (!SOURCE_FILE_TYPES.has(sourceType)) {
+      return sendJson(res, 400, { error: 'Belge türü geçersiz.' });
+    }
+    const originalFilename = safeOriginalFilename(req.headers['x-file-name']);
+    const countResult = await query(
+      `SELECT COUNT(*)::integer AS count
+         FROM source_files
+        WHERE revision_id = $1 AND archived_at IS NULL`,
+      [project.revision_id]
+    );
+    if (countResult.rows[0].count >= MAX_SOURCE_FILES_PER_REVISION) {
+      return sendJson(res, 409, { error: `Bir revizyona en fazla ${MAX_SOURCE_FILES_PER_REVISION} etkin dosya eklenebilir.` });
+    }
+    const bytes = await readBinary(req);
+    const detected = detectedFileType(bytes);
+    if (sourceType === 'photo' && !detected.contentType.startsWith('image/')) {
+      return sendJson(res, 400, { error: 'Fotoğraf türünde yalnızca görüntü dosyası yüklenebilir.' });
+    }
+    const revisionResult = await query(
+      `SELECT COALESCE(MAX(file_revision), 0) + 1 AS next_revision
+         FROM source_files
+        WHERE project_id = $1 AND original_filename = $2`,
+      [project.id, originalFilename]
+    );
+    const fileRevision = Number(revisionResult.rows[0].next_revision);
+    const fileId = crypto.randomUUID();
+    const objectKey = `admin-projects/${project.id}/${project.revision_id}/${fileId}${detected.extension}`;
+    const sha256 = crypto.createHash('sha256').update(bytes).digest('hex');
+    const client = getSourceFileR2Client();
+    const bucket = process.env.PL_R2_BUCKET_NAME;
+    await client.send(new PutObjectCommand({
+      Bucket: bucket,
+      Key: objectKey,
+      Body: bytes,
+      ContentType: detected.contentType,
+      Metadata: {
+        project_id: project.id,
+        revision_id: project.revision_id,
+        sha256
+      }
+    }));
+    try {
+      const inserted = await withTransaction(async database => {
+        const result = await database.query(
+          `INSERT INTO source_files
+            (id, project_id, revision_id, source_type, original_filename, object_key,
+             content_type, byte_size, sha256, file_revision, uploaded_by, ai_review_status)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, 'not_requested')
+           RETURNING id, project_id, revision_id, source_type, original_filename, object_key,
+                     content_type, byte_size, sha256, file_revision, ai_review_status,
+                     archived_at, created_at`,
+          [
+            fileId,
+            project.id,
+            project.revision_id,
+            sourceType,
+            originalFilename,
+            objectKey,
+            detected.contentType,
+            bytes.length,
+            sha256,
+            fileRevision,
+            user.id
+          ]
+        );
+        await database.query(
+          `INSERT INTO audit_log
+            (project_id, revision_id, actor_user_id, actor_type, action, entity_type, entity_id, new_value)
+           VALUES ($1, $2, $3, 'admin', 'create', 'source_file', $4, $5::jsonb)`,
+          [
+            project.id,
+            project.revision_id,
+            user.id,
+            fileId,
+            JSON.stringify({ source_type: sourceType, filename: originalFilename, byte_size: bytes.length, sha256 })
+          ]
+        );
+        return result.rows[0];
+      });
+      return sendJson(res, 201, { source_file: sourceFileView(inserted) });
+    } catch (error) {
+      await client.send(new DeleteObjectCommand({ Bucket: bucket, Key: objectKey })).catch(() => {});
+      throw error;
+    }
+  }
+
+  async function streamProjectSourceFile(req, res, projectId, fileId) {
+    const user = await requireUser(req);
+    const result = await query(
+      `SELECT sf.id, sf.original_filename, sf.object_key, sf.content_type, sf.byte_size
+         FROM source_files sf
+         JOIN project_members pm ON pm.project_id = sf.project_id AND pm.user_id = $3
+        WHERE sf.id = $1 AND sf.project_id = $2 AND sf.archived_at IS NULL
+        LIMIT 1`,
+      [fileId, projectId, user.id]
+    );
+    const file = result.rows[0];
+    if (!file) return sendJson(res, 404, { error: 'Proje dosyası bulunamadı.' });
+    const object = await getSourceFileR2Client().send(new GetObjectCommand({
+      Bucket: process.env.PL_R2_BUCKET_NAME,
+      Key: file.object_key
+    }));
+    res.writeHead(200, {
+      ...securityHeaders(file.content_type),
+      'Content-Disposition': safeDownloadName(file.original_filename),
+      'Content-Length': String(object.ContentLength || file.byte_size)
+    });
+    if (!object.Body || typeof object.Body.pipe !== 'function') {
+      throw Object.assign(new Error('Dosya akışı açılamadı.'), { statusCode: 502 });
+    }
+    object.Body.on('error', error => res.destroy(error));
+    object.Body.pipe(res);
+  }
+
+  async function archiveProjectSourceFile(req, res, projectId, fileId) {
+    requireSameOrigin(req);
+    const user = await requireUser(req, 'admin');
+    const project = await loadProject(projectId, user.id);
+    if (!project) return sendJson(res, 404, { error: 'Proje bulunamadı.' });
+    if (project.revision_state === 'approved') {
+      return sendJson(res, 409, { error: 'Onaylı revizyondaki dosyalar arşivlenemez.' });
+    }
+    const archived = await withTransaction(async client => {
+      const result = await client.query(
+        `UPDATE source_files
+            SET archived_at = now()
+          WHERE id = $1 AND project_id = $2 AND revision_id = $3 AND archived_at IS NULL
+          RETURNING id, original_filename, archived_at`,
+        [fileId, project.id, project.revision_id]
+      );
+      if (!result.rowCount) throw Object.assign(new Error('Etkin proje dosyası bulunamadı.'), { statusCode: 404 });
+      await client.query(
+        `INSERT INTO audit_log
+          (project_id, revision_id, actor_user_id, actor_type, action, entity_type, entity_id, new_value)
+         VALUES ($1, $2, $3, 'admin', 'archive', 'source_file', $4, $5::jsonb)`,
+        [project.id, project.revision_id, user.id, fileId, JSON.stringify({ archived_at: result.rows[0].archived_at })]
+      );
+      return result.rows[0];
+    });
+    return sendJson(res, 200, { source_file: archived });
   }
 
   async function loadProject(projectId, userId) {
@@ -487,6 +801,7 @@ function createProtocolAdminRouter(root) {
     );
 
     try {
+      const sourceFiles = await loadSourceFiles(project.id, project.revision_id);
       const generated = await generateProtocolDraft({
         project_id: project.id,
         project_code: project.project_code,
@@ -496,7 +811,8 @@ function createProtocolAdminRouter(root) {
         revision_number: project.revision_number,
         client_narrative: project.client_narrative,
         measurements: intakeText(project.measurements),
-        fixed_elements: intakeText(project.fixed_elements)
+        fixed_elements: intakeText(project.fixed_elements),
+        source_files: sourceFiles.map(sourceFileContract)
       });
       const completed = await withTransaction(async client => {
         const result = await client.query(
@@ -555,7 +871,10 @@ function createProtocolAdminRouter(root) {
     const body = await readJson(req, 2 * 1024 * 1024);
     let content;
     try {
-      content = validateProtocolAdminContract(body.content);
+      const sourceFiles = await loadSourceFiles(project.id, project.revision_id);
+      const candidate = structuredClone(body.content || {});
+      candidate.source_files = sourceFiles.map(sourceFileContract);
+      content = validateProtocolAdminContract(candidate);
     } catch (error) {
       throw Object.assign(new Error(error.message), { statusCode: 400 });
     }
@@ -618,7 +937,10 @@ function createProtocolAdminRouter(root) {
 
     let content;
     try {
-      content = validateProtocolAdminContract(draft.content);
+      const sourceFiles = await loadSourceFiles(project.id, project.revision_id);
+      const candidate = structuredClone(draft.content);
+      candidate.source_files = sourceFiles.map(sourceFileContract);
+      content = validateProtocolAdminContract(candidate);
     } catch (error) {
       throw Object.assign(new Error(error.message), { statusCode: 400 });
     }
@@ -632,9 +954,17 @@ function createProtocolAdminRouter(root) {
 
     const approvedContent = structuredClone(content);
     approvedContent.revision.state = 'approved';
+    const atlasSelectionResult = await query(
+      `SELECT primary_lens_slug, supporting_lens_slug, alternative_lens_slug, rationale
+         FROM project_atlas_selections
+        WHERE revision_id = $1
+        LIMIT 1`,
+      [project.revision_id]
+    );
     const snapshot = {
       schema_version: '1.0',
       audit: approvedContent,
+      atlas_direction: atlasDirection(atlasSelectionResult.rows[0] || null),
       report_context: {
         client_name: project.client_name,
         approved_by: user.display_name
@@ -795,6 +1125,20 @@ function createProtocolAdminRouter(root) {
       if (!uuid(atlasSelectionMatch[1])) return sendJson(res, 400, { error: 'Geçersiz proje kimliği.' });
       return updateProjectAtlasSelection(req, res, atlasSelectionMatch[1]);
     }
+    const fileCollectionMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/files$/);
+    if (fileCollectionMatch && req.method === 'POST') {
+      if (!uuid(fileCollectionMatch[1])) return sendJson(res, 400, { error: 'Geçersiz proje kimliği.' });
+      return uploadProjectSourceFile(req, res, fileCollectionMatch[1]);
+    }
+    const fileItemMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/files\/([^/]+)$/);
+    if (fileItemMatch && req.method === 'GET') {
+      if (!uuid(fileItemMatch[1]) || !uuid(fileItemMatch[2])) return sendJson(res, 400, { error: 'Geçersiz dosya kimliği.' });
+      return streamProjectSourceFile(req, res, fileItemMatch[1], fileItemMatch[2]);
+    }
+    if (fileItemMatch && req.method === 'PATCH') {
+      if (!uuid(fileItemMatch[1]) || !uuid(fileItemMatch[2])) return sendJson(res, 400, { error: 'Geçersiz dosya kimliği.' });
+      return archiveProjectSourceFile(req, res, fileItemMatch[1], fileItemMatch[2]);
+    }
     const approvalMatch = url.pathname.match(/^\/api\/protocol-admin\/projects\/([^/]+)\/approve$/);
     if (approvalMatch && req.method === 'POST') {
       if (!uuid(approvalMatch[1])) return sendJson(res, 400, { error: 'Geçersiz proje kimliği.' });
@@ -848,4 +1192,4 @@ function createProtocolAdminRouter(root) {
   return { handle, initialize, state };
 }
 
-module.exports = { createProtocolAdminRouter };
+module.exports = { createProtocolAdminRouter, detectedFileType, safeOriginalFilename };

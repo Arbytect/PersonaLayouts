@@ -6,6 +6,7 @@ const state = {
   currentDraft: null,
   currentApproval: null,
   currentAtlasSelection: null,
+  currentSourceFiles: [],
   atlasRecommendations: [],
   currentStep: 'brief',
   module: 'projects',
@@ -49,6 +50,12 @@ const elements = {
   protocolWorkflowNav: document.getElementById('protocol-workflow-nav'),
   protocolBriefPanel: document.getElementById('protocol-brief-panel'),
   briefReadiness: document.getElementById('brief-readiness'),
+  projectFileType: document.getElementById('project-file-type'),
+  projectFileInput: document.getElementById('project-file-input'),
+  projectFileUpload: document.getElementById('project-file-upload-button'),
+  projectFileMessage: document.getElementById('project-file-message'),
+  projectFileCount: document.getElementById('project-file-count'),
+  projectFileList: document.getElementById('project-file-list'),
   atlasRecommend: document.getElementById('atlas-recommend-button'),
   atlasRecommendations: document.getElementById('project-atlas-recommendations'),
   atlasPrimarySelect: document.getElementById('atlas-primary-select'),
@@ -804,6 +811,104 @@ async function prepareProjectAtlas(selection) {
   setMessage(elements.atlasSelectionMessage, selection ? 'Bu revizyon için kayıtlı Atlas seçimi yüklendi.' : 'Üç başlangıç önerisi hazırlandı; kaydetmeden önce düzenleyebilirsin.');
 }
 
+const SOURCE_FILE_LABELS = {
+  photo: 'Mekân fotoğrafı',
+  measured_plan: 'Ölçülü plan veya çizim',
+  uploaded_document: 'Proje belgesi'
+};
+
+function formatFileSize(bytes) {
+  const size = Number(bytes) || 0;
+  if (size < 1024) return `${size} B`;
+  if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+  return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function renderProjectFiles(files) {
+  state.currentSourceFiles = files || [];
+  elements.projectFileCount.textContent = `${state.currentSourceFiles.length} dosya`;
+  if (!state.currentSourceFiles.length) {
+    elements.projectFileList.replaceChildren(createElement('div', 'project-file-empty', 'Bu revizyona henüz belge veya fotoğraf eklenmedi.'));
+    return;
+  }
+  elements.projectFileList.replaceChildren(...state.currentSourceFiles.map(file => {
+    const card = createElement('article', 'project-file-card');
+    const preview = createElement('div', 'project-file-preview');
+    if (['image/jpeg', 'image/png', 'image/webp'].includes(file.content_type)) {
+      const image = createElement('img');
+      image.src = file.content_url;
+      image.alt = file.original_filename;
+      image.loading = 'lazy';
+      preview.append(image);
+    } else {
+      preview.textContent = file.content_type === 'application/pdf' ? 'PDF' : 'DOSYA';
+    }
+    const body = createElement('div', 'project-file-card-body');
+    body.append(
+      createElement('strong', '', file.original_filename),
+      createElement('small', '', `${SOURCE_FILE_LABELS[file.source_type] || humanize(file.source_type)} · ${formatFileSize(file.byte_size)} · Sürüm ${file.file_revision}`)
+    );
+    const actions = createElement('div', 'project-file-actions');
+    const open = createElement('a', '', 'Aç');
+    open.href = file.content_url;
+    open.target = '_blank';
+    open.rel = 'noopener';
+    const archive = createElement('button', '', 'Arşivle');
+    archive.type = 'button';
+    archive.dataset.archiveFile = file.id;
+    archive.dataset.fileName = file.original_filename;
+    archive.disabled = Boolean(state.currentApproval);
+    actions.append(open, archive);
+    body.append(actions);
+    card.append(preview, body);
+    return card;
+  }));
+}
+
+async function uploadSelectedProjectFiles() {
+  if (!state.currentProjectId) return;
+  const files = [...elements.projectFileInput.files];
+  if (!files.length) {
+    setMessage(elements.projectFileMessage, 'Yüklemek için en az bir dosya seçmelisin.');
+    return;
+  }
+  if (files.some(file => file.size > 20 * 1024 * 1024)) {
+    setMessage(elements.projectFileMessage, 'Her dosya en fazla 20 MB olabilir.');
+    return;
+  }
+  if (state.currentSourceFiles.length + files.length > 30) {
+    setMessage(elements.projectFileMessage, 'Bu revizyonda en fazla 30 etkin dosya bulunabilir.');
+    return;
+  }
+  elements.projectFileUpload.disabled = true;
+  try {
+    for (let index = 0; index < files.length; index += 1) {
+      const file = files[index];
+      setMessage(elements.projectFileMessage, `${index + 1}/${files.length} · ${file.name} yükleniyor…`);
+      const response = await fetch(`/api/protocol-admin/projects/${encodeURIComponent(state.currentProjectId)}/files`, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/octet-stream',
+          'X-File-Name': encodeURIComponent(file.name),
+          'X-Source-Type': elements.projectFileType.value
+        },
+        body: file
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || 'Dosya yüklenemedi.');
+      state.currentSourceFiles.unshift(payload.source_file);
+      renderProjectFiles(state.currentSourceFiles);
+    }
+    elements.projectFileInput.value = '';
+    setMessage(elements.projectFileMessage, `${files.length} dosya özel proje deposuna yüklendi.`);
+  } catch (error) {
+    setMessage(elements.projectFileMessage, error.message);
+  } finally {
+    elements.projectFileUpload.disabled = false;
+  }
+}
+
 function humanize(value) {
   const key = String(value || '');
   return PERSONA_LABELS[key] || TERM_LABELS[key] || key.replaceAll('_', ' ');
@@ -1189,7 +1294,17 @@ async function openProject(projectId) {
     state.currentStep = 'brief';
     renderBriefReadiness(project);
     renderProtocolDraft(payload.protocol_draft, payload.approval);
+    elements.projectFileType.disabled = Boolean(payload.approval);
+    elements.projectFileInput.disabled = Boolean(payload.approval);
+    elements.projectFileUpload.disabled = Boolean(payload.approval);
+    elements.projectFileUpload.title = payload.approval ? 'Onaylı revizyona dosya eklenemez; yeni revizyon gerekir.' : '';
+    renderProjectFiles(payload.source_files || []);
     await prepareProjectAtlas(payload.atlas_selection);
+    [elements.atlasPrimarySelect, elements.atlasSupportingSelect, elements.atlasAlternativeSelect, elements.atlasSelectionRationale]
+      .forEach(control => { control.disabled = Boolean(payload.approval); });
+    elements.atlasRecommend.disabled = Boolean(payload.approval);
+    elements.atlasSaveSelection.disabled = Boolean(payload.approval);
+    elements.atlasSaveSelection.title = payload.approval ? 'Onaylı revizyonun Atlas yönü değiştirilemez.' : '';
     showWorkspace('detail');
   } catch (error) {
     window.alert(error.message);
@@ -1292,6 +1407,26 @@ elements.protocolStepPrev.addEventListener('click', () => {
 elements.protocolStepNext.addEventListener('click', () => {
   const index = WORKFLOW_STEPS.indexOf(state.currentStep);
   if (index >= 0 && index < WORKFLOW_STEPS.length - 1) showProtocolStep(WORKFLOW_STEPS[index + 1]);
+});
+
+elements.projectFileUpload.addEventListener('click', uploadSelectedProjectFiles);
+elements.projectFileList.addEventListener('click', async event => {
+  const button = event.target.closest('[data-archive-file]');
+  if (!button || !state.currentProjectId || state.currentApproval) return;
+  if (!window.confirm(`“${button.dataset.fileName}” bu revizyonda arşivlensin mi? Dosya kanıt geçmişinde korunacaktır.`)) return;
+  button.disabled = true;
+  setMessage(elements.projectFileMessage, 'Dosya arşivleniyor…');
+  try {
+    await api(`/api/protocol-admin/projects/${encodeURIComponent(state.currentProjectId)}/files/${encodeURIComponent(button.dataset.archiveFile)}`, {
+      method: 'PATCH',
+      body: '{}'
+    });
+    renderProjectFiles(state.currentSourceFiles.filter(file => file.id !== button.dataset.archiveFile));
+    setMessage(elements.projectFileMessage, 'Dosya arşivlendi; proje geçmişinden fiziksel olarak silinmedi.');
+  } catch (error) {
+    button.disabled = false;
+    setMessage(elements.projectFileMessage, error.message);
+  }
 });
 
 elements.atlasRecommend.addEventListener('click', () => {
@@ -1483,7 +1618,7 @@ async function initialize() {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/protocol-admin/sw.js?v=atlas-tr-20260817-1', {
+    navigator.serviceWorker.register('/protocol-admin/sw.js?v=atlas-files-20260817-2', {
       scope: '/protocol-admin/',
       updateViaCache: 'none'
     }).then(registration => registration.update()).catch(() => {});
