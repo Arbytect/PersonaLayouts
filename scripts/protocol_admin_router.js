@@ -243,7 +243,23 @@ async function nextProjectCode(client) {
 function createProtocolAdminRouter(root) {
   const publicDirectory = path.join(root, 'protocol-admin');
   const spatialAtlasMasterFile = path.join(root, 'data', 'spatial_design_library_master.json');
-  const state = { ready: false, configured: databaseConfigured(), setupRequired: false, error: null };
+  const state = {
+    ready: false,
+    configured: databaseConfigured(),
+    setupRequired: false,
+    error: null,
+    errorCode: null,
+    lastInitializationAttempt: 0
+  };
+  let initializationPromise = null;
+
+  function initializationErrorCode(error) {
+    const message = String(error && error.message || '').toLowerCase();
+    if (/relation .* does not exist|migration/.test(message)) return 'migration_required';
+    if (/password authentication|authentication failed|credentials/.test(message)) return 'database_authentication';
+    if (/timeout|timed out|econnrefused|enotfound|connect/.test(message)) return 'database_connection';
+    return 'initialization_failed';
+  }
 
   function readSpatialAtlas() {
     if (!fs.existsSync(spatialAtlasMasterFile)) {
@@ -347,22 +363,40 @@ function createProtocolAdminRouter(root) {
   }
 
   async function initialize() {
-    state.configured = databaseConfigured();
-    if (!state.configured) return state;
-    try {
-      if (String(process.env.PL_ADMIN_AUTO_MIGRATE || '').toLowerCase() === 'true') {
-        await runMigrations(root);
+    if (initializationPromise) return initializationPromise;
+    initializationPromise = (async () => {
+      state.configured = databaseConfigured();
+      state.lastInitializationAttempt = Date.now();
+      if (!state.configured) return state;
+      try {
+        if (String(process.env.PL_ADMIN_AUTO_MIGRATE || '').toLowerCase() === 'true') {
+          await runMigrations(root);
+        }
+        const bootstrap = await ensureBootstrapAdmin();
+        state.setupRequired = Boolean(bootstrap.setup_required);
+        state.ready = !state.setupRequired;
+        state.error = null;
+        state.errorCode = null;
+      } catch (error) {
+        state.ready = false;
+        state.error = error.message;
+        state.errorCode = initializationErrorCode(error);
+        console.error('[protocol_admin] initialization failed:', error.message);
       }
-      const bootstrap = await ensureBootstrapAdmin();
-      state.setupRequired = Boolean(bootstrap.setup_required);
-      state.ready = !state.setupRequired;
-      state.error = null;
-    } catch (error) {
-      state.ready = false;
-      state.error = error.message;
-      console.error('[protocol_admin] initialization failed:', error.message);
+      return state;
+    })();
+    try {
+      return await initializationPromise;
+    } finally {
+      initializationPromise = null;
     }
-    return state;
+  }
+
+  async function ensureInitialized() {
+    state.configured = databaseConfigured();
+    if (!state.configured || state.ready || initializationPromise) return state;
+    if (Date.now() - state.lastInitializationAttempt < 10000) return state;
+    return initialize();
   }
 
   async function login(req, res) {
@@ -1083,12 +1117,15 @@ function createProtocolAdminRouter(root) {
 
   async function handleApi(req, res, url) {
     if (req.method === 'GET' && url.pathname === '/api/protocol-admin/status') {
+      await ensureInitialized();
       return sendJson(res, 200, {
         configured: state.configured,
         ready: state.ready,
-        setup_required: state.setupRequired
+        setup_required: state.setupRequired,
+        error_code: state.errorCode
       });
     }
+    await ensureInitialized();
     if (!state.ready) return sendJson(res, 503, { error: 'Protokol yönetim sistemi henüz yapılandırılmadı.' });
     if (req.method === 'POST' && url.pathname === '/api/protocol-admin/login') return login(req, res);
     if (req.method === 'POST' && url.pathname === '/api/protocol-admin/logout') {

@@ -95,6 +95,8 @@ async function run() {
   assert(router.includes('PutObjectCommand'));
   assert(router.includes('MAX_SOURCE_FILE_BYTES'));
   assert(router.includes('detectedFileType'));
+  assert(router.includes('ensureInitialized'));
+  assert(router.includes('database_connection'));
   assert(router.includes("await requireUser(req, 'admin')"));
   assert(router.includes('/protocol-admin\\/atlas-images'));
 
